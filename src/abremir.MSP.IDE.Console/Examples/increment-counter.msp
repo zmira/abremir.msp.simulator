@@ -1,0 +1,12 @@
+MEMORIA DE DADOS
+counter 0 TAM 1 VAL 0
+
+CODIGO
+incrementCounter:
+	psha counter
+	psha counter
+	load
+	push 1
+	add
+	store
+	jmp incrementCounter

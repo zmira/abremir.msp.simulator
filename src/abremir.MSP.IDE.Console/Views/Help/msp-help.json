@@ -1,0 +1,529 @@
+[
+  {
+    "title": "Data segment / MEMORIA DE DADOS",
+    "description": "Data Segment is defined with the reserved words MEMORIA DE DADOS and continues until the beginning of the Code Segment.\nThe Data Segment is where variables required by a program are declared, and eventually initialized.",
+    "syntax": "<id_variable> <address> TAM <size> VAL <value1> ... <valueN>",
+    "url": "data-segment-declaration-of-variables.md"
+  },
+  {
+    "title": "Code segment / CODIGO",
+    "description": "The Code Segment is initialized with the reserved word CODIGO and continues until the end of the text file (EOF)",
+    "url": "code-segment-instruction-set.md",
+    "items": [
+      {
+        "title": "Value and address",
+        "description": "Value and address manipulation instructions",
+        "items": [
+          {
+            "title": "PUSH",
+            "description": "Pushes either one <int_8> or one <sint_8> to the Stack",
+            "syntax": "Stack[SP] = <int_8> or Stack[SP] = <sint_8>;\nSP = SP - 1;\nPC = PC + 2;",
+            "code": 1
+          },
+          {
+            "title": "PSHA",
+            "description": "Pushes one <int_16> to the Stack; if the argument is not <address>, <id_variable> is converted into its corresponding <address>; this address is split into two <int_8> (LSB and MSB, such that <address> is one <int_16> equal to MSB * 256 + LSB) that are pushed to the Stack (first the LSB, then the MSB)",
+            "syntax": "Stack[SP] = LSB;\nSP = SP - 1;\nStack[SP] = MSB;\nSP = SP - 1;\nPC = PC + 3;",
+            "code": 2
+          },
+          {
+            "title": "LOAD",
+            "description": "Pops two <int_8> from the Stack, calculates a Data Memory address, and pushes the value at that Data Memory address to the Stack",
+            "syntax": "SP = SP + 1;\nMSB = Stack[SP];\nSP = SP + 1;\nLSB = Stack[SP];\nADDRESS = MSB * 256 + LSB;\nStack[SP] = DataMemory[ADDRESS];\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 3
+          },
+          {
+            "title": "LDA",
+            "description": "Pops two <int_8> from the Stack and calculates a Data Memory address; the value at that Data Memory address, and the value at the following address, become, respectively, the LSB and MSB of another address, which are then pushed to the Stack (first the LSB, then the MSB)",
+            "syntax": "SP = SP + 1;\nMSB = Stack[SP];\nSP = SP + 1;\nLSB = Stack[SP];\nADDRESS = MSB * 256 + LSB;\nLSB = DataMemory[ADDRESS];\nStack[SP] = LSB;\nSP = SP - 1;\nMSB = DataMemory[ADDRESS + 1];\nStack[SP] = MSB;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 4
+          },
+          {
+            "title": "STORE",
+            "description": "Pops one <int_8> VALUE from the Stack and calculates a Data Memory address with two <int_8> also popped from the Stack; VALUE is written at the Data Memory address",
+            "syntax": "SP = SP + 1;\nVALUE = Stack[SP];\nSP = SP + 1;\nMSB = Stack[SP];\nSP = SP + 1;\nLSB = Stack[SP];\nADDRESS = MSB * 256 + LSB;\nDataMemory[ADDRESS] = VALUE;\nPC = PC + 1;",
+            "code": 5
+          },
+          {
+            "title": "STRA",
+            "description": "Pops two <int_8> from the Stack (possibly the LSB and MSB of a Data Memory address); then pops two more <int_8> and calculates a Data Memory address (ADDRESS); the initial two <int_8> are written to the Data Memory at ADDRESS and ADDRESS+1",
+            "syntax": "SP = SP + 1;\nMSB2 = Stack[SP];\nSP = SP + 1;\nLSB2 = Stack[SP];\nSP = SP + 1;\nMSB = Stack[SP];\nSP = SP + 1;\nLSB = Stack[SP];\nADDRESS = MSB * 256 + LSB;\nDataMemory[ADDRESS] = LSB2;\nDataMemory[ADDRESS + 1] = MSB2;\nPC = PC + 1;",
+            "code": 6
+          },
+          {
+            "title": "IN",
+            "description": "Pushes to the Stack the contents of the special port input; this results from reading one <signed_value> from the keyboard buffer",
+            "syntax": "Stack[SP] = input;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 7
+          },
+          {
+            "title": "OUT",
+            "description": "Writes one <signed_value> popped from the Stack to the special port output",
+            "syntax": "SP = SP + 1;\noutput = Stack[SP];\nPC = PC + 1;",
+            "code": 8
+          },
+          {
+            "title": "INC",
+            "description": "Pushes to the Stack the contents (ASCII code, of type <value>) of the special port input; this results from reading one <character> from the keyboard buffer",
+            "syntax": "Stack[SP] = input;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 28
+          },
+          {
+            "title": "OUTC",
+            "description": "Writes one <character> to the special port output; this results from popping a <value> from the Stack",
+            "syntax": "SP = SP + 1;\noutput = Stack[SP];\nPC = PC + 1;",
+            "code": 29
+          }
+        ]
+      },
+      {
+        "title": "Arithmetic",
+        "description": "Arithmetic instructions",
+        "items": [
+          {
+            "title": "ADD",
+            "description": "Pops two <sint_8> from the Stack, and pushes the addition of them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 + OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 9
+          },
+          {
+            "title": "SUB",
+            "description": "Pops two <sint_8> from the Stack, and pushes the subtraction of them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 - OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 10
+          },
+          {
+            "title": "MUL",
+            "description": "Pops two <sint_8> from the Stack, and pushes the product of them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 * OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 11
+          },
+          {
+            "title": "DIV",
+            "description": "Pops two <sint_8> from the Stack, and pushes the resulting quotient of the division with them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 / OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 12
+          },
+          {
+            "title": "ADDA",
+            "description": "Pops one <sint_8> from the Stack (OFFSET) and calculates an ADDRESS with two <int_8> also popped from the Stack; OFFSET is added to ADDRESS and the resulting address is decomposed, into LSB and MSB, and pushed to the Stack",
+            "syntax": "SP = SP + 1;\nOFFSET = Stack[SP];\nSP = SP + 1;\nMSB = Stack[SP];\nSP = SP + 1;\nLSB = Stack[SP];\nADDRESS = MSB * 256 + LSB + OFFSET;\nMSB = quotient(ADDRESS / 256) ;\nLSB = remainder(ADDRESS / 256);\nStack[SP] = LSB;\nSP = SP - 1;\nStack[SP] = MSB;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 13
+          }
+        ]
+      },
+      {
+        "title": "Logic",
+        "description": "Logic instructions",
+        "items": [
+          {
+            "title": "AND",
+            "description": "Pops two <int_8> from the Stack, and pushes the logical conjunction of them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 && OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 14
+          },
+          {
+            "title": "OR",
+            "description": "Pops two <int_8> from the Stack, and pushes the logical disjunction between them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 || OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 15
+          },
+          {
+            "title": "NOT",
+            "description": "Pops one <int_8> from the Stack, and pushes its logical negation to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND = Stack[SP];\nStack[SP] = !OPERAND;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 16
+          },
+          {
+            "title": "EQ",
+            "description": "Pops two <int_8> from the Stack, checks if they are equal, and pushes the result of that comparison to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 == OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 17
+          },
+          {
+            "title": "NE",
+            "description": "Pops two <int_8> from the Stack, checks if they are different, and pushes the result of that comparison to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 != OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 18
+          },
+          {
+            "title": "LT",
+            "description": "Pops two <int_8> from the Stack, checks if one is less than the other, and pushes the result of that comparison to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 < OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 19
+          },
+          {
+            "title": "LE",
+            "description": "Pops two <int_8> from the Stack, checks if one is less than, or equal to, the other, and pushes the result of that comparison to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 <= OPERAND2);\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 20
+          },
+          {
+            "title": "GT",
+            "description": "Pops two <int_8> from the Stack, checks if one is greater than the other, and pushes the result of that comparison to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 > OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 21
+          },
+          {
+            "title": "GE",
+            "description": "Pops two <int_8> from the Stack, checks if one is greater than, or equal to, the other, and pushes the result of that comparison to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 >= OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 22
+          }
+        ]
+      },
+      {
+        "title": "Bitwise",
+        "description": "Bitwise instructions",
+        "items": [
+          {
+            "title": "ANDB",
+            "description": "Pops two <int_8> from the Stack, and pushes the resulting bitwise conjunction of them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 & OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 30
+          },
+          {
+            "title": "ORB",
+            "description": "Pops two <int_8> from the Stack, and pushes the resulting bitwise disjunction between them to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND2 = Stack[SP];\nSP = SP + 1;\nOPERAND1 = Stack[SP];\nStack[SP] = OPERAND1 | OPERAND2;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 31
+          },
+          {
+            "title": "NOTB",
+            "description": "Pops one <int_8> from the Stack, and pushes the bitwise negation (i.e. one's complement) of it to the Stack",
+            "syntax": "SP = SP + 1;\nOPERAND = Stack[SP];\nStack[SP] = ~OPERAND;\nSP = SP - 1;\nPC = PC + 1;",
+            "code": 32
+          }
+        ]
+      },
+      {
+        "title": "Control",
+        "description": "Control instructions",
+        "items": [
+          {
+            "title": "JMP",
+            "description": "Unconditional jump to a program ADDRESS defined by a calculated <int_16>, based on the argument; ADDRESS is a Program Memory address that can be tagged with one <id_label>, or it may already be an absolute <address>, or it may the result of applying an offset, given by <relative_address>, to the current Program Counter (see note on this calculation); the program execution continues at the ADDRESS assigned to the Program Counter, calculated based on the argument",
+            "syntax": "PC = ADDRESS;",
+            "code": 23
+          },
+          {
+            "title": "JMPF",
+            "description": "Conditional jump to a program ADDRESS defined by a calculated <int_16>, based on the argument; ADDRESS to be assigned to the Program Counter is calculated identically to the JMP instruction, but the execution of the jump is conditioned by a logical test against the <int_8> value popped from the Stack",
+            "syntax": "SP = SP + 1;\nVALUE = Stack[SP];\nIF ( VALUE == FALSE ) THEN PC = ADDRESS;\nELSE PC = PC + 3;",
+            "code": 24
+          },
+          {
+            "title": "CALL",
+            "description": "Unconditional call to a sub-routine, defined by a calculated <int_16> address, based on the argument; ADDRESS to be assigned to the Program Counter is calculated identically to the JMP instruction; after executing the sub-routine (see RET), the execution will continue at the instruction following CALL, for which it is necessary to push its address to the Stack (NextPC)",
+            "syntax": "NextPC = PC + 3;\nMSB = quotient(NextPC / 256);\nLSB = remainder(NextPC / 256) ;\nStack[SP] = LSB;\nSP = SP - 1;\nStack[SP] = MSB;\nSP = SP - 1;\nPC = ADDRESS;",
+            "code": 25
+          },
+          {
+            "title": "RET",
+            "description": "Returns from a sub-routine, taking the program's execution to an address previously saved in the Stack; pops two <int_8> from the Stack and calculates an ADDRESS, which is then assigned to the Program Counter",
+            "syntax": "SP = SP + 1;\nMSB = Stack[SP];\nSP = SP + 1;\nLSB = Stack[SP];\nADDRESS = MSB * 256 + LSB;\nPC = ADDRESS;",
+            "code": 26
+          },
+          {
+            "title": "HALT",
+            "description": "Aborts the execution of the program, regardless of there being more instructions to execute",
+            "code": 27
+          },
+          {
+            "title": "NOOP",
+            "description": "No operation, does not do anything",
+            "code": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Errors and Warnings",
+    "description": "The different circumstances that will generate errors or warnings during the assembly of a MSP program\nA warning is an alert for a condition that, event though it is not an obstacle to generate executable code, may be a symptom that something is not semantically correct. The program may be compile but there's no guarantee that there are no errors at runtime! Hence the separation between assembly errors and runtime errors.",
+    "url": "errors-and-warnings.md",
+    "items": [
+      {
+        "title": "Assembly errors",
+        "url": "assembly-errors.md",
+        "items": [
+          {
+            "title": "Data Memory, or Program Memory not available",
+            "description": "There was an internal error that prevented the allocation of the Data Memory and/or the Program Memory",
+            "code": 0
+          },
+          {
+            "title": "Expected MEMORIA DE DADOS",
+            "description": "The MEMORIA DE DADOS pragma was not found; it must occupy a single line, and must be included even if no variables are declared",
+            "syntax": "CODIGO",
+            "code": 1
+          },
+          {
+            "title": "Data Memory exhausted",
+            "description": "The existing declarations of variables have exhausted the available capacity of the Data Memory, this not allowing any more variable allocations",
+            "syntax": "MEMORIA DE DADOS\nvar1 0 TAM 20000\nvar2 19999 TAM 20000 ; not OK - this will exhaust the 32000 available memory cells\nCODIGO",
+            "code": 2
+          },
+          {
+            "title": "Invalid Data Memory address",
+            "description": "The initial address assigned to a variable is invalid; this could be caused by an address greater than 31999 or a collision with an area previously reserved by another variable; keep in mind that memory allocation for variables may not always be contiguous, but they are always exclusive; collisions may also originate from the declared size",
+            "syntax": "MEMORIA DE DADOS\nvar1 100 TAM 20 ; OK - memory [100, 119] reserved\nvar2 110 TAM 1 ; not OK - collision, memory cell 110 is in the range [100, 119] already reserved\nCODIGO",
+            "code": 3
+          },
+          {
+            "title": "Data Memory identifier already defined",
+            "description": "Declaration of a variable, in the Data Segment, for which the identifier has already been used for another variable",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 1 ; OK\nx 200 TAM 3 ; not OK - re-use of identifier \"x\"\nCODIGO",
+            "code": 4
+          },
+          {
+            "title": "Unrecognized address of Data Memory",
+            "description": "Following the declaration of a variable its initial address must be defined; it must be a 16-bit positive integer in the range of the addressable space of the Data Memory ([0, 31999])",
+            "syntax": "MEMORIA DE DADOS\ny TAM 1 ; not OK - lacks the initial address of the variable\nx 123abc--?? TAM 3 ; not OK - \"123abc--??\" is not a 16-bit integer in [0, 31999]\nCODIGO",
+            "code": 5
+          },
+          {
+            "title": "Expected TAMANHO",
+            "description": "The required reserved word TAMANHO (or one of its abbreviations down to TAM) was not found; this reserved word appears between the address and the specification of the size of the variable",
+            "syntax": "MEMORIA DE DADOS\na 0 100 ; not OK - \"TAM\" not found between \"0\" and \"100\"\nb 200 T 12 ; not OK - \"T\" is not recognized as being an alias of \"TAMANHO\"\nCODIGO",
+            "code": 6
+          },
+          {
+            "title": "Expected value for TAMANHO",
+            "description": "Following the reserved word TAMANHO it is required to define the size of the variable, which must be a positive integer in the range [1, 32000]",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 10 ; OK\ny 20 TAM ; not OK - variable size not found\nCODIGO",
+            "code": 7
+          },
+          {
+            "title": "Invalid value for TAMANHO",
+            "description": "The size being assigned to the variable is either zero, or it is greater than the size of the Data Memory (32000), or it collides (completely or partially) with a memory area previously reserved by another variable, or it is such that the end of the allocated memory is beyond the addressable space of the Data Memory (i.e. greater than 31999)",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 0 ; not OK - variable has size 0\ny 10 TAM 40000 ; not OK - size greater than 32000\nz 100 TAM 10 ; OK\na 90 TAM 50 ; not OK - collision with reserved memory for \"z\"\nb 31000 TAM 1000 ; not OK - \"address\" + \"size\" is outside the Data Memory\nCODIGO",
+            "code": 8
+          },
+          {
+            "title": "Expected initialization value(s) to be in [-128, 255]",
+            "description": "The usage of the reserved word VALOR (or one of its abbreviations down to VAL) makes it required to define at least one initialization value in the range [-128, 255] (optional + for positive values); the remaining values (in the case where TAMANHO is greater than 1) can be omitted, but will be defaulted to zero",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 1 VAL ; not OK - initialization value not found\ny 10 TAM 2 ; OK - all values are initialized with zero\na 20 TAM 3 VAL 100 ; OK - remaining values are initialized with zero\nb 40 TAM 1 VAL 1|b%3 ; not OK - \"1|b%3\" is not a 16-bit integer in [-128, 255]\nCODIGO",
+            "code": 9
+          },
+          {
+            "title": "Initialization values exceed reserved memory",
+            "description": "The list of values declared to initialize the reserved memory space allocated to a variable contains more items than the number of bytes reserved",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 2 VAL 1 2 3 ; not OK - allocated size is \"2\" but there \"3\" values\nCODIGO",
+            "code": 10
+          },
+          {
+            "title": "8-bit integer value outside [-128, 255] range",
+            "description": "One initialization constant cannot exceed 255, nor can it be less than -128; values above 127 are interpreted based on context",
+            "syntax": "MEMORIA DE DADOS\nz 0 TAM 1 VAL 256 ; not OK - value greater than 255\na 1 TAM 1 VAL -129 ; not OK - value less than -128\nCODIGO",
+            "code": 11
+          },
+          {
+            "title": "Unknown or unexpected token",
+            "description": "A set of characters was encountered that have no meaning for the MSP language; the only recognized tokens are alphanumeric identifiers of variables and labels (if not reserved words), and signed or unsigned 8-bit and 16-bit integers (+ is optional for positive integers); comments must be preceded by a semi-colon (;); this error is also raised if following the reserved word CODIGO, on the same line, there is anything other than a comment",
+            "syntax": "MEMORIA DE DADOS d7)8/&f8 ; not OK\nx 0 TAM 1 d7)8/&f8 ; not OK - expected \"VAL\"\ny 10 TAM 2 VAL 1 88d7)8/&f8 ; not OK - invalid initialization value\nCODIGO 88d7)8/&f8 ; not OK\n88d7)8/&f8 ; not OK",
+            "code": 12
+          },
+          {
+            "title": "Expected CODIGO, or invalid variable identifier",
+            "description": "A valid alphanumeric variable identifier, or the delimiter CODIGO that begins the Code Segment, was not found",
+            "syntax": "MEMORIA DE DADOS\n/gghg% ; not OK - invalid variable identifier\nPUSH 10 ; not OK - \"PUSH\" is a reserved word\nCODIGO",
+            "code": 13
+          },
+          {
+            "title": "End-of-line not found, or instruction expected",
+            "description": "The Code Segment allows empty lines, lines with only comments, lines with a single instruction (optionally preceded with a label and/or followed by a comment); two instructions or labels cannot be declared on the same line",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH 10 PSHA x ; not OK - two  instructions on the same line\nRET (7lijklsfd ; not OK - \"RET\" does not take any arguments\nLabel1: Label2: ; not OK - two labels on the same line",
+            "code": 14
+          },
+          {
+            "title": "Program Memory exhausted",
+            "description": "The preceding instructions have exhausted the Program Memory, not being able to take any more code",
+            "code": 15
+          },
+          {
+            "title": "Label already defined",
+            "description": "Declaration of a label identifier that has already been previously defined",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nloop: PUSH 10\nloop: RET ; not OK - label \"loop\" already defined above",
+            "code": 16
+          },
+          {
+            "title": "Potential label without colon (:)",
+            "description": "The MSP language syntax requires that a label must be followed by :",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nSubProc PSHA x ; not OK - \":\" missing, after \"SubProc\"\nEnd : RET ; OK - there can be a space between the label and \":\"",
+            "code": 17
+          },
+          {
+            "title": "Unexpected instruction argument",
+            "description": "The instruction does not require more arguments than the ones already defined",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nADD 1 ; not OK - \"ADD\" does not take arguments\nPSHA x z ; not OK - \"PSHA\" only takes one argument",
+            "code": 18
+          },
+          {
+            "title": "PUSH 8-bit integer argument outside [-128, 255] range",
+            "description": "the PUSH instruction places an 8-bit integer in the Stack; any other value is not valid; not providing a value also raises this error",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH x ; not OK - \"x\" is not an 8-bit integer\nPUSH ; not OK - missing argument",
+            "code": 19
+          },
+          {
+            "title": "Invalid PSHA address, 16-bit value must be in [0, 31999]",
+            "description": "the argument for PSHA was recognized as a 16-bit integer, but its value is not within the Data Memory address space [0, 31999]",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPSHA 32000 ; not OK - \"32000\" is not within [0, 31999]",
+            "code": 20
+          },
+          {
+            "title": "Use of undeclared Data Memory identifier as PSHA argument",
+            "description": "The argument of PSHA is a variable identifier that has not been declared in the Data Segment",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 1\nCODIGO\nPSHA z ; not OK - \"z\" has not been declared in the Data Segment",
+            "code": 21
+          },
+          {
+            "title": "Use of label, instead of Data Memory identifier, as PSHA argument",
+            "description": "the argument used for PSHA is a label, not a variable, identifier; it is allowed to use the same identifier both as a variable and as a label",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 1\nCODIGO\ny: PSHA y ; not OK - \"y\" is not a variable, even though it is a label\nx: PSHA x ; OK - \"x\" is simultaneously a label and a variable",
+            "code": 22
+          },
+          {
+            "title": "Unknown Data Memory identifier used as PSHA argument",
+            "description": "The argument for PSHA is not valid; valid arguments are 16-bit addresses (not required to be linked to a variable), or a known variable identifier (in lieu of its address)",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 1\nCODIGO\nPSHA 1234 ; OK - a valid 16-bit address\nPSHA x ; OK - a valid variable identifier\nPSHA 0/887&5 ; not OK",
+            "code": 23
+          },
+          {
+            "title": "Undefined label",
+            "description": "A label used in a jump instruction has not been defined",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nCALL end ; not OK - \"end\" has not been defined\nHALT",
+            "code": 24
+          },
+          {
+            "title": "Attempt to jump outside Program Memory limits ([0, 31999])",
+            "description": "The relative or absolute address used as the argument of a jump instruction is pointing to a location outside the address space of the Program Memory [0, 31999]",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nJMP -4 ; not OK - jump to absolute address -1 (PC[0] + 3 + -4)\nJMP 32000 ; not OK - jump to absolute address greater than 31999\nJMP +31992 : not OK - jump to absolute address greater than 31999 (PC[3 + 3] + 3 + 31992)",
+            "code": 25
+          },
+          {
+            "title": "Invalid argument for branch instruction (JMP, JMPF, CALL)",
+            "description": "The argument provided for a jump instruction is not valid, or the jump instruction is referencing itself; valid arguments are an address associated with a label, or a 16-bit absolute address in the range [0, 31999], or a relative address (positive or negative) that is translatable to a 16-bit absolute address in the range [0, 31999]",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nJMP k(76% ; not OK\nloop: CALL loop ; not OK - jump instruction cannot reference itself",
+            "code": 26
+          },
+          {
+            "title": "No code to assemble",
+            "description": "No text was found to be assembled",
+            "code": 27
+          },
+          {
+            "title": "Syntax error",
+            "description": "Other types of syntax errors not already caught and assigned a particular error type",
+            "code": 999
+          },
+          {
+            "title": "Other exception",
+            "description": "a \"catch-all\" exception for any type of exception generated while parsing the source code",
+            "code": 1000
+          }
+        ]
+      },
+      {
+        "title": "Assembly warnings",
+        "url": "assembly-warnings.md",
+        "items": [
+          {
+            "title": "No variables declared",
+            "description": "No variable has been declared in the Memory Segment and, due to this, the Data Memory is completely free and initialized with zero",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nHALT",
+            "code": 0
+          },
+          {
+            "title": "Uninitialized Data Memory identifier(s)",
+            "description": "A variable declared in the Data Segment has not been initialized or it has only been done partially; non-initialized cells will have the value zero by default",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 1 ; no initialization\ny 1 TAM 3 VAL 1 ; partial initialization (2nd and 3rd cells will have value zero)\nCODIGO\nHALT",
+            "code": 1
+          },
+          {
+            "title": "Data Memory identifier declared, but never referenced",
+            "description": "A variable declared in the Data Segment is never referenced in the Code Segment",
+            "syntax": "MEMORIA DE DADOS\na 0 TAM 1 ; the variable \"a\" is never used in the code\nCODIGO\nHALT",
+            "code": 2
+          },
+          {
+            "title": "No instructions declared",
+            "description": "Since no instruction was written in the Code Segment, a warning is raised; similarly to the \"empty\" Data Memory, all Program Memory cells will have the value zero by default",
+            "syntax": "MEMORIA DE DADOS\nCODIGO",
+            "code": 3
+          },
+          {
+            "title": "Label declared, but never referenced",
+            "description": "A label declared in the Code Segment is never referenced in it",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nstart: IN ; the label \"start\" is never referenced in the program\nOUT\nHALT",
+            "code": 4
+          },
+          {
+            "title": "Data Memory identifier matches label name",
+            "description": "The identifier for a label declared in the Code Segment coincides with the identifier of a label in the Data Segment",
+            "syntax": "MEMORIA DE DADOS\nsum 0 TAM 1\nCODIGO\nsum: HALT ; \"sum\" identifies both a label and a variable",
+            "code": 5
+          },
+          {
+            "title": "PSHA instruction references memory space not reserved by any Data Memory identifier",
+            "description": "As argument of the PSHA instruction a valid 16-bit address is being used (in the range [0, 31999]) but it does not reference any Data Memory cell reserved by a Data Segment variable",
+            "syntax": "MEMORIA DE DADOS\nx 0 TAM 100\nCODIGO\nPSHA 0 ; OK - this is the start address of the declared variable \"x\"\nPSHA 50 ; OK - 50 is an address inside the reserved area for \"x\"\nPSHA 200 ; not OK - there isn't any variable that has reserved Data Memory cell 200",
+            "code": 6
+          },
+          {
+            "title": "HALT instruction not found",
+            "description": "The instruction HALT has not been found in the Code Segment, this means the program will run until the Program Counter reaches the end of the addressable for the Program Memory",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH 10",
+            "code": 7
+          }
+        ]
+      },
+      {
+        "title": "Runtime errors",
+        "url": "runtime-errors.md",
+        "items": [
+          {
+            "title": "Divide by zero",
+            "description": "A division operation was attempted where the divisor is zero",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH 10\nPUSH 0\nDIV",
+            "code": 100
+          },
+          {
+            "title": "Underflow error",
+            "description": "An operation yields a result too small to store",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH -100\nPUSH -100\nADD ; for arithmetic operations, arguments and result must be within the range [-127, 128]",
+            "code": 101
+          },
+          {
+            "title": "Overflow error",
+            "description": "An operation yields a result to large to store",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH 100\nPUSH 100\nADD ; for arithmetic operations, arguments and result must be within the range [-127, 128]",
+            "code": 102
+          },
+          {
+            "title": "Stack overflow",
+            "description": "An attempt was made to push a value to an already full stack, but this situation is very rare in practical terms",
+            "code": 103
+          },
+          {
+            "title": "Stack underflow",
+            "description": "An attempt was made to pop a value from an empty stack",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nLOAD ; the stack is still empty, as such the components needed by the operation are not there",
+            "code": 104
+          },
+          {
+            "title": "Memory address violation",
+            "description": "An attempt was made to access the memory through an address that does not sit within its address space [0, 31999]; any instruction that builds an address from the Stack is bound to encounter this error if the MSP and LSB components are such that (MSB * 256 + LSB) does not belong to the addressable space",
+            "syntax": "MEMORIA DE DADOS\nCODIGO\nPUSH 255\nPUSH 255\nLOAD ; attempt to load the contents of address 65535 (255 * 256 + 255), which does not belong to the valid range [0, 31999]",
+            "code": 105
+          },
+          {
+            "title": "Unknown instruction",
+            "description": "An instruction opcode not belonging to the instruction set has been encountered while running the program; highly unlikely to happen, unless a compiled program is loaded directly to Program Memory",
+            "code": 106
+          }
+        ]
+      }
+    ]
+  }
+]

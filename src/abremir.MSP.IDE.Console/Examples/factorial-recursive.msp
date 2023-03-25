@@ -1,0 +1,58 @@
+﻿MEMORIA DE DADOS
+    main_1  0  TAM 1
+    x_1  1  TAM 1
+    f_1  2  TAM 1
+    factorialRec_2  3  TAM 1
+    x_2  4  TAM 1
+
+CODIGO
+    CALL  main
+    HALT
+
+main:
+    PSHA  x_1
+    IN
+    STORE
+    PSHA  f_1
+    PSHA  x_2
+    PSHA  x_1
+    LOAD
+    STORE
+    CALL  factorialRec
+    PSHA  factorialRec_2
+    LOAD
+    STORE
+    PSHA  f_1
+    LOAD
+    OUT
+    RET
+
+factorialRec:
+    PSHA  x_2
+    LOAD
+    PUSH  0
+    EQ
+    JMPF  else_1
+    PSHA  factorialRec_2
+    PUSH  1
+    STORE
+    JMP   e_if_1
+
+else_1:
+    PSHA  factorialRec_2
+    PSHA  x_2
+    LOAD
+    PSHA  x_2
+    PSHA  x_2
+    LOAD
+    PUSH  1
+    SUB
+    STORE
+    CALL  factorialRec
+    PSHA  factorialRec_2
+    LOAD
+    MUL
+    STORE
+
+e_if_1:
+    RET

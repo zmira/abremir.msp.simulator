@@ -1,0 +1,58 @@
+# MSP - *Mais Simples Possível*
+
+# Table of Contents
+
+- [Disclaimer](disclaimer.md)
+- [Introduction](introduction.md)
+- Stack Virtual Machine
+  - [Architecture](architecture.md)
+  - [Principle of Operation](principle-of-operation.md)
+- The MSP Language
+  - [Grammar](grammar.md)
+  - [Negative numbers](negative-numbers.md)
+  - Syntax and Semantics
+    - [Data Segment - Declaration of Variables](data-segment-declaration-of-variables.md)
+    - [Code Segment - Instruction Set](code-segment-instruction-set.md)
+      - Value and address manipulation instructions
+        - [PUSH](code-segment-instruction-set-value-and-address-manipulation-instructions.md#push)
+        - [PSHA](code-segment-instruction-set-value-and-address-manipulation-instructions.md#psha)
+        - [LOAD](code-segment-instruction-set-value-and-address-manipulation-instructions.md#load)
+        - [LDA](code-segment-instruction-set-value-and-address-manipulation-instructions.md#lda)
+        - [STORE](code-segment-instruction-set-value-and-address-manipulation-instructions.md#store)
+        - [STRA](code-segment-instruction-set-value-and-address-manipulation-instructions.md#stra)
+        - [IN](code-segment-instruction-set-value-and-address-manipulation-instructions.md#in)
+        - [OUT](code-segment-instruction-set-value-and-address-manipulation-instructions.md#out)
+        - [INC](code-segment-instruction-set-value-and-address-manipulation-instructions.md#inc)
+        - [OUTC](code-segment-instruction-set-value-and-address-manipulation-instructions.md#outc)
+      - Arithmetic instructions
+        - [ADD](code-segment-instruction-set-arithmetic-instructions.md#add)
+        - [SUB](code-segment-instruction-set-arithmetic-instructions.md#sub)
+        - [MUL](code-segment-instruction-set-arithmetic-instructions.md#mul)
+        - [DIV](code-segment-instruction-set-arithmetic-instructions.md#div)
+        - [ADDA](code-segment-instruction-set-arithmetic-instructions.md#adda)
+      - Logic instructions
+        - [AND](code-segment-instruction-set-logic-instructions.md#and)
+        - [OR](code-segment-instruction-set-logic-instructions.md#or)
+        - [NOT](code-segment-instruction-set-logic-instructions.md#not)
+        - [EQ](code-segment-instruction-set-logic-instructions.md#eq)
+        - [NE](code-segment-instruction-set-logic-instructions.md#ne)
+        - [LT](code-segment-instruction-set-logic-instructions.md#lt)
+        - [LE](code-segment-instruction-set-logic-instructions.md#le)
+        - [GT](code-segment-instruction-set-logic-instructions.md#gt)
+        - [GE](code-segment-instruction-set-logic-instructions.md#ge)
+      - Bitwise instructions
+        - [ANDB](code-segment-instruction-set-bitwise-instructions.md#andb)
+        - [ORB](code-segment-instruction-set-bitwise-instructions.md#orb)
+        - [NOTB](code-segment-instruction-set-bitwise-instructions.md#notb)
+      - Control instructions
+        - [JMP](code-segment-instruction-set-control-instructions.md#jmp)
+        - [JMPF](code-segment-instruction-set-control-instructions.md#jmpf)
+        - [CALL](code-segment-instruction-set-control-instructions.md#call)
+        - [RET](code-segment-instruction-set-control-instructions.md#ret)
+        - [HALT](code-segment-instruction-set-control-instructions.md#halt)
+        - [NOOP](code-segment-instruction-set-control-instructions.md#noop)
+  - [Errors and Warnings](errors-and-warnings.md)
+    - [Assembly Errors](assembly-errors.md)
+    - [Assembly Warnings](assembly-warnings.md)
+    - [Runtime Errors](runtime-errors.md)
+- [Glossary](glossary.md)

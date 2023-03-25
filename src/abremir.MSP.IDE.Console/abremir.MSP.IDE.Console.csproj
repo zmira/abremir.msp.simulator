@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Views\Help\msp-help.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+        <PackageReference Include="System.Text.Json" Version="7.0.2" />
+        <PackageReference Include="Terminal.Gui" Version="1.10.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\abremir.MSP.Compiler\abremir.MSP.Compiler.csproj" />
+        <ProjectReference Include="..\abremir.MSP.VirtualMachine\abremir.MSP.VirtualMachine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="Examples\factorial-recursive.msp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Examples\factorial.msp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Examples\hello-world.msp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Examples\increment-counter.msp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

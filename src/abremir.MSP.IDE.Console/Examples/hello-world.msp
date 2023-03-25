@@ -1,0 +1,42 @@
+MEMORIA DE DADOS
+helloWorld 0 TAM 13 VAL 72 101 108 108 111 44 32 119 111 114 108 100 33
+counter 13 TAM 1 VAL 0
+
+CODIGO
+printHelloWorld:
+	call printNext
+	call isEnd
+	call incrementCounter
+	jmp printHelloWorld
+
+printNext:
+	psha helloWorld
+	psha counter
+	load
+	adda
+	load
+	outc
+	ret
+
+isEnd:
+	psha helloWorld
+	psha counter
+	load
+	adda
+	load
+	push 33
+	ne
+	jmpf end
+	ret
+
+incrementCounter:
+	psha counter
+	psha counter
+	load
+	push 1
+	add
+	store
+	ret
+
+end:
+	halt
