@@ -29,6 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "abremir.MSP.Shared.Test", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "abremir.MSP.VirtualMachine.Test", "abremir.MSP.VirtualMachine.Test\abremir.MSP.VirtualMachine.Test.csproj", "{6388C79D-77BE-473B-9309-2AA8DEC256CD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0E3A537-FE37-4117-AB6D-E5EDAF67A1F2}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
