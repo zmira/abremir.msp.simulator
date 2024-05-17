@@ -9,7 +9,7 @@ namespace abremir.MSP.Shared.Test.Extensions
         [Fact]
         public void GetDescription_ForEnumWithDescription_ReturnsDescription()
         {
-            var result = TestEnumExtentionEnum.EnumValueWithDescription.GetDescription();
+            var result = TestEnumExtensionEnum.EnumValueWithDescription.GetDescription();
 
             EnumValueDescription.Should().Be(result);
         }
@@ -17,13 +17,13 @@ namespace abremir.MSP.Shared.Test.Extensions
         [Fact]
         public void GetDescription_ForEnumWithoutDescription_ReturnsStringRepresentationOfEnumValue()
         {
-            var result = TestEnumExtentionEnum.EnumValueWithoutDescription.GetDescription();
+            var result = TestEnumExtensionEnum.EnumValueWithoutDescription.GetDescription();
 
-            nameof(TestEnumExtentionEnum.EnumValueWithoutDescription).Should().Be(result);
+            nameof(TestEnumExtensionEnum.EnumValueWithoutDescription).Should().Be(result);
         }
     }
 
-    public enum TestEnumExtentionEnum
+    public enum TestEnumExtensionEnum
     {
         [Description(EnumExtensionsTests.EnumValueDescription)]
         EnumValueWithDescription,
