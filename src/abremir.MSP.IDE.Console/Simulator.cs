@@ -29,33 +29,33 @@ namespace abremir.MSP.IDE.Console
 
             var menu = new MenuBar(new MenuBarItem[]
             {
-                new MenuBarItem("_File", new MenuItem[]
+                new("_File", new MenuItem[]
                 {
-                    new MenuItem ("_New", "", () => New()),
-                    new MenuItem ("_Open...", "", () => Open(), shortcut: Key.F3),
-                    new MenuItem ("_Save", "", () => Save(), shortcut: Key.F2),
-                    new MenuItem ("Save _as...", "", () => SaveAs()),
+                    new("_New", "", () => New()),
+                    new("_Open...", "", () => Open(), shortcut: Key.F3),
+                    new("_Save", "", () => Save(), shortcut: Key.F2),
+                    new("Save _as...", "", () => SaveAs()),
                     null!,
-                    new MenuItem ("E_xit", "", () => Exit(), shortcut: Key.AltMask | Key.X),
+                    new("E_xit", "", () => Exit(), shortcut: Key.AltMask | Key.X),
                 }),
-                new MenuBarItem("_Search", new MenuItem[]
+                new("_Search", new MenuItem[]
                 {
-                    new MenuItem("_Go to line number...", "", () => GoToLineNumber()),
+                    new("_Go to line number...", "", () => GoToLineNumber()),
                 }),
-                new MenuBarItem("_Run", new MenuItem[]
+                new("_Run", new MenuItem[]
                 {
-                    new MenuItem("_Run", "", () => Run(), shortcut: Key.CtrlMask | Key.F9),
-                    new MenuItem("_Program reset", "", () => Reset(), () => _simulatorManager.VirtualMachine.PC != 0, shortcut: Key.CtrlMask | Key.F2)
+                    new("_Run", "", () => Run(), shortcut: Key.CtrlMask | Key.F9),
+                    new("_Program reset", "", () => Reset(), () => _simulatorManager.VirtualMachine.PC != 0, shortcut: Key.CtrlMask | Key.F2)
                 }),
-                new MenuBarItem("_Compile", new MenuItem[]
+                new("_Compile", new MenuItem[]
                 {
-                    new MenuItem("_Compile", "", () => Compile(), shortcut: Key.AltMask | Key.F9)
+                    new("_Compile", "", () => Compile(), shortcut: Key.AltMask | Key.F9)
                 }),
-                new MenuBarItem("_Help", new MenuItem[]
+                new("_Help", new MenuItem[]
                 {
-                    new MenuItem("_MSP Help", "", () => MspHelp(), shortcut: Key.F1),
+                    new("_MSP Help", "", () => MspHelp(), shortcut: Key.F1),
                     null!,
-                    new MenuItem("_About...", "", () => About())
+                    new("_About...", "", () => About())
                 })
             });
 
@@ -102,9 +102,9 @@ namespace abremir.MSP.IDE.Console
 
             var statusBar = new StatusBar(new StatusItem[] {
                 siCursorPosition,
-                new StatusItem(Key.F3, "~F3~ Open", () => Open()),
-                new StatusItem(Key.F2, "~F2~ Save", () => Save()),
-                new StatusItem(Key.AltMask | Key.F9, "~Alt+F9~ Compile", () => Compile())
+                new(Key.F3, "~F3~ Open", () => Open()),
+                new(Key.F2, "~F2~ Save", () => Save()),
+                new(Key.AltMask | Key.F9, "~Alt+F9~ Compile", () => Compile())
             });
 
             Add(statusBar);

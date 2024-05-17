@@ -12,7 +12,7 @@ namespace abremir.MSP.Shared.Extensions
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi
                 !.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-            return attributes is not null && attributes.Length > 0
+            return attributes?.Length > 0
                 ? attributes[0].Description
                 : value.ToString();
         }

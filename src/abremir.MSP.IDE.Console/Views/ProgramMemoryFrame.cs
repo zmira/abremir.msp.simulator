@@ -94,7 +94,9 @@ namespace abremir.MSP.IDE.Console.Views
 
                             if (cellsOccupied > 3)
                             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                                 throw new ArgumentOutOfRangeException(nameof(cellsOccupied));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
                             }
                         }
                     }

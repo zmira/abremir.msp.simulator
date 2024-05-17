@@ -78,7 +78,7 @@ namespace abremir.MSP.IDE.Console.Views
                 mspHelpTree.SetNeedsDisplay();
             };
 
-            mspHelpTree.DrawContent += (e) =>
+            mspHelpTree.DrawContent += (_) =>
             {
                 mspHelperTreeScrollBar.Size = mspHelpTree.ContentHeight;
                 mspHelperTreeScrollBar.Position = mspHelpTree.ScrollOffsetVertical;
@@ -96,7 +96,7 @@ namespace abremir.MSP.IDE.Console.Views
             AddButton(closeButton);
         }
 
-        private IReadOnlyCollection<HelpItem> LoadMspHelp()
+        private static IReadOnlyCollection<HelpItem> LoadMspHelp()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var mspHelpResourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("msp-help.json"));
@@ -111,7 +111,7 @@ namespace abremir.MSP.IDE.Console.Views
             return JsonSerializer.Deserialize<IReadOnlyCollection<HelpItem>>(stream!, options)!;
         }
 
-        private void DisplayHelpDetails(FrameView mspHelpItemView, HelpItem? helpItem)
+        private static void DisplayHelpDetails(FrameView mspHelpItemView, HelpItem? helpItem)
         {
             mspHelpItemView.RemoveAll();
 

@@ -30,7 +30,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_PushAddress_RaisesInstructionArgumentsEvent()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             ExecuteNextInstruction_Verify_RaisesInstructionArgumentsEvent(_operation, new[] { _lsb, _msb }.ToMemoryAddress());
+#pragma warning restore IDE0230 // Use UTF-8 string literal
         }
 
         [Fact]

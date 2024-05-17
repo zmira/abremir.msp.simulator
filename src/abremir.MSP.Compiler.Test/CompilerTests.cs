@@ -23,7 +23,7 @@ namespace abremir.MSP.Compiler.Test
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void Compile_EmptySource_ReturnsNoSourceDetectedToAssembleError(string source)
+        public void Compile_EmptySource_ReturnsNoSourceDetectedToAssembleError(string? source)
         {
             var parser = Container.Resolve<IParser>();
             var validator = Container.Resolve<IValidator>();

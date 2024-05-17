@@ -170,7 +170,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutingEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuting += handler)
-                .Verify(eventArgs => count++)
+                .Verify(_ => count++)
                 .Build();
 
             VirtualMachine.Run();
@@ -189,7 +189,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutingEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuting += handler)
-                .Verify(eventArgs => count++)
+                .Verify(_ => count++)
                 .Build();
 
             VirtualMachine.Run();
@@ -208,7 +208,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutingEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuting += handler)
-                .Verify(eventArgs => count++)
+                .Verify(_ => count++)
                 .Build();
 
             VirtualMachine.Run();
@@ -228,7 +228,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler)
-                .Verify(eventArgs => count++)
+                .Verify(_ => count++)
                 .Build();
 
             VirtualMachine.Run();
@@ -249,7 +249,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler)
-                .Verify(eventArgs => count++)
+                .Verify(_ => count++)
                 .Build();
 
             VirtualMachine.Run();

@@ -149,8 +149,7 @@ namespace abremir.MSP.Validator.Validators
         {
             parsedInstructions
                 .Where(instruction => instruction.InstructionLabel is not null
-                    && instruction.TargetTextIdentifier is not null
-                    && instruction.TargetTextIdentifier.Equals(instruction.InstructionLabel, StringComparison.OrdinalIgnoreCase))
+                    && instruction.TargetTextIdentifier?.Equals(instruction.InstructionLabel, StringComparison.OrdinalIgnoreCase) == true)
                 .ToList()
                 .ForEach(instruction => validatorResult.AddError(
                     new(Error.CodeBranchInvalidArgument, instruction.LineNumber)));

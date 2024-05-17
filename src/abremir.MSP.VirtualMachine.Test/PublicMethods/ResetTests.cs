@@ -9,7 +9,9 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
     {
         public ResetTests()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             var data = new byte[] { 111 };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
             var program = new byte[] { (byte)Operation.PushValue, 55 };
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).WithData(data).Build();

@@ -27,7 +27,9 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine.SetMemory(data, program);
             VirtualMachine.Step();
 
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             VirtualMachine.SetMemory(new byte[] { 111 }, new byte[] { 123 });
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
             VirtualMachine.Data.Take(data.Length).Should().BeEquivalentTo(data);
             VirtualMachine.Program.Take(program.Length).Should().BeEquivalentTo(program);

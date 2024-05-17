@@ -11,7 +11,7 @@
 
         public static int ToMemoryAddress(this byte[] value)
         {
-            if (value?.Length is not 2)
+            if (value.Length is not 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(value), "Array must have only two elements");
             }

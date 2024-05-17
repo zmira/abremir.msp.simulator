@@ -27,7 +27,6 @@
         }
 
         [Theory]
-        [InlineData(null)]
         [InlineData(new byte[] { })]
         [InlineData(new byte[] { 0 })]
         [InlineData(new byte[] { 255, 124, 0 })]

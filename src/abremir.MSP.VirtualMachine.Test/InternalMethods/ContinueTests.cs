@@ -47,8 +47,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void Continue_StatusInterruptedAndDoesNotSetProgramCounterToAddressOfNextNextInstruction_DoesNotContinue()
         {
-            var operation = Operation.InputValue;
-            var lastMemoryPosition = Constants.MemoryCapacity - 1;
+            const Operation operation = Operation.InputValue;
+            const int lastMemoryPosition = Constants.MemoryCapacity - 1;
             var lastMemoryPositionComponents = lastMemoryPosition.ToLeastAndMostSignificantBytes();
             var program = new List<byte>(VirtualMachine.Program)
             {

@@ -74,7 +74,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void ExecuteInstruction_InvalidOperation_DoesNotExecuteInstruction()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             var program = new byte[] { 33 };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
@@ -89,7 +91,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void ExecuteInstruction_InvalidOperation_SetsStatusToHalted()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             var program = new byte[] { 33 };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
@@ -101,7 +105,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void ExecuteInstruction_InvalidOperation_SetsHaltReasonUnknownOperation()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             var program = new byte[] { 33 };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
@@ -113,7 +119,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void ExecuteInstruction_InvalidOperation_ReturnsNull()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             var program = new byte[] { 33 };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 

@@ -16,7 +16,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         private const byte _msb = 33;
         private const byte _lsbValue = 00;
         private const byte _msbValue = 11;
+#pragma warning disable IDE0230 // Use UTF-8 string literal
         private readonly int _dataAddress = new[] { _lsb, _msb }.ToMemoryAddress();
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
         public StoreAddressTests()
         {
@@ -330,7 +332,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(false);
 
-            ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -347,7 +349,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(true, false);
 
-            ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -364,7 +366,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(false);
 
-            ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -381,7 +383,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(true, false);
 
-            ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -398,7 +400,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(false);
 
-            ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -415,7 +417,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(true, false);
 
-            ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -432,7 +434,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(false);
 
-            ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -449,7 +451,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(true, false);
 
-            ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
         [Fact]
@@ -466,7 +468,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             memory.TrySet(Arg.Any<ushort>(), Arg.Any<byte>())
                 .Returns(true, false);
 
-            ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(stack: stack, dataMemory: memory, data: _data, program: _program);
+            ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(dataMemory: memory, stack: stack, data: _data, program: _program);
         }
     }
 }

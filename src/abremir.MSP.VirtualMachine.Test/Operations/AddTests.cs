@@ -16,7 +16,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public AddTests()
         {
+#pragma warning disable IDE0230 // Use UTF-8 string literal
             _program = new byte[] { (byte)_operation };
+#pragma warning restore IDE0230 // Use UTF-8 string literal
 
             VirtualMachine.SetMemory(Array.Empty<byte>(), _program);
             VirtualMachine.TryPushToStack(_operation, _operand1);
