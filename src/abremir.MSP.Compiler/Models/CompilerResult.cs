@@ -30,11 +30,11 @@ namespace abremir.MSP.Compiler.Models
             }
         }
 
-        public void SetMemory(byte[] data, byte[] program, ICollection<LineAddress> lineAddessMap, ICollection<DataAddressVariable> dataAddressVariableMap)
+        public void SetMemory(byte[] data, byte[] program, ICollection<LineAddress> lineAddressMap, ICollection<DataAddressVariable> dataAddressVariableMap)
         {
             Data = data;
             Program = program;
-            LineAddressMap = lineAddessMap;
+            LineAddressMap = lineAddressMap;
             DataAddressVariableMap = dataAddressVariableMap;
         }
     }
