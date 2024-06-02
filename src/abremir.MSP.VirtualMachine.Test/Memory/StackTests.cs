@@ -5,7 +5,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 {
     public class StackTests
     {
-        private readonly IStack _stack;
+        private readonly Stack _stack;
 
         public StackTests()
         {

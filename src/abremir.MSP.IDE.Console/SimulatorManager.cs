@@ -31,7 +31,7 @@ namespace abremir.MSP.IDE.Console
             DataAddressVariableMap = [];
         }
 
-        private static IVirtualMachine InitializeVirtualMachine()
+        private static VirtualMachine.VirtualMachine InitializeVirtualMachine()
         {
             return new VirtualMachine.VirtualMachine(
                 new VirtualMachineMemory(),
@@ -39,7 +39,7 @@ namespace abremir.MSP.IDE.Console
                 new Stack());
         }
 
-        private static ICompiler InitializeCompiler()
+        private static Compiler.Compiler InitializeCompiler()
         {
             return new Compiler.Compiler(
                 new Parser.Parser(new Tokenizer(), new TokenListParser()),

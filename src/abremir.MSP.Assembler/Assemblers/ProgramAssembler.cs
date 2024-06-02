@@ -77,7 +77,7 @@ namespace abremir.MSP.Assembler.Assemblers
             return (programMemory.ToArray(), errors, lineNumberMemoryAddressMap);
         }
 
-        private static IReadOnlyDictionary<string, int> GetInstructionLabelMap(IReadOnlyCollection<ParsedInstruction> parsedInstructions)
+        private static Dictionary<string, int> GetInstructionLabelMap(IReadOnlyCollection<ParsedInstruction> parsedInstructions)
         {
             var instructions = parsedInstructions.OrderBy(instruction => instruction.LineNumber).ToList();
 
