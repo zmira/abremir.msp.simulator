@@ -50,7 +50,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             const Operation operation = Operation.InputValue;
             const int lastMemoryPosition = Constants.MemoryCapacity - 1;
             var lastMemoryPositionComponents = lastMemoryPosition.ToLeastAndMostSignificantBytes();
-            var program = new List<byte>(VirtualMachine.Program)
+            List<byte> program = new(VirtualMachine.Program)
             {
                 [0] = (byte)Operation.Jump,
                 [1] = lastMemoryPositionComponents[0],

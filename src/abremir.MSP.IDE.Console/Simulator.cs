@@ -375,7 +375,7 @@ namespace abremir.MSP.IDE.Console
 
                 toggle = !toggle;
 
-                var shortenedFilePathSegments = new List<string>(startSegments);
+                List<string> shortenedFilePathSegments = new(startSegments);
                 shortenedFilePathSegments.AddRange(middleSegment);
                 shortenedFilePathSegments.AddRange(endSegments);
                 shortenedFilePathSegments.Add(fileName);
