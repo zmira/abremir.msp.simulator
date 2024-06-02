@@ -2,18 +2,10 @@
 
 namespace abremir.MSP.VirtualMachine.Models
 {
-    public class InstructionArgumentsEventArgs : BaseInstructionEventArgs
+    public class InstructionArgumentsEventArgs(ushort pc, ushort sp, Operation operation, int value, byte? lsb = null, byte? msb = null) : BaseInstructionEventArgs(pc, sp, operation)
     {
-        public byte? Lsb { get; }
-        public byte? Msb { get; }
-        public int Value { get; }
-
-        public InstructionArgumentsEventArgs(ushort pc, ushort sp, Operation operation, int value, byte? lsb = null, byte? msb = null)
-            : base(pc, sp, operation)
-        {
-            Value = value;
-            Lsb = lsb;
-            Msb = msb;
-        }
+        public byte? Lsb { get; } = lsb;
+        public byte? Msb { get; } = msb;
+        public int Value { get; } = value;
     }
 }

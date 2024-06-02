@@ -6,21 +6,14 @@ using abremir.MSP.Validator;
 
 namespace abremir.MSP.Compiler
 {
-    public class Compiler : ICompiler
+    public class Compiler(
+        IParser parser,
+        IValidator validator,
+        IAssembler assembler) : ICompiler
     {
-        private readonly IParser _parser;
-        private readonly IValidator _validator;
-        private readonly IAssembler _assembler;
-
-        public Compiler(
-            IParser parser,
-            IValidator validator,
-            IAssembler assembler)
-        {
-            _parser = parser;
-            _validator = validator;
-            _assembler = assembler;
-        }
+        private readonly IParser _parser = parser;
+        private readonly IValidator _validator = validator;
+        private readonly IAssembler _assembler = assembler;
 
         public CompilerResult Compile(string? source)
         {

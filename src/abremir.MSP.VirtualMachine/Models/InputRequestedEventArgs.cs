@@ -2,13 +2,8 @@
 
 namespace abremir.MSP.VirtualMachine.Models
 {
-    public class InputRequestedEventArgs : EventArgs
+    public class InputRequestedEventArgs(bool isCharacter) : EventArgs
     {
-        public bool IsCharacter { get; }
-
-        public InputRequestedEventArgs(bool isCharacter)
-        {
-            IsCharacter = isCharacter;
-        }
+        public bool IsCharacter { get; } = isCharacter;
     }
 }

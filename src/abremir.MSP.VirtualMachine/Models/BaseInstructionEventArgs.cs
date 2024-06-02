@@ -3,17 +3,10 @@ using abremir.MSP.Shared.Enums;
 
 namespace abremir.MSP.VirtualMachine.Models
 {
-    public class BaseInstructionEventArgs : EventArgs
+    public class BaseInstructionEventArgs(ushort pc, ushort sp, Operation? operation) : EventArgs
     {
-        public ushort PC { get; }
-        public ushort SP { get; }
-        public Operation? Operation { get; }
-
-        public BaseInstructionEventArgs(ushort pc, ushort sp, Operation? operation)
-        {
-            PC = pc;
-            SP = sp;
-            Operation = operation;
-        }
+        public ushort PC { get; } = pc;
+        public ushort SP { get; } = sp;
+        public Operation? Operation { get; } = operation;
     }
 }

@@ -10,11 +10,11 @@ using abremir.MSP.VirtualMachine.Models;
 
 namespace abremir.MSP.VirtualMachine
 {
-    public class VirtualMachine : IVirtualMachine
+    public class VirtualMachine(IVirtualMachineMemory? dataMemory, IVirtualMachineMemory? programMemory, IStack? stack) : IVirtualMachine
     {
-        private readonly IStack _stack;
-        private readonly IVirtualMachineMemory _dataMemory;
-        private readonly IVirtualMachineMemory _programMemory;
+        private readonly IStack _stack = stack ?? throw new ArgumentNullException(nameof(stack));
+        private readonly IVirtualMachineMemory _dataMemory = dataMemory ?? throw new ArgumentNullException(nameof(dataMemory));
+        private readonly IVirtualMachineMemory _programMemory = programMemory ?? throw new ArgumentNullException(nameof(programMemory));
 
         public Status Status { get; private set; } = Status.None;
         public Mode Mode { get; private set; } = Mode.None;
@@ -40,13 +40,6 @@ namespace abremir.MSP.VirtualMachine
         public event EventHandler<StatusChangedEventArgs>? StatusChanged;
         public event EventHandler<ModeChangedEventArgs>? ModeChanged;
         public event EventHandler<DataMemoryUpdatedEventArgs>? DataMemoryUpdated;
-
-        public VirtualMachine(IVirtualMachineMemory? dataMemory, IVirtualMachineMemory? programMemory, IStack? stack)
-        {
-            _dataMemory = dataMemory ?? throw new ArgumentNullException(nameof(dataMemory));
-            _programMemory = programMemory ?? throw new ArgumentNullException(nameof(programMemory));
-            _stack = stack ?? throw new ArgumentNullException(nameof(stack));
-        }
 
         public void SetMemory(IReadOnlyCollection<byte>? data, IReadOnlyCollection<byte>? program)
         {

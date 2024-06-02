@@ -4,18 +4,12 @@ using abremir.MSP.Shared.Models;
 
 namespace abremir.MSP.Assembler
 {
-    public class Assembler : IAssembler
+    public class Assembler(
+        IDataAssembler dataAssembler,
+        IProgramAssembler programAssembler) : IAssembler
     {
-        private readonly IDataAssembler _dataAssembler;
-        private readonly IProgramAssembler _programAssembler;
-
-        public Assembler(
-            IDataAssembler dataAssembler,
-            IProgramAssembler programAssembler)
-        {
-            _dataAssembler = dataAssembler;
-            _programAssembler = programAssembler;
-        }
+        private readonly IDataAssembler _dataAssembler = dataAssembler;
+        private readonly IProgramAssembler _programAssembler = programAssembler;
 
         public AssemblerResult Assemble(IReadOnlyCollection<ParsedData> parsedData, IReadOnlyCollection<ParsedInstruction> parsedInstructions)
         {
