@@ -16,7 +16,7 @@
         private AssembledData()
         {
             DataVariableMap = new Dictionary<string, int>();
-            Data = Array.Empty<byte>();
+            Data = [];
         }
     }
 }

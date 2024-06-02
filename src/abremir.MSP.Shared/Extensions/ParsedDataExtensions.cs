@@ -9,7 +9,7 @@ namespace abremir.MSP.Shared.Extensions
         {
             if (parsedData.Count is 0)
             {
-                return Array.Empty<byte>();
+                return [];
             }
 
             var lastAllocation = parsedData.OrderByDescending(data => data.Address).First();

@@ -27,8 +27,8 @@ namespace abremir.MSP.IDE.Console
 
             ColorScheme = Colors.Base;
 
-            var menu = new MenuBar(new MenuBarItem[]
-            {
+            var menu = new MenuBar(
+            [
                 new("_File", new MenuItem[]
                 {
                     new("_New", "", () => New()),
@@ -57,7 +57,7 @@ namespace abremir.MSP.IDE.Console
                     null!,
                     new("_About...", "", () => About())
                 })
-            });
+            ]);
 
             Add(menu);
 
@@ -100,12 +100,12 @@ namespace abremir.MSP.IDE.Console
 
             Add(_simulatorWindow);
 
-            var statusBar = new StatusBar(new StatusItem[] {
+            var statusBar = new StatusBar([
                 siCursorPosition,
                 new(Key.F3, "~F3~ Open", () => Open()),
                 new(Key.F2, "~F2~ Save", () => Save()),
                 new(Key.AltMask | Key.F9, "~Alt+F9~ Compile", () => Compile())
-            });
+            ]);
 
             Add(statusBar);
 
@@ -177,7 +177,7 @@ namespace abremir.MSP.IDE.Console
             {
                 if (string.IsNullOrWhiteSpace(filePath))
                 {
-                    var fileSelection = new OpenDialog("Open a file", "Load existing MSP file to the editor", new List<string> { "msp", "asm", "txt" })
+                    var fileSelection = new OpenDialog("Open a file", "Load existing MSP file to the editor", ["msp", "asm", "txt"])
                     {
                         DirectoryPath = Path.GetDirectoryName(_filePath ?? Assembly.GetEntryAssembly()!.Location)
                     };
@@ -228,7 +228,7 @@ namespace abremir.MSP.IDE.Console
 
         private void SaveAs()
         {
-            var fileSelection = new SaveDialog("Save file as...", "Save content of the editor to a new file", new List<string> { "msp", "asm", "txt", "*" });
+            var fileSelection = new SaveDialog("Save file as...", "Save content of the editor to a new file", ["msp", "asm", "txt", "*"]);
 
             Application.Run(fileSelection);
 
@@ -343,9 +343,9 @@ namespace abremir.MSP.IDE.Console
             }
 
             var fileName = filePathSegments[^1];
-            var startSegments = new List<string> { filePathSegments[0] };
-            var endSegments = new List<string>();
-            var middleSegment = new List<string> { "..." };
+            List<string> startSegments = [filePathSegments[0]];
+            List<string> endSegments = [];
+            List<string> middleSegment = ["..."];
 
             var startIndex = 1;
             var endIndex = filePathSegments.Length - 2;

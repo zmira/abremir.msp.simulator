@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using abremir.MSP.Shared.Constants;
 
 namespace abremir.MSP.VirtualMachine.Memory
@@ -9,7 +8,7 @@ namespace abremir.MSP.VirtualMachine.Memory
     {
         private byte[] InternalMemory { get; } = new byte[Constants.MemoryCapacity];
 
-        public IReadOnlyCollection<byte> MemoryData => InternalMemory.ToArray();
+        public IReadOnlyCollection<byte> MemoryData => [.. InternalMemory];
 
         private readonly bool _isReadOnly;
 

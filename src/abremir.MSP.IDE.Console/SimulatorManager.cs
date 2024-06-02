@@ -19,8 +19,8 @@ namespace abremir.MSP.IDE.Console
         public ICompiler Compiler { get; }
         public ICollection<DataAddressVariable> DataAddressVariableMap { get; private set; }
 
-        private IReadOnlyCollection<byte> _originalData = new List<byte>();
-        private IReadOnlyCollection<byte> _originalProgram = new List<byte>();
+        private IReadOnlyCollection<byte> _originalData = [];
+        private IReadOnlyCollection<byte> _originalProgram = [];
 
         public event Action<string>? OutputEmitted;
 
@@ -28,7 +28,7 @@ namespace abremir.MSP.IDE.Console
         {
             VirtualMachine = InitializeVirtualMachine();
             Compiler = InitializeCompiler();
-            DataAddressVariableMap = new List<DataAddressVariable>();
+            DataAddressVariableMap = [];
         }
 
         private static IVirtualMachine InitializeVirtualMachine()
@@ -98,7 +98,7 @@ namespace abremir.MSP.IDE.Console
 
         public void New()
         {
-            DataAddressVariableMap = new List<DataAddressVariable>();
+            DataAddressVariableMap = [];
             VirtualMachine.Reset(true);
         }
 

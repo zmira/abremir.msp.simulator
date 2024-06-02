@@ -11,8 +11,8 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public NoOperationTests() : base()
         {
-            _data = Array.Empty<byte>();
-            _program = new byte[] { (byte)_operation };
+            _data = [];
+            _program = [(byte)_operation];
 
             VirtualMachine.SetMemory(_data, _program);
         }

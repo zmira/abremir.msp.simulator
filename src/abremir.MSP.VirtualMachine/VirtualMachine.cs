@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using abremir.MSP.Shared.Constants;
 using abremir.MSP.Shared.Enums;
@@ -59,8 +58,8 @@ namespace abremir.MSP.VirtualMachine
                 return;
             }
 
-            _dataMemory.SetMemory(data.ToArray());
-            _programMemory.SetMemory(program.ToArray());
+            _dataMemory.SetMemory([.. data]);
+            _programMemory.SetMemory([.. program]);
 
             OnVirtualMachineMemorySet();
         }

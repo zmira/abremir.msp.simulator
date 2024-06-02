@@ -160,7 +160,7 @@ namespace abremir.MSP.Compiler.Test
             parser.Parse(Arg.Any<string>()).Returns(new ParserResult());
             validator.Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>()).Returns(new ValidatorResult());
 
-            var assemblerResult = new AssemblerResult(Array.Empty<byte>(), Array.Empty<byte>(), new[] { new MspError(Error.SyntaxError) }, Array.Empty<LineAddress>(), Array.Empty<DataAddressVariable>());
+            var assemblerResult = new AssemblerResult([], [], [new MspError(Error.SyntaxError)], [], []);
 
             assembler.Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>()).Returns(assemblerResult);
 
@@ -187,7 +187,7 @@ namespace abremir.MSP.Compiler.Test
             parser.Parse(Arg.Any<string>()).Returns(new ParserResult());
             validator.Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>()).Returns(new ValidatorResult());
 
-            var assemblerResult = new AssemblerResult(new byte[] { 1, 2 }, new byte[] { 3, 4 }, Array.Empty<MspError>(), Array.Empty<LineAddress>(), Array.Empty<DataAddressVariable>());
+            var assemblerResult = new AssemblerResult([1, 2], [3, 4], [], [], []);
 
             assembler.Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>()).Returns(assemblerResult);
 

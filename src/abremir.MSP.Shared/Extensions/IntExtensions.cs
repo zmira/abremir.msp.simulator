@@ -24,7 +24,7 @@
             var lowerByte = Convert.ToByte(value % 256);
             var upperByte = Convert.ToByte((value - lowerByte) >> 8);
 
-            return new byte[] { lowerByte, upperByte };
+            return [lowerByte, upperByte];
         }
     }
 }

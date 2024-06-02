@@ -18,7 +18,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void InputCharacter_InterruptedByIsNotInputCharacter_DoesNotPushValueToStack()
         {
-            var program = new[] { (byte)Operation.InputValue };
+            byte[] program = [(byte)Operation.InputValue];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
@@ -33,7 +33,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void InputCharacter_PushesValueToStack()
         {
-            var program = new[] { (byte)Operation.InputCharacter };
+            byte[] program = [(byte)Operation.InputCharacter];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
@@ -46,7 +46,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void InputCharacter_ExecutesNextInstruction()
         {
-            var program = new[] { (byte)Operation.InputCharacter, (byte)Operation.Halt };
+            byte[] program = [(byte)Operation.InputCharacter, (byte)Operation.Halt];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();

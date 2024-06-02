@@ -22,7 +22,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public StoreAddressTests()
         {
-            _program = new byte[] { (byte)_operation };
+            _program = [(byte)_operation];
             _data = new byte[_dataAddress + 2];
             _data.Initialize();
 

@@ -25,8 +25,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         public void TryGetProgramValue_Succeeds_OutputsValue()
         {
             const Operation operation = Operation.Jump;
-            var data = Array.Empty<byte>();
-            var program = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, (byte)operation };
+            byte[] data = [];
+            byte[] program = [0, 0, 0, 0, 0, 0, 0, 0, 0, (byte)operation];
 
             VirtualMachine.SetMemory(data, program);
 

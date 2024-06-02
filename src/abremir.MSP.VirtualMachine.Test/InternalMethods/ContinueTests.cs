@@ -58,7 +58,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
                 [lastMemoryPosition] = (byte)operation
             };
 
-            VirtualMachine = new VirtualMachineBuilder().WithProgram(program.ToArray()).Build();
+            VirtualMachine = new VirtualMachineBuilder().WithProgram([.. program]).Build();
             VirtualMachine.Run();
 
             VirtualMachine.InterruptedBy.Should().Be(InterruptReason.InputValue);

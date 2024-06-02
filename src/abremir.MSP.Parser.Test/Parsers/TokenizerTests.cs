@@ -1,11 +1,11 @@
+using System;
+using System.Linq;
 using abremir.MSP.Parser.Enums;
 using abremir.MSP.Parser.Parsers;
 using abremir.MSP.Shared.Constants;
 using abremir.MSP.Shared.Enums;
 using abremir.MSP.Shared.Extensions;
 using Superpower;
-using System;
-using System.Linq;
 
 namespace abremir.MSP.Parser.Test.Parsers
 {
@@ -21,7 +21,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         [Fact]
         public void Tokenize_NewLine_ReturnsNewLineToken()
         {
-            var expectedTokens = new[] { MspToken.NewLine };
+            MspToken[] expectedTokens = [MspToken.NewLine];
 
             var actualTokens = _tokenizer
                 .Tokenize(Environment.NewLine)

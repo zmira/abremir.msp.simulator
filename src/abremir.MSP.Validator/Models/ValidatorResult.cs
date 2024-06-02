@@ -9,8 +9,8 @@ namespace abremir.MSP.Validator.Models
 
         public ValidatorResult()
         {
-            Errors = new List<MspError>();
-            Warnings = new List<MspWarning>();
+            Errors = [];
+            Warnings = [];
         }
 
         public ValidatorResult(ICollection<MspError> errors, ICollection<MspWarning> warnings)
