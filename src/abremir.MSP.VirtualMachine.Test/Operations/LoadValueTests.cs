@@ -18,7 +18,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public LoadValueTests()
         {
-            _program = new byte[] { (byte)_operation };
+            _program = [(byte)_operation];
 
 #pragma warning disable IDE0230 // Use UTF-8 string literal
             var _dataAddress = new[] { _lsb, _msb }.ToMemoryAddress();

@@ -3,13 +3,8 @@ using abremir.MSP.VirtualMachine.Enums;
 
 namespace abremir.MSP.VirtualMachine.Models
 {
-    public class StatusChangedEventArgs : EventArgs
+    public class StatusChangedEventArgs(Status newStatus) : EventArgs
     {
-        public Status NewStatus { get; }
-
-        public StatusChangedEventArgs(Status newStatus)
-        {
-            NewStatus = newStatus;
-        }
+        public Status NewStatus { get; } = newStatus;
     }
 }

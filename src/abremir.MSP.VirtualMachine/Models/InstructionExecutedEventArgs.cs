@@ -2,11 +2,7 @@
 
 namespace abremir.MSP.VirtualMachine.Models
 {
-    public class InstructionExecutedEventArgs : BaseInstructionEventArgs
+    public class InstructionExecutedEventArgs(ushort pc, ushort sp, Operation operation) : BaseInstructionEventArgs(pc, sp, operation)
     {
-        public InstructionExecutedEventArgs(ushort pc, ushort sp, Operation operation)
-            : base(pc, sp, operation)
-        {
-        }
     }
 }

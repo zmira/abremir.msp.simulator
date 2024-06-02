@@ -14,13 +14,13 @@ namespace Terminal.Gui
 
         public event Action<int>? ValueChanged;
 
-        private readonly Key[] AllowedKeys = new[]
-        {
+        private readonly Key[] AllowedKeys =
+        [
             Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9,
             Key.Backspace, Key.Delete, Key.Home, Key.End, Key.CursorLeft, Key.CursorRight,
             Key.CursorUp, Key.CursorDown, Key.CtrlMask | Key.Home, Key.CtrlMask | Key.End,
             Key.DeleteChar, (Key)45 /* minus */, Key.AltMask | Key.X
-        };
+        ];
 
         public NumericUpDown()
         {

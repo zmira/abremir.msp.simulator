@@ -12,7 +12,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_StatusInterrupted_RaisesInputRequestedEvent()
         {
-            var program = new[] { (byte)Operation.InputValue };
+            byte[] program = [(byte)Operation.InputValue];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
@@ -27,7 +27,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_StatusHalted_ClearsStack()
         {
-            var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
+            byte[] program = [(byte)Operation.PushValue, 1, (byte)Operation.Halt];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
@@ -55,7 +55,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_StatusHalted_SetsProgramCounterToZero()
         {
-            var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
+            byte[] program = [(byte)Operation.PushValue, 1, (byte)Operation.Halt];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
@@ -83,7 +83,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_StatusHalted_SetsHaltedByToNull()
         {
-            var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
+            byte[] program = [(byte)Operation.PushValue, 1, (byte)Operation.Halt];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
@@ -98,7 +98,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_SetsModeToStep()
         {
-            var program = new byte[] { (byte)Operation.PushValue, 1 };
+            byte[] program = [(byte)Operation.PushValue, 1];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
@@ -112,7 +112,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_SetsStatusToRunning()
         {
-            var program = new byte[] { (byte)Operation.PushValue, 1 };
+            byte[] program = [(byte)Operation.PushValue, 1];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
@@ -126,7 +126,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Step_ExecutesNextInstruction()
         {
-            var program = new byte[] { (byte)Operation.PushValue, 1 };
+            byte[] program = [(byte)Operation.PushValue, 1];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 

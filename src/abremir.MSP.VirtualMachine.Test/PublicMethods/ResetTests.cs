@@ -9,10 +9,8 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
     {
         public ResetTests()
         {
-#pragma warning disable IDE0230 // Use UTF-8 string literal
-            var data = new byte[] { 111 };
-#pragma warning restore IDE0230 // Use UTF-8 string literal
-            var program = new byte[] { (byte)Operation.PushValue, 55 };
+            byte[] data = [111];
+            byte[] program = [(byte)Operation.PushValue, 55];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).WithData(data).Build();
             VirtualMachine.Step();
@@ -43,7 +41,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             var program = new byte[] { (byte)Operation.Halt };
 
             VirtualMachine.Reset();
-            VirtualMachine.SetMemory(Array.Empty<byte>(), program);
+            VirtualMachine.SetMemory([], program);
             VirtualMachine.Step();
 
             VirtualMachine.HaltedBy.Should().NotBeNull();
@@ -59,7 +57,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             var program = new byte[] { (byte)Operation.InputCharacter };
 
             VirtualMachine.Reset();
-            VirtualMachine.SetMemory(Array.Empty<byte>(), program);
+            VirtualMachine.SetMemory([], program);
             VirtualMachine.Step();
 
             VirtualMachine.InterruptedBy.Should().NotBeNull();

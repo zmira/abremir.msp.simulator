@@ -6,18 +6,12 @@ using Superpower;
 
 namespace abremir.MSP.Parser
 {
-    public class Parser : IParser
+    public class Parser(
+        ITokenizer tokenizer,
+        ITokenListParser tokenListParser) : IParser
     {
-        private readonly ITokenizer _tokenizer;
-        private readonly ITokenListParser _tokenListParser;
-
-        public Parser(
-            ITokenizer tokenizer,
-            ITokenListParser tokenListParser)
-        {
-            _tokenizer = tokenizer;
-            _tokenListParser = tokenListParser;
-        }
+        private readonly ITokenizer _tokenizer = tokenizer;
+        private readonly ITokenListParser _tokenListParser = tokenListParser;
 
         public ParserResult Parse(string source)
         {

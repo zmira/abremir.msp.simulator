@@ -12,8 +12,8 @@ namespace abremir.MSP.Validator
             var codeValidation = CodeValidator.Validate(parsedData, parsedInstructions);
 
             return new ValidatorResult(
-                dataValidation.Errors.Concat(codeValidation.Errors).ToList(),
-                dataValidation.Warnings.Concat(codeValidation.Warnings).ToList());
+                [.. dataValidation.Errors, .. codeValidation.Errors],
+                [.. dataValidation.Warnings, .. codeValidation.Warnings]);
         }
     }
 }

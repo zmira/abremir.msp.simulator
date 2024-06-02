@@ -28,11 +28,11 @@ namespace abremir.MSP.Assembler.Models
 
         private AssemblerResult()
         {
-            Data = Array.Empty<byte>();
-            Program = Array.Empty<byte>();
-            Errors = new List<MspError>();
-            LineAddressMap = new List<LineAddress>();
-            DataAddressVariableMap = new List<DataAddressVariable>();
+            Data = [];
+            Program = [];
+            Errors = [];
+            LineAddressMap = [];
+            DataAddressVariableMap = [];
         }
     }
 }

@@ -9,10 +9,10 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         private readonly byte[] _program;
         private const Operation _operation = Operation.NoOperation;
 
-        public NoOperationTests() : base()
+        public NoOperationTests()
         {
-            _data = Array.Empty<byte>();
-            _program = new byte[] { (byte)_operation };
+            _data = [];
+            _program = [(byte)_operation];
 
             VirtualMachine.SetMemory(_data, _program);
         }

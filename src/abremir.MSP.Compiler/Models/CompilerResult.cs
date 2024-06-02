@@ -4,13 +4,13 @@ namespace abremir.MSP.Compiler.Models
 {
     public class CompilerResult
     {
-        public ICollection<MspError> Errors { get; } = new List<MspError>();
-        public ICollection<MspWarning> Warnings { get; } = new List<MspWarning>();
-        public ICollection<LineAddress> LineAddressMap { get; private set; } = new List<LineAddress>();
-        public ICollection<DataAddressVariable> DataAddressVariableMap { get; private set; } = new List<DataAddressVariable>();
+        public ICollection<MspError> Errors { get; } = [];
+        public ICollection<MspWarning> Warnings { get; } = [];
+        public ICollection<LineAddress> LineAddressMap { get; private set; } = [];
+        public ICollection<DataAddressVariable> DataAddressVariableMap { get; private set; } = [];
 
-        public byte[] Data { get; private set; } = Array.Empty<byte>();
-        public byte[] Program { get; private set; } = Array.Empty<byte>();
+        public byte[] Data { get; private set; } = [];
+        public byte[] Program { get; private set; } = [];
 
         public void AddError(MspError error) => Errors.Add(error);
 

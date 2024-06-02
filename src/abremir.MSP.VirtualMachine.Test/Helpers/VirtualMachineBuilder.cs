@@ -8,8 +8,8 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
         private IStack _stack = new Stack();
         private IVirtualMachineMemory _dataMemory = new VirtualMachineMemory();
         private IVirtualMachineMemory _programMemory = new VirtualMachineMemory(true);
-        private byte[] _data = Array.Empty<byte>();
-        private byte[] _program = Array.Empty<byte>();
+        private byte[] _data = [];
+        private byte[] _program = [];
         private Status? _status;
         private Mode? _mode;
 

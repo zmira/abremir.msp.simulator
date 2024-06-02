@@ -15,9 +15,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public GreaterThanOrEqualTests()
         {
-            _program = new byte[] { (byte)_operation };
+            _program = [(byte)_operation];
 
-            VirtualMachine.SetMemory(Array.Empty<byte>(), _program);
+            VirtualMachine.SetMemory([], _program);
             VirtualMachine.TryPushToStack(_operation, _operand1);
             VirtualMachine.TryPushToStack(_operation, _operand2);
         }

@@ -9,13 +9,13 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void SetMemory_NullData_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => VirtualMachine.SetMemory(null, Array.Empty<byte>()));
+            Assert.Throws<ArgumentNullException>(() => VirtualMachine.SetMemory(null, []));
         }
 
         [Fact]
         public void SetMemory_NullProgram_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => VirtualMachine.SetMemory(Array.Empty<byte>(), null));
+            Assert.Throws<ArgumentNullException>(() => VirtualMachine.SetMemory([], null));
         }
 
         [Fact]
@@ -27,9 +27,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine.SetMemory(data, program);
             VirtualMachine.Step();
 
-#pragma warning disable IDE0230 // Use UTF-8 string literal
-            VirtualMachine.SetMemory(new byte[] { 111 }, new byte[] { 123 });
-#pragma warning restore IDE0230 // Use UTF-8 string literal
+            VirtualMachine.SetMemory([111], [123]);
 
             VirtualMachine.Data.Take(data.Length).Should().BeEquivalentTo(data);
             VirtualMachine.Program.Take(program.Length).Should().BeEquivalentTo(program);
@@ -54,7 +52,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
                 .Hook((virtualMachine, handler) => virtualMachine.VirtualMachineMemorySet += handler)
                 .Build();
 
-            VirtualMachine.SetMemory(Array.Empty<byte>(), Array.Empty<byte>());
+            VirtualMachine.SetMemory([], []);
 
             hook.Verify(Called.Once());
         }

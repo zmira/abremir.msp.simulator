@@ -19,9 +19,9 @@ namespace abremir.MSP.Assembler.Models
 
         private AssembledProgram()
         {
-            Program = Array.Empty<byte>();
-            Errors = new List<MspError>();
-            LineAddressMap = new List<LineAddress>();
+            Program = [];
+            Errors = [];
+            LineAddressMap = [];
         }
     }
 }

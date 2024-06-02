@@ -26,7 +26,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             const byte value = 99;
             var data = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, value };
-            var program = Array.Empty<byte>();
+            byte[] program = [];
 
             VirtualMachine.SetMemory(data, program);
 

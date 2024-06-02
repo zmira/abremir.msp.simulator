@@ -5,7 +5,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 {
     public class StackTests
     {
-        private readonly IStack _stack;
+        private readonly Stack _stack;
 
         public StackTests()
         {
@@ -128,7 +128,9 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
             var result = _stack.StackData;
 
             result.Should().NotBeEmpty();
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
             result.Should().BeEquivalentTo(new[] { 3, 2, 1 });
+#pragma warning restore CA1861 // Avoid constant arrays as arguments
         }
     }
 }

@@ -9,6 +9,11 @@ namespace abremir.MSP.IDE.Console.Views
 {
     internal class HelpDialog : Dialog
     {
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         public HelpDialog()
         {
             var mspHelp = new Help(LoadMspHelp());
@@ -103,12 +108,7 @@ namespace abremir.MSP.IDE.Console.Views
 
             using var stream = assembly.GetManifestResourceStream(mspHelpResourceName);
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-
-            return JsonSerializer.Deserialize<IReadOnlyCollection<HelpItem>>(stream!, options)!;
+            return JsonSerializer.Deserialize<IReadOnlyCollection<HelpItem>>(stream!, JsonSerializerOptions)!;
         }
 
         private static void DisplayHelpDetails(FrameView mspHelpItemView, HelpItem? helpItem)

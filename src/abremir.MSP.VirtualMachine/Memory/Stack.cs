@@ -18,7 +18,7 @@ namespace abremir.MSP.VirtualMachine.Memory
 
         public bool TryPush(byte value)
         {
-            if (SP - 1 < 0)
+            if (SP < 1)
             {
                 return false;
             }

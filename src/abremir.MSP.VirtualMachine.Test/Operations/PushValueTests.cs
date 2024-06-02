@@ -14,9 +14,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public PushValueTests()
         {
-            _program = new byte[] { (byte)_operation, _value };
+            _program = [(byte)_operation, _value];
 
-            VirtualMachine.SetMemory(Array.Empty<byte>(), _program);
+            VirtualMachine.SetMemory([], _program);
         }
 
         [Fact]

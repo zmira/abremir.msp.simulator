@@ -4,10 +4,10 @@ namespace abremir.MSP.Parser.Models
 {
     public class ParserResult
     {
-        public ICollection<MspError> Errors { get; } = new List<MspError>();
-        public ICollection<MspWarning> Warnings { get; } = new List<MspWarning>();
-        public IReadOnlyCollection<ParsedData> Data { get; private set; } = new List<ParsedData>();
-        public IReadOnlyCollection<ParsedInstruction> Instructions { get; private set; } = new List<ParsedInstruction>();
+        public ICollection<MspError> Errors { get; } = [];
+        public ICollection<MspWarning> Warnings { get; } = [];
+        public IReadOnlyCollection<ParsedData> Data { get; private set; } = [];
+        public IReadOnlyCollection<ParsedInstruction> Instructions { get; private set; } = [];
 
         public void SetData(IReadOnlyCollection<ParsedData>? data)
         {

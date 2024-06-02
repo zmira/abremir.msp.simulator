@@ -8,12 +8,12 @@ namespace abremir.MSP.IDE.Console.Views
         public bool Cancelled { get; private set; }
         public int? Value { get; private set; }
 
-        private readonly Key[] AllowedKeys = new[]
-{
+        private readonly Key[] AllowedKeys =
+        [
             Key.D0, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9,
             Key.Backspace, Key.Delete, Key.Home, Key.End, Key.CursorLeft, Key.CursorRight,
             Key.DeleteChar, Key.AltMask | Key.X, Key.Enter, Key.Esc
-        };
+        ];
 
         public GoToLineNumberDialog(int maxValue)
         {

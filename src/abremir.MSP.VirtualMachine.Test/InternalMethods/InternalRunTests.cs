@@ -11,7 +11,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void InternalRun_StatusInterrupted_RaisesInputRequestedEvent()
         {
-            var program = new[] { (byte)Operation.InputValue };
+            byte[] program = [(byte)Operation.InputValue];
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();

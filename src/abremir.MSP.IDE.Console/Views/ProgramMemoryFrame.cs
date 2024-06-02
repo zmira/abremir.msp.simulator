@@ -14,7 +14,7 @@ namespace abremir.MSP.IDE.Console.Views
     {
         private readonly DataTable _programMemory;
         private readonly MemoryTable _programMemoryTable;
-        private List<(int ProgramCounter, int TableRow)> _programCounterTableRowMap = new();
+        private List<(int ProgramCounter, int TableRow)> _programCounterTableRowMap = [];
 
         private const string AddressColumnName = "address";
         private const string OperationCodeColumnName = "opcode";
@@ -116,7 +116,7 @@ namespace abremir.MSP.IDE.Console.Views
         private void ClearProgramMemory()
         {
             _programMemory.Clear();
-            _programCounterTableRowMap = new();
+            _programCounterTableRowMap = [];
 
             Enumerable
                 .Range(0, Constants.MemoryCapacity)

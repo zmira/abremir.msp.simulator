@@ -14,6 +14,6 @@ namespace abremir.MSP.IDE.Console.Views
         public int? Code { get; set; }
 
         public override string Text => Title ?? string.Empty;
-        public override IList<ITreeNode> Children => Items?.Cast<ITreeNode>().ToList() ?? new List<ITreeNode>();
+        public override IList<ITreeNode> Children => Items?.Cast<ITreeNode>().ToList() ?? [];
     }
 }

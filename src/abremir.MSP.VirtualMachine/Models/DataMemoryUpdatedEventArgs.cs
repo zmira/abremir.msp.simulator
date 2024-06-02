@@ -2,15 +2,9 @@
 
 namespace abremir.MSP.VirtualMachine.Models
 {
-    public class DataMemoryUpdatedEventArgs : EventArgs
+    public class DataMemoryUpdatedEventArgs(ushort address, byte value) : EventArgs
     {
-        public ushort Address { get; }
-        public byte Value { get; }
-
-        public DataMemoryUpdatedEventArgs(ushort address, byte value)
-        {
-            Address = address;
-            Value = value;
-        }
+        public ushort Address { get; } = address;
+        public byte Value { get; } = value;
     }
 }

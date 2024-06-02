@@ -7,7 +7,7 @@ namespace abremir.MSP.Shared.Test.Extensions
         [Fact]
         public void GetMemoryMap_EmptyCollection_ReturnsEmptyArray()
         {
-            var parsedData = new List<ParsedData>();
+            List<ParsedData> parsedData = [];
 
             var result = parsedData.GetMemoryMap();
 
@@ -17,15 +17,15 @@ namespace abremir.MSP.Shared.Test.Extensions
         [Fact]
         public void GetMemoryMap_CollectionWithData_ReturnsMemoryMap()
         {
-            var parsedData = new List<ParsedData>
-            {
+            List<ParsedData> parsedData =
+            [
                 new(0, "a", 0, 1, null),
                 new(0, "b", 2, 1, null),
                 new(0, "c", 5, 2, null),
                 new(0, "d", 10, 1, null),
                 new(0, "e", 31, 1, null),
                 new(0, "f", Constants.Constants.MemoryCapacity - 1, 1, null)
-            };
+            ];
 
             var result = parsedData.GetMemoryMap().ToList();
 

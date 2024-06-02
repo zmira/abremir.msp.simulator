@@ -5,7 +5,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 {
     public class VirtualMachineMemoryTests
     {
-        private IVirtualMachineMemory _virtualMachineMemory;
+        private VirtualMachineMemory _virtualMachineMemory;
 
         public VirtualMachineMemoryTests()
         {

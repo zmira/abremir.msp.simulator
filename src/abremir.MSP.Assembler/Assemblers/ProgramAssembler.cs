@@ -23,9 +23,9 @@ namespace abremir.MSP.Assembler.Assemblers
         private static (byte[] Memory, ICollection<MspError> Errors, List<LineAddress> LineAddressMap) BuildProgramMemory(IReadOnlyCollection<ParsedInstruction> parsedInstructions, IReadOnlyDictionary<string, int> dataVariableMap)
         {
             var instructionLabelMap = GetInstructionLabelMap(parsedInstructions);
-            var programMemory = new List<byte>();
-            var errors = new List<MspError>();
-            var lineNumberMemoryAddressMap = new List<LineAddress>();
+            List<byte> programMemory = [];
+            List<MspError> errors = [];
+            List<LineAddress> lineNumberMemoryAddressMap = [];
             var dataVariableDictionary = new Dictionary<string, int>(dataVariableMap, StringComparer.OrdinalIgnoreCase);
 
             foreach (var instruction in parsedInstructions.OrderBy(inst => inst.LineNumber))
@@ -63,7 +63,7 @@ namespace abremir.MSP.Assembler.Assemblers
                                 errors.Add(new(Error.CodeBranchTargetOutsideMemoryLimits, instruction.LineNumber));
                             }
 
-                            programMemory.AddRange(address >= 0 ? address.ToLeastAndMostSignificantBytes() : new byte[] { 0, 0 });
+                            programMemory.AddRange(address >= 0 ? address.ToLeastAndMostSignificantBytes() : [0, 0]);
                         }
                         break;
                 }
@@ -77,7 +77,7 @@ namespace abremir.MSP.Assembler.Assemblers
             return (programMemory.ToArray(), errors, lineNumberMemoryAddressMap);
         }
 
-        private static IReadOnlyDictionary<string, int> GetInstructionLabelMap(IReadOnlyCollection<ParsedInstruction> parsedInstructions)
+        private static Dictionary<string, int> GetInstructionLabelMap(IReadOnlyCollection<ParsedInstruction> parsedInstructions)
         {
             var instructions = parsedInstructions.OrderBy(instruction => instruction.LineNumber).ToList();
 

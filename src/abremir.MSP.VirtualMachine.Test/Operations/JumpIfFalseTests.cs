@@ -16,9 +16,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public JumpIfFalseTests()
         {
-            _program = new byte[] { (byte)_operation, _lsb, _msb };
+            _program = [(byte)_operation, _lsb, _msb];
 
-            VirtualMachine.SetMemory(Array.Empty<byte>(), _program);
+            VirtualMachine.SetMemory([], _program);
             VirtualMachine.TryPushToStack(_operation, 0);
         }
 

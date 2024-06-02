@@ -3,7 +3,7 @@ using System.CommandLine;
 using abremir.MSP.IDE.Console;
 using Terminal.Gui;
 
-var pathOption = new Option<string>(new[] { "-f", "--file" }, description: "File to load");
+var pathOption = new Option<string>(["-f", "--file"], description: "File to load");
 
 var rootCommand = new RootCommand
 {

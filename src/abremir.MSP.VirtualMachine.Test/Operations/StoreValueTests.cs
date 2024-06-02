@@ -21,7 +21,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
         public StoreValueTests()
         {
-            _program = new byte[] { (byte)_operation };
+            _program = [(byte)_operation];
             _data = new byte[_dataAddress + 1];
             _data.Initialize();
 
