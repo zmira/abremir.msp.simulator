@@ -1,9 +1,9 @@
-﻿using abremir.MSP.Parser.Enums;
+﻿using System.Text.RegularExpressions;
+using abremir.MSP.Parser.Enums;
 using abremir.MSP.Shared.Constants;
 using Superpower.Model;
 using Superpower.Parsers;
 using Superpower.Tokenizers;
-using System.Text.RegularExpressions;
 
 namespace abremir.MSP.Parser.Parsers
 {
