@@ -3,29 +3,29 @@ using abremir.MSP.Parser.Parsers;
 using abremir.MSP.Shared.Enums;
 using abremir.MSP.Shared.Extensions;
 using NSubstitute;
+using NSubstituteAutoMocker.Standard;
 using Superpower;
 using Superpower.Model;
-using Tethos.NSubstitute;
 
 namespace abremir.MSP.Parser.Test
 {
-    public class ParserTests : AutoMockingTest
+    public class ParserTests
     {
-        private readonly Parser _parser;
+        private readonly NSubstituteAutoMocker<Parser> _parser;
 
         public ParserTests()
         {
-            _parser = Container.Resolve<Parser>();
+            _parser = new NSubstituteAutoMocker<Parser>();
         }
 
         [Fact]
         public void Parse_ParseExceptionOfUnknownTypeIsThrownWithoutPosition_ReturnsSyntaxError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new ParseException(exceptionMessage, Position.Empty));
 
-            var result = _parser.Parse(string.Empty);
+            var result = _parser.ClassUnderTest.Parse(string.Empty);
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
@@ -39,10 +39,10 @@ namespace abremir.MSP.Parser.Test
         {
             var exceptionMessage = Guid.NewGuid().ToString();
             var errorPosition = new Position(1, 2, 3);
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new ParseException(exceptionMessage, errorPosition));
 
-            var result = _parser.Parse(string.Empty);
+            var result = _parser.ClassUnderTest.Parse(string.Empty);
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
@@ -61,10 +61,10 @@ namespace abremir.MSP.Parser.Test
         {
             var exceptionMessage = Guid.NewGuid().ToString();
             var errorPosition = new Position(1, 1, 1);
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new ParseException(exceptionMessage, errorPosition));
 
-            var result = _parser.Parse($"{operation.GetDescription()} k(76%");
+            var result = _parser.ClassUnderTest.Parse($"{operation.GetDescription()} k(76%");
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
@@ -80,10 +80,10 @@ namespace abremir.MSP.Parser.Test
         {
             var exceptionMessage = Guid.NewGuid().ToString();
             var errorPosition = new Position(1, 1, 1);
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new ParseException(exceptionMessage, errorPosition));
 
-            var result = _parser.Parse($"{Operation.PushAddress.GetDescription()} 0/887&5");
+            var result = _parser.ClassUnderTest.Parse($"{Operation.PushAddress.GetDescription()} 0/887&5");
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
@@ -99,10 +99,10 @@ namespace abremir.MSP.Parser.Test
         {
             var exceptionMessage = Guid.NewGuid().ToString();
             var errorPosition = new Position(1, 1, 1);
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new ParseException(exceptionMessage, errorPosition));
 
-            var result = _parser.Parse($"{Operation.PushValue.GetDescription()} k(76%");
+            var result = _parser.ClassUnderTest.Parse($"{Operation.PushValue.GetDescription()} k(76%");
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
@@ -118,10 +118,10 @@ namespace abremir.MSP.Parser.Test
         {
             var exceptionMessage = Guid.NewGuid().ToString();
             var errorPosition = new Position(1, 1, 1);
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new ParseException(exceptionMessage, errorPosition));
 
-            var result = _parser.Parse("gghg 1 TAM 1 VAL 1|b%3");
+            var result = _parser.ClassUnderTest.Parse("gghg 1 TAM 1 VAL 1|b%3");
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
@@ -136,10 +136,10 @@ namespace abremir.MSP.Parser.Test
         public void Parse_ExceptionIsThrown_ReturnsExceptionError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
-            var tokenizer = Container.Resolve<ITokenizer>();
+            var tokenizer = _parser.Get<ITokenizer>();
             tokenizer.Tokenize(Arg.Any<string>()).Returns(_ => throw new Exception(exceptionMessage));
 
-            var result = _parser.Parse(string.Empty);
+            var result = _parser.ClassUnderTest.Parse(string.Empty);
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
