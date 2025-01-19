@@ -18,7 +18,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryGetProgramValue(Operation.LessThan, 100, out _);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TryGetProgramValue(Operation.LessThan, (ushort)(program.Length - 1), out var poppedValue);
 
-            poppedValue.Should().Be((byte)operation);
+            poppedValue.ShouldBe((byte)operation);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryGetProgramValue(Operation.LessThan, 100, out _);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -58,8 +58,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TryGetProgramValue(Operation.LessThan, 100, out _);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.MemoryAddressViolation);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.MemoryAddressViolation);
         }
     }
 }

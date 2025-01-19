@@ -11,8 +11,8 @@ namespace abremir.MSP.Validator.Test.Validators
         {
             var result = DataValidator.Validate([], []);
 
-            result.Errors.Should().BeEmpty();
-            result.Warnings.Single().Warning.Should().Be(Warning.DataNoVariablesDeclared);
+            result.Errors.ShouldBeEmpty();
+            result.Warnings.Single().Warning.ShouldBe(Warning.DataNoVariablesDeclared);
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataMemoryCapacityExhausted);
+            result.Errors.ShouldContain(error => error.Error == Error.DataMemoryCapacityExhausted);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataInvalidAddress);
+            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidAddress);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([dataY, dataX], []);
 
-            result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber.Should().Be(dataY.LineNumber);
+            result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber.ShouldBe(dataY.LineNumber);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = DataValidator.Validate([dataX2, dataX3, dataX1], []);
 
             result.Errors.Where(error => error.Error is Error.DataRedefinitionOfVariable)
-                .Select(error => error.LineNumber).Should().BeEquivalentTo(new[] { dataX2.LineNumber, dataX3.LineNumber });
+                .Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(new[] { dataX2.LineNumber, dataX3.LineNumber });
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataInvalidSize);
+            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidSize);
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataInvalidSize);
+            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidSize);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataInvalidSize);
+            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidSize);
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([dataY, dataX], []);
 
-            result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber.Should().Be(dataY.LineNumber);
+            result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber.ShouldBe(dataY.LineNumber);
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataUnexpectedInitializationValues);
+            result.Errors.ShouldContain(error => error.Error == Error.DataUnexpectedInitializationValues);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.Should().Contain(error => error.Error == Error.DataInitializedValuesExceedReservedSpace);
+            result.Errors.ShouldContain(error => error.Error == Error.DataInitializedValuesExceedReservedSpace);
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = DataValidator.Validate([dataA, dataW, dataX, dataY, dataZ], []);
 
             result.Errors.Where(error => error.Error is Error.DataInitializationValueOutsideAllowedRange)
-                .Select(error => error.LineNumber).Should().BeEquivalentTo(new[] { dataX.LineNumber, dataZ.LineNumber });
+                .Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(new[] { dataX.LineNumber, dataZ.LineNumber });
         }
 
         [Fact]
@@ -142,7 +142,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.DataUninitializedValues);
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataUninitializedValues);
         }
 
         [Fact]
@@ -152,7 +152,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([data], []);
 
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.DataUnusedVariable);
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataUnusedVariable);
         }
     }
 }

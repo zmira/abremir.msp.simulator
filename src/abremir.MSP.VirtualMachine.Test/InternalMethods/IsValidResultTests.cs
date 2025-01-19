@@ -14,7 +14,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidResult(Operation.NoOperation, value);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidResult(Operation.NoOperation, value, true);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidResult(Operation.NoOperation, value);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -42,12 +42,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             const int value = Constants.Min8BitValue - 1;
 
-            VirtualMachine.Status.Should().NotBe(Status.Halted);
+            VirtualMachine.Status.ShouldNotBe(Status.Halted);
 
             VirtualMachine.IsValidResult(Operation.NoOperation, value);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.UnderflowError);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.UnderflowError);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidResult(Operation.NoOperation, value, true);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -65,12 +65,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             const int value = Constants.Min8BitValue - 1;
 
-            VirtualMachine.Status.Should().NotBe(Status.Halted);
+            VirtualMachine.Status.ShouldNotBe(Status.Halted);
 
             VirtualMachine.IsValidResult(Operation.NoOperation, value, true);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.UnderflowError);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.UnderflowError);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidResult(Operation.NoOperation, value);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -88,12 +88,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             const int value = Constants.Max8BitValue + 1;
 
-            VirtualMachine.Status.Should().NotBe(Status.Halted);
+            VirtualMachine.Status.ShouldNotBe(Status.Halted);
 
             VirtualMachine.IsValidResult(Operation.NoOperation, value);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.OverflowError);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.OverflowError);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidResult(Operation.NoOperation, value, true);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -111,12 +111,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             const int value = sbyte.MaxValue + 1;
 
-            VirtualMachine.Status.Should().NotBe(Status.Halted);
+            VirtualMachine.Status.ShouldNotBe(Status.Halted);
 
             VirtualMachine.IsValidResult(Operation.NoOperation, value, true);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.OverflowError);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.OverflowError);
         }
     }
 }

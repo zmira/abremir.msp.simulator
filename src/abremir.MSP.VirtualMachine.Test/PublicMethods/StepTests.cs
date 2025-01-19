@@ -32,7 +32,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Stack.Where(value => value != 0).Should().NotBeEmpty();
+            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
 
             var count = 0;
 
@@ -49,7 +49,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.Step();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.PC.Should().NotBe(0);
+            VirtualMachine.PC.ShouldNotBe((byte)0);
 
             var count = 0;
 
@@ -77,7 +77,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.Step();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -88,11 +88,11 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.HaltedBy.Should().NotBeNull();
+            VirtualMachine.HaltedBy.ShouldNotBeNull();
 
             VirtualMachine.Step();
 
-            VirtualMachine.HaltedBy.Should().BeNull();
+            VirtualMachine.HaltedBy.ShouldBeNull();
         }
 
         [Fact]
@@ -102,11 +102,11 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
-            VirtualMachine.Mode.Should().Be(Mode.None);
+            VirtualMachine.Mode.ShouldBe(Mode.None);
 
             VirtualMachine.Step();
 
-            VirtualMachine.Mode.Should().Be(Mode.Step);
+            VirtualMachine.Mode.ShouldBe(Mode.Step);
         }
 
         [Fact]
@@ -116,11 +116,11 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
 
-            VirtualMachine.Status.Should().Be(Status.None);
+            VirtualMachine.Status.ShouldBe(Status.None);
 
             VirtualMachine.Step();
 
-            VirtualMachine.Status.Should().Be(Status.Running);
+            VirtualMachine.Status.ShouldBe(Status.Running);
         }
 
         [Fact]

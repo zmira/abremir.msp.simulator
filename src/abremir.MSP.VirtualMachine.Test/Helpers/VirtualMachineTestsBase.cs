@@ -22,7 +22,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutingEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuting += handler)
-                .Verify(eventArgs => eventArgs.Operation.Should().Be(operation))
+                .Verify(eventArgs => eventArgs.Operation.ShouldBe(operation))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -34,8 +34,8 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InstructionArgumentsEventArgs>((virtualMachine, handler) => virtualMachine.InstructionArguments += handler)
-                .Verify(eventArgs => eventArgs.Operation.Should().Be(operation))
-                .Verify(eventArgs => eventArgs.Value.Should().Be(value))
+                .Verify(eventArgs => eventArgs.Operation.ShouldBe(operation))
+                .Verify(eventArgs => eventArgs.Value.ShouldBe(value))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -47,7 +47,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutedEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuted += handler)
-                .Verify(eventArgs => eventArgs.Operation.Should().Be(operation))
+                .Verify(eventArgs => eventArgs.Operation.ShouldBe(operation))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -66,7 +66,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
         {
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.Should().Be(address);
+            VirtualMachine.PC.ShouldBe(address);
         }
 
         public void ExecuteNextInstruction_Verify_DoesNotChangeDataMemory()
@@ -75,7 +75,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Data.Should().BeEquivalentTo(data);
+            VirtualMachine.Data.ShouldBeEquivalentTo(data);
         }
 
         public void ExecuteNextInstruction_Verify_DoesNotChangeStack()
@@ -85,8 +85,8 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Should().BeEquivalentTo(stack);
-            VirtualMachine.SP.Should().Be(sp);
+            VirtualMachine.Stack.ShouldBeEquivalentTo(stack);
+            VirtualMachine.SP.ShouldBe(sp);
         }
 
         public void ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(
@@ -103,7 +103,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.Should().Be(pc);
+            VirtualMachine.PC.ShouldBe(pc);
         }
 
         public void ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(
@@ -119,7 +119,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler)
-                .Verify(eventArgs => eventArgs.Reason.Should().Be(reason))
+                .Verify(eventArgs => eventArgs.Reason.ShouldBe(reason))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -140,7 +140,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<StatusChangedEventArgs>((virtualMachine, handler) => virtualMachine.StatusChanged += handler)
-                .Verify(eventArgs => eventArgs.NewStatus.Should().Be(newStatus))
+                .Verify(eventArgs => eventArgs.NewStatus.ShouldBe(newStatus))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -161,7 +161,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Status.Should().Be(status);
+            VirtualMachine.Status.ShouldBe(status);
         }
 
         public void ExecuteNextInstruction_Verify_SetsHaltedBy(
@@ -177,7 +177,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.HaltedBy.Should().Be(reason);
+            VirtualMachine.HaltedBy.ShouldBe(reason);
         }
 
         public void ExecuteNextInstruction_Verify_SetsInterruptedBy(
@@ -193,7 +193,7 @@ namespace abremir.MSP.VirtualMachine.Test.Helpers
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.InterruptedBy.Should().Be(reason);
+            VirtualMachine.InterruptedBy.ShouldBe(reason);
         }
     }
 }

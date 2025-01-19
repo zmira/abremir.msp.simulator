@@ -12,7 +12,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Halted).Build();
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler);
@@ -25,23 +25,23 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void Halt_StatusNotHalted_SetsHaltedBy()
         {
-            VirtualMachine.HaltedBy.Should().BeNull();
+            VirtualMachine.HaltedBy.ShouldBeNull();
 
             const HaltReason haltedBy = HaltReason.HaltInstruction;
 
             VirtualMachine.Halt(null, null, haltedBy);
 
-            VirtualMachine.HaltedBy.Should().Be(haltedBy);
+            VirtualMachine.HaltedBy.ShouldBe(haltedBy);
         }
 
         [Fact]
         public void Halt_StatusNotHalted_SetsStatusHalted()
         {
-            VirtualMachine.Status.Should().NotBe(Status.Halted);
+            VirtualMachine.Status.ShouldNotBe(Status.Halted);
 
             VirtualMachine.Halt(null, null, HaltReason.HaltInstruction);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler)
-                .Verify(eventArgs => eventArgs.Reason.Should().Be(reason))
+                .Verify(eventArgs => eventArgs.Reason.ShouldBe(reason))
                 .Build();
 
             VirtualMachine.Halt(null, null, reason);

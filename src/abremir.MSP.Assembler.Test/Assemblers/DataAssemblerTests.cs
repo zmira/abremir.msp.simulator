@@ -18,9 +18,9 @@ namespace abremir.MSP.Assembler.Test.Assemblers
         {
             var result = _assembler.Assemble([]);
 
-            result.Should().NotBeNull();
-            result.DataVariableMap.Should().BeEmpty();
-            result.Data.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.DataVariableMap.ShouldBeEmpty();
+            result.Data.ShouldBeEmpty();
         }
 
         [Fact]
@@ -36,17 +36,17 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedData);
 
-            result.Should().NotBeNull();
-            result.DataVariableMap.Should().NotBeEmpty();
-            result.Data.Should().NotBeEmpty();
+            result.ShouldNotBeNull();
+            result.DataVariableMap.ShouldNotBeEmpty();
+            result.Data.ShouldNotBeEmpty();
             parsedData.ForEach(data =>
             {
-                result.DataVariableMap.ContainsKey(data.VariableName).Should().BeTrue();
-                result.DataVariableMap[data.VariableName].Should().Be(data.Address);
+                result.DataVariableMap.ContainsKey(data.VariableName).ShouldBeTrue();
+                result.DataVariableMap[data.VariableName].ShouldBe(data.Address);
 
                 for (var valueIndex = 0; valueIndex < (data.Values ?? []).Length; valueIndex++)
                 {
-                    result.Data[data.Address + valueIndex].Should().Be(data.Values![valueIndex].ToTwosComplement());
+                    result.Data[data.Address + valueIndex].ShouldBe(data.Values![valueIndex].ToTwosComplement());
                 }
             });
         }

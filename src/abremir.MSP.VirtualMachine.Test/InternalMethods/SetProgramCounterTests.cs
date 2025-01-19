@@ -13,7 +13,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.SetProgramCounter(Constants.MemoryCapacity);
 
-            VirtualMachine.PC.Should().Be(pc);
+            VirtualMachine.PC.ShouldBe(pc);
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             var result = VirtualMachine.SetProgramCounter(Constants.MemoryCapacity);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.SetProgramCounter(newPc);
 
-            VirtualMachine.PC.Should().Be(newPc);
+            VirtualMachine.PC.ShouldBe(newPc);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.SetProgramCounter(newPc);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
     }
 }

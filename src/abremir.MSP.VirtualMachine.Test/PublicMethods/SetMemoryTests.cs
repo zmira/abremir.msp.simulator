@@ -29,8 +29,8 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.SetMemory([111], [123]);
 
-            VirtualMachine.Data.Take(data.Length).Should().BeEquivalentTo(data);
-            VirtualMachine.Program.Take(program.Length).Should().BeEquivalentTo(program);
+            VirtualMachine.Data.Take(data.Length).ToArray().ShouldBeEquivalentTo(data);
+            VirtualMachine.Program.Take(program.Length).ToArray().ShouldBeEquivalentTo(program);
         }
 
         [Fact]
@@ -41,8 +41,8 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.SetMemory(data, program);
 
-            VirtualMachine.Data.Take(data.Length).Should().BeEquivalentTo(data);
-            VirtualMachine.Program.Take(program.Length).Should().BeEquivalentTo(program);
+            VirtualMachine.Data.Take(data.Length).ToArray().ShouldBeEquivalentTo(data);
+            VirtualMachine.Program.Take(program.Length).ToArray().ShouldBeEquivalentTo(program);
         }
 
         [Fact]

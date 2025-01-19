@@ -38,12 +38,12 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_PushAddress_PushesResultToStack()
         {
-            VirtualMachine.Stack.Should().BeEmpty();
+            VirtualMachine.Stack.ShouldBeEmpty();
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.ElementAt(0).Should().Be(_msb);
-            VirtualMachine.Stack.ElementAt(1).Should().Be(_lsb);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(_msb);
+            VirtualMachine.Stack.ElementAt(1).ShouldBe(_lsb);
         }
 
         [Fact]

@@ -54,7 +54,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             var nextInstructionAddress = pc + Operation.Call.GetNumberOfMemoryCellsOccupied();
             var memoryAddressInStack = new[] { VirtualMachine.Stack.ElementAt(1), VirtualMachine.Stack.ElementAt(0) }.ToMemoryAddress();
 
-            memoryAddressInStack.Should().Be(nextInstructionAddress);
+            memoryAddressInStack.ShouldBe(nextInstructionAddress);
         }
 
         [Fact]

@@ -53,7 +53,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.Should().BeTrue())
+                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBeTrue())
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();

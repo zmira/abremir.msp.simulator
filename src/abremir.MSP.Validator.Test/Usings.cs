@@ -1,3 +1,3 @@
 global using abremir.MSP.Validator.Validators;
-global using FluentAssertions;
+global using Shouldly;
 global using Xunit;

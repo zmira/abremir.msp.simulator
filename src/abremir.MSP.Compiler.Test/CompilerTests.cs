@@ -31,12 +31,12 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile(source);
 
-            result.Should().NotBeNull();
-            result.Errors.Should().NotBeEmpty();
-            result.Errors.Should().Contain(error => error.Error == Error.NoSourceDetectedToAssemble);
-            result.Warnings.Should().BeEmpty();
-            result.Data.Should().BeEmpty();
-            result.Program.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(error => error.Error == Error.NoSourceDetectedToAssemble);
+            result.Warnings.ShouldBeEmpty();
+            result.Data.ShouldBeEmpty();
+            result.Program.ShouldBeEmpty();
             parser.DidNotReceive().Parse(Arg.Any<string>());
             validator.DidNotReceive().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
@@ -57,12 +57,12 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.Should().NotBeNull();
-            result.Errors.Should().NotBeEmpty();
-            result.Errors.Should().Contain(error => error.Error == Error.SyntaxError);
-            result.Warnings.Should().BeEmpty();
-            result.Data.Should().BeEmpty();
-            result.Program.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(error => error.Error == Error.SyntaxError);
+            result.Warnings.ShouldBeEmpty();
+            result.Data.ShouldBeEmpty();
+            result.Program.ShouldBeEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.DidNotReceive().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
@@ -84,12 +84,12 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.Should().NotBeNull();
-            result.Errors.Should().BeEmpty();
-            result.Warnings.Should().NotBeEmpty();
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.DataNoVariablesDeclared);
-            result.Data.Should().BeEmpty();
-            result.Program.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.Errors.ShouldBeEmpty();
+            result.Warnings.ShouldNotBeEmpty();
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataNoVariablesDeclared);
+            result.Data.ShouldBeEmpty();
+            result.Program.ShouldBeEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
@@ -112,12 +112,12 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.Should().NotBeNull();
-            result.Errors.Should().NotBeEmpty();
-            result.Errors.Should().Contain(error => error.Error == Error.SyntaxError);
-            result.Warnings.Should().BeEmpty();
-            result.Data.Should().BeEmpty();
-            result.Program.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(error => error.Error == Error.SyntaxError);
+            result.Warnings.ShouldBeEmpty();
+            result.Data.ShouldBeEmpty();
+            result.Program.ShouldBeEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
@@ -139,12 +139,12 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.Should().NotBeNull();
-            result.Errors.Should().BeEmpty();
-            result.Warnings.Should().NotBeEmpty();
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.DataNoVariablesDeclared);
-            result.Data.Should().BeEmpty();
-            result.Program.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.Errors.ShouldBeEmpty();
+            result.Warnings.ShouldNotBeEmpty();
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataNoVariablesDeclared);
+            result.Data.ShouldBeEmpty();
+            result.Program.ShouldBeEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
@@ -166,12 +166,12 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.Should().NotBeNull();
-            result.Errors.Should().NotBeEmpty();
-            result.Errors.Should().Contain(error => error.Error == Error.SyntaxError);
-            result.Warnings.Should().BeEmpty();
-            result.Data.Should().BeEmpty();
-            result.Program.Should().BeEmpty();
+            result.ShouldNotBeNull();
+            result.Errors.ShouldNotBeEmpty();
+            result.Errors.ShouldContain(error => error.Error == Error.SyntaxError);
+            result.Warnings.ShouldBeEmpty();
+            result.Data.ShouldBeEmpty();
+            result.Program.ShouldBeEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
@@ -193,13 +193,13 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.Should().NotBeNull();
-            result.Errors.Should().BeEmpty();
-            result.Warnings.Should().BeEmpty();
-            result.Data.Should().NotBeEmpty();
-            result.Data.Should().BeEquivalentTo(assemblerResult.Data);
-            result.Program.Should().NotBeEmpty();
-            result.Program.Should().BeEquivalentTo(assemblerResult.Program);
+            result.ShouldNotBeNull();
+            result.Errors.ShouldBeEmpty();
+            result.Warnings.ShouldBeEmpty();
+            result.Data.ShouldNotBeEmpty();
+            result.Data.ShouldBeEquivalentTo(assemblerResult.Data);
+            result.Program.ShouldNotBeEmpty();
+            result.Program.ShouldBeEquivalentTo(assemblerResult.Program);
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());

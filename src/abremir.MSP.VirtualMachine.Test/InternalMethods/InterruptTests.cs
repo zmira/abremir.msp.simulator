@@ -16,7 +16,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(status).Build();
 
-            VirtualMachine.Status.Should().Be(status);
+            VirtualMachine.Status.ShouldBe(status);
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<StatusChangedEventArgs>((virtualMachine, handler) => virtualMachine.StatusChanged += handler);
@@ -29,23 +29,23 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [Fact]
         public void Interrupt_StatusNotInterrupted_SetsInterruptedBy()
         {
-            VirtualMachine.InterruptedBy.Should().BeNull();
+            VirtualMachine.InterruptedBy.ShouldBeNull();
 
             const InterruptReason interruptedBy = InterruptReason.InputCharacter;
 
             VirtualMachine.Interrupt(interruptedBy);
 
-            VirtualMachine.InterruptedBy.Should().Be(interruptedBy);
+            VirtualMachine.InterruptedBy.ShouldBe(interruptedBy);
         }
 
         [Fact]
         public void Interrupt_StatusNotInterrupted_SetsStatusInterrupted()
         {
-            VirtualMachine.Status.Should().NotBe(Status.Interrupted);
+            VirtualMachine.Status.ShouldNotBe(Status.Interrupted);
 
             VirtualMachine.Interrupt(InterruptReason.InputCharacter);
 
-            VirtualMachine.Status.Should().Be(Status.Interrupted);
+            VirtualMachine.Status.ShouldBe(Status.Interrupted);
         }
     }
 }

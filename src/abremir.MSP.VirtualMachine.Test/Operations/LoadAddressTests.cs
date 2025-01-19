@@ -43,13 +43,13 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_LoadAddress_PushesResultToStack()
         {
-            VirtualMachine.Stack.ElementAt(0).Should().NotBe(_newMsb);
-            VirtualMachine.Stack.ElementAt(1).Should().NotBe(_newLsb);
+            VirtualMachine.Stack.ElementAt(0).ShouldNotBe(_newMsb);
+            VirtualMachine.Stack.ElementAt(1).ShouldNotBe(_newLsb);
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.ElementAt(0).Should().Be(_newMsb);
-            VirtualMachine.Stack.ElementAt(1).Should().Be(_newLsb);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(_newMsb);
+            VirtualMachine.Stack.ElementAt(1).ShouldBe(_newLsb);
         }
 
         [Fact]

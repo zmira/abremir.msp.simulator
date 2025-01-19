@@ -65,7 +65,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
                 .HookOnly<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler);
             var operationExecutedEventHook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutedEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuted += handler)
-                .Verify(eventArgs => eventArgs.Operation.Should().Be(Operation.Halt))
+                .Verify(eventArgs => eventArgs.Operation.ShouldBe(Operation.Halt))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -101,7 +101,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.Should().Be(address);
+            VirtualMachine.PC.ShouldBe(address);
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.Should().Be((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
+            VirtualMachine.PC.ShouldBe((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
         }
     }
 }

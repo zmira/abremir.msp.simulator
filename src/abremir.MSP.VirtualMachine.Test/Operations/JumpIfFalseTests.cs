@@ -317,7 +317,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.Should().Be((ushort)(pc + _operation.GetNumberOfMemoryCellsOccupied()));
+            VirtualMachine.PC.ShouldBe((ushort)(pc + _operation.GetNumberOfMemoryCellsOccupied()));
         }
     }
 }

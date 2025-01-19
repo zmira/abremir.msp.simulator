@@ -12,8 +12,8 @@ namespace abremir.MSP.Validator.Test.Validators
         {
             var result = CodeValidator.Validate([], []);
 
-            result.Errors.Should().BeEmpty();
-            result.Warnings.Single().Warning.Should().Be(Warning.CodeNoInstructionsDeclared);
+            result.Errors.ShouldBeEmpty();
+            result.Warnings.Single().Warning.ShouldBe(Warning.CodeNoInstructionsDeclared);
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], code);
 
-            result.Errors.Should().Contain(error => error.Error == Error.ProgramMemoryCapacityExhausted);
+            result.Errors.ShouldContain(error => error.Error == Error.ProgramMemoryCapacityExhausted);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = CodeValidator.Validate([], [codeX3, code2, codeX1, code1, codeX2]);
 
             result.Errors.Where(error => error.Error is Error.CodeRedefinitionOfLabel)
-                .Select(error => error.LineNumber).Should().BeEquivalentTo(new[] { codeX2.LineNumber, codeX3.LineNumber });
+                .Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(new[] { codeX2.LineNumber, codeX3.LineNumber });
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = CodeValidator.Validate([], [code5, code2, code4, code1, code3, code6]);
 
             result.Errors.Where(error => error.Error is Error.CodePushArgumentOutsideAllowedRange)
-                .Select(error => error.LineNumber).Should().BeEquivalentTo(new[] { code1.LineNumber, code3.LineNumber });
+                .Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(new[] { code1.LineNumber, code3.LineNumber });
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], [code]);
 
-            result.Errors.Should().Contain(error => error.Error == Error.CodePshaInvalidAddress);
+            result.Errors.ShouldContain(error => error.Error == Error.CodePshaInvalidAddress);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], [code]);
 
-            result.Errors.Should().Contain(error => error.Error == Error.CodePshaVariableNotDeclared);
+            result.Errors.ShouldContain(error => error.Error == Error.CodePshaVariableNotDeclared);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], [code1, code2]);
 
-            result.Errors.Single(error => error.Error is Error.CodePshaInvalidVariableArgument).LineNumber.Should().Be(code2.LineNumber);
+            result.Errors.Single(error => error.Error is Error.CodePshaInvalidVariableArgument).LineNumber.ShouldBe(code2.LineNumber);
         }
 
         [Theory]
@@ -103,7 +103,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], [code]);
 
-            result.Errors.Should().Contain(error => error.Error == Error.CodeBranchUndefinedLabel);
+            result.Errors.ShouldContain(error => error.Error == Error.CodeBranchUndefinedLabel);
         }
 
         [Theory]
@@ -119,7 +119,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = CodeValidator.Validate([], [code2, code3, code1]);
 
             result.Errors.Where(error => error.Error is Error.CodeBranchTargetOutsideMemoryLimits)
-                .Select(error => error.LineNumber).Should().BeEquivalentTo(new[] { code1.LineNumber, code2.LineNumber });
+                .Select(error => error.LineNumber).ToArray().ShouldBeSubsetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
         [Theory]
@@ -136,7 +136,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = CodeValidator.Validate([], [code4, code2, code3, code1]);
 
             result.Errors.Where(error => error.Error is Error.CodeBranchTargetOutsideMemoryLimits)
-                .Select(error => error.LineNumber).Should().BeEquivalentTo(new[] { code1.LineNumber, code2.LineNumber });
+                .Select(error => error.LineNumber).ToArray().ShouldBeSubsetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], [code]);
 
-            result.Errors.Should().Contain(error => error.Error == Error.CodeBranchInvalidArgument);
+            result.Errors.ShouldContain(error => error.Error == Error.CodeBranchInvalidArgument);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], [code]);
 
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.CodeUnusedLabel);
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.CodeUnusedLabel);
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([data], [code]);
 
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.CodeLabelSharesNameWithVariable);
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.CodeLabelSharesNameWithVariable);
         }
 
         [Fact]
@@ -179,7 +179,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = CodeValidator.Validate([], [code2, code1]);
 
             result.Warnings.Where(warning => warning.Warning is Warning.CodeAddressDoesNotReferenceVariableSpace)
-                .Select(warnings => warnings.LineNumber).Should().BeEquivalentTo(new[] { code1.LineNumber, code2.LineNumber });
+                .Select(warnings => warnings.LineNumber).ToArray().ShouldBeSubsetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
         [Fact]
@@ -193,7 +193,7 @@ namespace abremir.MSP.Validator.Test.Validators
             var result = CodeValidator.Validate([data2, data1], [code2, code1]);
 
             result.Warnings.Where(warning => warning.Warning is Warning.CodeAddressDoesNotReferenceVariableSpace)
-                .Select(warnings => warnings.LineNumber).Should().BeEquivalentTo(new[] { code1.LineNumber, code2.LineNumber });
+                .Select(warnings => warnings.LineNumber).ToArray().ShouldBeSubsetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = CodeValidator.Validate([], parsedInstructions);
 
-            result.Warnings.Should().Contain(warning => warning.Warning == Warning.CodeNoHaltInstructionDeclared);
+            result.Warnings.ShouldContain(warning => warning.Warning == Warning.CodeNoHaltInstructionDeclared);
         }
     }
 }

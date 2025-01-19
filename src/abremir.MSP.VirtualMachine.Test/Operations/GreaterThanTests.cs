@@ -45,8 +45,8 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Count.Should().Be(1);
-            VirtualMachine.Stack.ElementAt(0).Should().Be(expectedResult);
+            VirtualMachine.Stack.Count.ShouldBe(1);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(expectedResult);
         }
 
         [Fact]

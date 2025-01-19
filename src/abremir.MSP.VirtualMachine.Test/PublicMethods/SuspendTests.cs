@@ -11,7 +11,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.Suspend();
 
-            VirtualMachine.Status.Should().NotBe(Enums.Status.Suspended);
+            VirtualMachine.Status.ShouldNotBe(Enums.Status.Suspended);
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.Suspend();
 
-            VirtualMachine.Status.Should().NotBe(Enums.Status.Suspended);
+            VirtualMachine.Status.ShouldNotBe(Enums.Status.Suspended);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.Suspend();
 
-            VirtualMachine.Status.Should().Be(Enums.Status.Suspended);
+            VirtualMachine.Status.ShouldBe(Enums.Status.Suspended);
         }
     }
 }

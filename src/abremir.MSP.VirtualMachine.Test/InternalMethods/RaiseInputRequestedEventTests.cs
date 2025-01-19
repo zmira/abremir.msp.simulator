@@ -27,7 +27,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.RaiseInputRequestedEvent();
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Interrupted).Build();
 
-            VirtualMachine.HaltedBy.Should().BeNull();
+            VirtualMachine.HaltedBy.ShouldBeNull();
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler);
@@ -50,11 +50,11 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Interrupted).Build();
 
-            VirtualMachine.HaltedBy.Should().BeNull();
+            VirtualMachine.HaltedBy.ShouldBeNull();
 
             var result = VirtualMachine.RaiseInputRequestedEvent();
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Theory]
@@ -66,7 +66,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.Should().Be(expectedIsCharacterFlag))
+                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBe(expectedIsCharacterFlag))
                 .Build();
 
             _ = VirtualMachine.RaiseInputRequestedEvent();
@@ -81,7 +81,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.RaiseInputRequestedEvent();
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
     }
 }

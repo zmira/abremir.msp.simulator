@@ -15,11 +15,11 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.Stack.Should().NotBeEmpty();
+            VirtualMachine.Stack.ShouldNotBeEmpty();
 
             VirtualMachine.ClearStack();
 
-            VirtualMachine.Stack.Should().BeEmpty();
+            VirtualMachine.Stack.ShouldBeEmpty();
         }
 
         [Fact]

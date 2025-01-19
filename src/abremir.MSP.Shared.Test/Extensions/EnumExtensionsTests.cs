@@ -11,7 +11,7 @@ namespace abremir.MSP.Shared.Test.Extensions
         {
             var result = TestEnumExtensionEnum.EnumValueWithDescription.GetDescription();
 
-            EnumValueDescription.Should().Be(result);
+            EnumValueDescription.ShouldBe(result);
         }
 
         [Fact]
@@ -19,7 +19,7 @@ namespace abremir.MSP.Shared.Test.Extensions
         {
             var result = TestEnumExtensionEnum.EnumValueWithoutDescription.GetDescription();
 
-            nameof(TestEnumExtensionEnum.EnumValueWithoutDescription).Should().Be(result);
+            nameof(TestEnumExtensionEnum.EnumValueWithoutDescription).ShouldBe(result);
         }
     }
 

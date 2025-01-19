@@ -19,7 +19,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryPopFromStack(Operation.LessThan, out _);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             _ = VirtualMachine.TryPopFromStack(Operation.LessThan, out var poppedValue);
 
-            poppedValue.Should().Be(value);
+            poppedValue.ShouldBe(value);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             var result = VirtualMachine.TryPopFromStack(Operation.LessThan, out _);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -65,8 +65,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine.TryPopFromStack(Operation.LessThan, out _);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.StackEmpty);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.StackEmpty);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _virtualMachineMemory.SetMemory(data);
 
-            _virtualMachineMemory.MemoryData.Count(value => value is not 0).Should().Be(data.Length);
+            _virtualMachineMemory.MemoryData.Count(value => value is not 0).ShouldBe(data.Length);
         }
 
         [Fact]
@@ -32,8 +32,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.Count(value => value is not 0).Should().NotBe(data.Length);
-            memoryData.Count(value => value is not 0).Should().Be(Constants.MemoryCapacity);
+            memoryData.Count(value => value is not 0).ShouldNotBe(data.Length);
+            memoryData.Count(value => value is not 0).ShouldBe(Constants.MemoryCapacity);
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var newMemoryData = _virtualMachineMemory.MemoryData;
 
-            newMemoryData.Count(value => value is not 0).Should().NotBe(memoryData.Count);
-            newMemoryData.All(value => value is 0).Should().BeTrue();
+            newMemoryData.Count(value => value is not 0).ShouldNotBe(memoryData.Count);
+            newMemoryData.All(value => value is 0).ShouldBeTrue();
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TryGet(Constants.MemoryCapacity, out _);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TryGet(Constants.MemoryCapacity - 1, out _);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _virtualMachineMemory.TryGet(address, out var outputValue);
 
-            outputValue.Should().Be(value);
+            outputValue.ShouldBe(value);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TrySet(Constants.MemoryCapacity, 5);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TrySet(Constants.MemoryCapacity - 1, 5);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -110,7 +110,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.ElementAt(address).Should().Be(value);
+            memoryData.ElementAt(address).ShouldBe(value);
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _virtualMachineMemory.TrySet(address, value);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -138,8 +138,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.ElementAt(address).Should().NotBe(value);
-            result.Should().BeTrue();
+            memoryData.ElementAt(address).ShouldNotBe(value);
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -151,8 +151,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.Count.Should().Be(Constants.MemoryCapacity);
-            memoryData.Count(value => value is not 0).Should().Be(data.Length);
+            memoryData.Count.ShouldBe(Constants.MemoryCapacity);
+            memoryData.Count(value => value is not 0).ShouldBe(data.Length);
         }
     }
 }

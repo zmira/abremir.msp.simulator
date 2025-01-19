@@ -19,7 +19,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryPushToStack(Operation.LessThan, 5);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryPushToStack(Operation.LessThan, 5);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -61,8 +61,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TryPushToStack(Operation.LessThan, 5);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.StackFull);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.StackFull);
         }
     }
 }

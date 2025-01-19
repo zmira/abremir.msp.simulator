@@ -13,8 +13,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.Stack.Should().NotBeEmpty();
-            VirtualMachine.PC.Should().NotBe(0);
+            VirtualMachine.Stack.ShouldNotBeEmpty();
+            VirtualMachine.PC.ShouldNotBe((ushort)0);
 
             var pc = VirtualMachine.PC;
             var stack = VirtualMachine.Stack;
@@ -22,9 +22,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.PC.Should().Be(pc);
-            VirtualMachine.Stack.Should().BeEquivalentTo(stack);
-            VirtualMachine.HaltedBy.Should().Be(haltedBy);
+            VirtualMachine.PC.ShouldBe(pc);
+            VirtualMachine.Stack.ShouldBeEquivalentTo(stack);
+            VirtualMachine.HaltedBy.ShouldBe(haltedBy);
         }
 
         [Fact]
@@ -35,13 +35,13 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Status.Should().Be(Enums.Status.Halted);
-            VirtualMachine.HaltedBy.Should().NotBeNull();
-            VirtualMachine.Stack.Should().NotBeEmpty();
+            VirtualMachine.Status.ShouldBe(Enums.Status.Halted);
+            VirtualMachine.HaltedBy.ShouldNotBeNull();
+            VirtualMachine.Stack.ShouldNotBeEmpty();
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.Stack.Should().BeEmpty();
+            VirtualMachine.Stack.ShouldBeEmpty();
         }
 
         [Fact]
@@ -52,13 +52,13 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Status.Should().Be(Enums.Status.Halted);
-            VirtualMachine.HaltedBy.Should().NotBeNull();
-            VirtualMachine.PC.Should().NotBe(0);
+            VirtualMachine.Status.ShouldBe(Enums.Status.Halted);
+            VirtualMachine.HaltedBy.ShouldNotBeNull();
+            VirtualMachine.PC.ShouldNotBe((ushort)0);
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.PC.Should().Be(0);
+            VirtualMachine.PC.ShouldBe((ushort)0);
         }
 
         [Fact]
@@ -69,12 +69,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Status.Should().Be(Enums.Status.Halted);
-            VirtualMachine.HaltedBy.Should().NotBeNull();
+            VirtualMachine.Status.ShouldBe(Enums.Status.Halted);
+            VirtualMachine.HaltedBy.ShouldNotBeNull();
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.HaltedBy.Should().BeNull();
+            VirtualMachine.HaltedBy.ShouldBeNull();
         }
     }
 }

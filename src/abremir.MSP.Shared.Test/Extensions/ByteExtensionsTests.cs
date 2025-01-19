@@ -11,7 +11,7 @@
         {
             var result = byteValue.FromTwosComplement();
 
-            expectedDecomplementedValue.Should().Be(result);
+            expectedDecomplementedValue.ShouldBe(result);
         }
 
         [Theory]
@@ -23,7 +23,7 @@
         {
             var result = byteValue.ToMemoryAddress();
 
-            expectedIntValue.Should().Be(result);
+            expectedIntValue.ShouldBe(result);
         }
 
         [Theory]

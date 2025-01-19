@@ -34,8 +34,8 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<OutputEmittedEventArgs>((virtualMachine, handler) => virtualMachine.OutputEmitted += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.Should().BeFalse())
-                .Verify(eventArgs => eventArgs.Value.Should().Be(_value.FromTwosComplement()))
+                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBeFalse())
+                .Verify(eventArgs => eventArgs.Value.ShouldBe(_value.FromTwosComplement()))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -52,11 +52,11 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_OutputValue_PopsValueFromStack()
         {
-            VirtualMachine.Stack.Should().NotBeEmpty();
+            VirtualMachine.Stack.ShouldNotBeEmpty();
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Should().BeEmpty();
+            VirtualMachine.Stack.ShouldBeEmpty();
         }
 
         [Fact]

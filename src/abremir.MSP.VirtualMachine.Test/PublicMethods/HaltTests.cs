@@ -11,7 +11,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler)
-                .Verify(eventArgs => eventArgs.Reason.Should().Be(Enums.HaltReason.ForceHalt))
+                .Verify(eventArgs => eventArgs.Reason.ShouldBe(Enums.HaltReason.ForceHalt))
                 .Build();
 
             VirtualMachine.Halt();

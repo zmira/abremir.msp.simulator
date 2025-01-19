@@ -11,7 +11,7 @@
         {
             var result = intValue.ToTwosComplement();
 
-            expectedComplementValue.Should().Be(result);
+            expectedComplementValue.ShouldBe(result);
         }
 
         [Theory]
@@ -33,7 +33,7 @@
         {
             var result = intValue.ToLeastAndMostSignificantBytes();
 
-            expectedBytes.Should().BeEquivalentTo(result);
+            expectedBytes.ShouldBeEquivalentTo(result);
         }
 
         [Theory]

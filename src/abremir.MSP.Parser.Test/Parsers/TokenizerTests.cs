@@ -28,7 +28,7 @@ namespace abremir.MSP.Parser.Test.Parsers
                 .Select(t => t.Kind)
                 .ToList();
 
-            expectedTokens.Should().Equal(actualTokens);
+            expectedTokens.ShouldBe(actualTokens);
         }
 
         [Theory]
@@ -99,7 +99,7 @@ namespace abremir.MSP.Parser.Test.Parsers
                 .Select(t => t.Kind)
                 .ToList();
 
-            expectedTokens.Should().Equal(actualTokens);
+            expectedTokens.ShouldBe(actualTokens);
         }
 
         [Fact]

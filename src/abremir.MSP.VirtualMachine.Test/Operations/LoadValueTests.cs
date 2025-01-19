@@ -41,11 +41,11 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_LoadValue_PushesResultToStack()
         {
-            VirtualMachine.Stack.ElementAt(0).Should().NotBe(_value);
+            VirtualMachine.Stack.ElementAt(0).ShouldNotBe(_value);
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.ElementAt(0).Should().Be(_value);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(_value);
         }
 
         [Fact]

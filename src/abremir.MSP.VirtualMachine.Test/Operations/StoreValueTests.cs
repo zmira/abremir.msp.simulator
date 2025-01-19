@@ -40,21 +40,21 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_StoreValue_SetsResultInDataMemory()
         {
-            VirtualMachine.Data.ElementAt(_dataAddress).Should().NotBe(_value);
+            VirtualMachine.Data.ElementAt(_dataAddress).ShouldNotBe(_value);
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Data.ElementAt(_dataAddress).Should().Be(_value);
+            VirtualMachine.Data.ElementAt(_dataAddress).ShouldBe(_value);
         }
 
         [Fact]
         public void ExecuteNextInstruction_StoreValue_PopsValueFromStack()
         {
-            VirtualMachine.Stack.Should().NotBeEmpty();
+            VirtualMachine.Stack.ShouldNotBeEmpty();
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Should().BeEmpty();
+            VirtualMachine.Stack.ShouldBeEmpty();
         }
 
         [Fact]

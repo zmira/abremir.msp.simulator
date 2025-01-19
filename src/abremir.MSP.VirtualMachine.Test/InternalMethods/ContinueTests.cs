@@ -16,7 +16,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Running).Build();
 
-            VirtualMachine.Status.Should().NotBe(Status.Interrupted);
+            VirtualMachine.Status.ShouldNotBe(Status.Interrupted);
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<StatusChangedEventArgs>((virtualMachine, handler) => virtualMachine.StatusChanged += handler);
@@ -61,11 +61,11 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram([.. program]).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.InterruptedBy.Should().Be(InterruptReason.InputValue);
+            VirtualMachine.InterruptedBy.ShouldBe(InterruptReason.InputValue);
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.InterruptedBy.Should().NotBeNull();
+            VirtualMachine.InterruptedBy.ShouldNotBeNull();
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.PC.Should().Be((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
+            VirtualMachine.PC.ShouldBe((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
         }
 
         [Fact]
@@ -93,11 +93,11 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.InterruptedBy.Should().Be(InterruptReason.InputValue);
+            VirtualMachine.InterruptedBy.ShouldBe(InterruptReason.InputValue);
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.InterruptedBy.Should().BeNull();
+            VirtualMachine.InterruptedBy.ShouldBeNull();
         }
 
         [Fact]
@@ -109,11 +109,11 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.Status.Should().Be(Status.Interrupted);
+            VirtualMachine.Status.ShouldBe(Status.Interrupted);
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.Status.Should().Be(Status.Running);
+            VirtualMachine.Status.ShouldBe(Status.Running);
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Mode.Should().Be(Mode.Run);
+            VirtualMachine.Mode.ShouldBe(Mode.Run);
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<InstructionExecutingEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuting += handler);

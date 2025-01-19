@@ -41,7 +41,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            result.Should().BeNull();
+            result.ShouldBeNull();
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(Constants.MemoryCapacity);
 
-            result.Should().BeNull();
+            result.ShouldBeNull();
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.UnknownOperation);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.UnknownOperation);
         }
 
         [Fact]
@@ -127,7 +127,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            result.Should().BeNull();
+            result.ShouldBeNull();
         }
 
         [Fact]
@@ -155,8 +155,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            result.Should().NotBeNull();
-            result!.Operation.Should().Be(operation);
+            result.ShouldNotBeNull();
+            result!.Operation.ShouldBe(operation);
         }
     }
 }

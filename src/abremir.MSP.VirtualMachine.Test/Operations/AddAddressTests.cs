@@ -36,15 +36,15 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         {
             var expectedAddress = (new[] { _lsb, _msb }.ToMemoryAddress() + _offset.FromTwosComplement()).ToLeastAndMostSignificantBytes();
 
-            VirtualMachine.Stack.ElementAt(0).Should().Be(_offset);
-            VirtualMachine.Stack.ElementAt(1).Should().Be(_msb);
-            VirtualMachine.Stack.ElementAt(2).Should().Be(_lsb);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(_offset);
+            VirtualMachine.Stack.ElementAt(1).ShouldBe(_msb);
+            VirtualMachine.Stack.ElementAt(2).ShouldBe(_lsb);
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Count.Should().Be(2);
-            VirtualMachine.Stack.ElementAt(0).Should().Be(expectedAddress[1]);
-            VirtualMachine.Stack.ElementAt(1).Should().Be(expectedAddress[0]);
+            VirtualMachine.Stack.Count.ShouldBe(2);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(expectedAddress[1]);
+            VirtualMachine.Stack.ElementAt(1).ShouldBe(expectedAddress[0]);
         }
 
         [Fact]

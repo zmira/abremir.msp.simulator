@@ -32,7 +32,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Stack.Where(value => value != 0).Should().NotBeEmpty();
+            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
 
             var count = 0;
 
@@ -49,7 +49,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.PC.Should().NotBe(0);
+            VirtualMachine.PC.ShouldNotBe((ushort)0);
 
             var count = 0;
 
@@ -77,7 +77,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.HaltedBy.Should().NotBeNull();
+            VirtualMachine.HaltedBy.ShouldNotBeNull();
 
             var count = 0;
 
@@ -106,7 +106,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().BeGreaterThan(0);
+            count.ShouldBeGreaterThan(0);
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -213,7 +213,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.Should().Be(1);
+            count.ShouldBe(1);
         }
 
         [Fact]
@@ -234,7 +234,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine.Run();
             VirtualMachine.Suspend();
 
-            count.Should().Be(0);
+            count.ShouldBe(0);
         }
 
         [Fact]
@@ -255,7 +255,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine.Run();
             VirtualMachine.SetMode(Enums.Mode.Step);
 
-            count.Should().Be(0);
+            count.ShouldBe(0);
         }
     }
 }

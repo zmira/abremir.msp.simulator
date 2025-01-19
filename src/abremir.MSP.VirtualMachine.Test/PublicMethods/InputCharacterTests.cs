@@ -12,7 +12,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         {
             VirtualMachine.InputCharacter(65);
 
-            VirtualMachine.Stack.Where(value => value != 0).Should().BeEmpty();
+            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
         }
 
         [Fact]
@@ -23,11 +23,11 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.InterruptedBy.Should().Be(Enums.InterruptReason.InputValue);
+            VirtualMachine.InterruptedBy.ShouldBe(Enums.InterruptReason.InputValue);
 
             VirtualMachine.InputCharacter(65);
 
-            VirtualMachine.Stack.Where(value => value != 0).Should().BeEmpty();
+            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.InputCharacter(65);
 
-            VirtualMachine.Stack.Where(value => value != 0).Should().NotBeEmpty();
+            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
         }
 
         [Fact]

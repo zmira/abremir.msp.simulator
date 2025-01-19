@@ -32,13 +32,13 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_Divide_PushesResultToStack()
         {
-            VirtualMachine.Stack.ElementAt(0).Should().Be(_operand2);
-            VirtualMachine.Stack.ElementAt(1).Should().Be(_operand1);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe(_operand2);
+            VirtualMachine.Stack.ElementAt(1).ShouldBe(_operand1);
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Count.Should().Be(1);
-            VirtualMachine.Stack.ElementAt(0).Should().Be(_operand1 / _operand2);
+            VirtualMachine.Stack.Count.ShouldBe(1);
+            VirtualMachine.Stack.ElementAt(0).ShouldBe((byte)(_operand1 / _operand2));
         }
 
         [Fact]

@@ -20,7 +20,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TrySetDataValue(Operation.LessThan, 100, 5);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -36,8 +36,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<DataMemoryUpdatedEventArgs>((virtualMachine, handler) => virtualMachine.DataMemoryUpdated += handler)
-                .Verify(eventArgs => eventArgs.Address.Should().Be(address))
-                .Verify(eventArgs => eventArgs.Value.Should().Be(value))
+                .Verify(eventArgs => eventArgs.Address.ShouldBe(address))
+                .Verify(eventArgs => eventArgs.Value.ShouldBe(value))
                 .Build();
 
             _ = VirtualMachine.TrySetDataValue(Operation.LessThan, address, value);
@@ -55,7 +55,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TrySetDataValue(Operation.LessThan, 100, 5);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -68,8 +68,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TrySetDataValue(Operation.LessThan, 100, 5);
 
-            VirtualMachine.Status.Should().Be(Status.Halted);
-            VirtualMachine.HaltedBy.Should().Be(HaltReason.MemoryAddressViolation);
+            VirtualMachine.Status.ShouldBe(Status.Halted);
+            VirtualMachine.HaltedBy.ShouldBe(HaltReason.MemoryAddressViolation);
         }
     }
 }

@@ -25,8 +25,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.DataSegmentExpected));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.DataSegmentExpected));
         }
 
         [Fact]
@@ -37,8 +37,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.DataSegmentExpected));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.DataSegmentExpected));
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.CodeSegmentExpectedOrInvalidToken));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.CodeSegmentExpectedOrInvalidToken));
         }
 
         [Fact]
@@ -61,11 +61,11 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.ErrorMessage.Should().BeNull();
-            parsedResult.Expectations.Should().BeNull();
-            parsedResult.HasValue.Should().BeTrue();
-            parsedResult.Value.Instructions.Should().BeEmpty();
-            parsedResult.Value.Data.Should().BeEmpty();
+            parsedResult.ErrorMessage.ShouldBeNull();
+            parsedResult.Expectations.ShouldBeNull();
+            parsedResult.HasValue.ShouldBeTrue();
+            parsedResult.Value.Instructions.ShouldBeEmpty();
+            parsedResult.Value.Data.ShouldBeEmpty();
         }
 
         [Fact]
@@ -76,8 +76,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.DataUnrecognizedAddress));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.DataUnrecognizedAddress));
         }
 
         [Fact]
@@ -88,8 +88,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.DataSizeTokenExpected));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.DataSizeTokenExpected));
         }
 
         [Fact]
@@ -100,8 +100,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.DataSizeExpected));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.DataSizeExpected));
         }
 
         [Fact]
@@ -112,8 +112,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.DataUnexpectedInitializationValues));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.DataUnexpectedInitializationValues));
         }
 
         [Theory]
@@ -126,8 +126,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.CodePushArgumentOutsideAllowedRange));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.CodePushArgumentOutsideAllowedRange));
         }
 
         [Theory]
@@ -140,8 +140,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.EndOfLineNotFound));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.EndOfLineNotFound));
         }
 
         [Fact]
@@ -152,8 +152,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.CodeUnexpectedArgument));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.CodeUnexpectedArgument));
         }
 
         [Fact]
@@ -164,8 +164,8 @@ namespace abremir.MSP.Parser.Test.Parsers
 
             var parsedResult = _tokenListParser.Parse(tokenList);
 
-            parsedResult.HasValue.Should().BeFalse();
-            parsedResult.Expectations.Should().Contain(nameof(Error.CodePotentialLabelWithoutColon));
+            parsedResult.HasValue.ShouldBeFalse();
+            parsedResult.Expectations.ShouldContain(nameof(Error.CodePotentialLabelWithoutColon));
         }
 
         [Fact]
@@ -234,17 +234,17 @@ zzz:
 
             var parsedResult = _tokenListParser.Parse(tokenList).Value;
 
-            parsedResult.Data.Should().NotBeEmpty();
-            parsedResult.Instructions.Should().NotBeEmpty();
-            parsedResult.Data!.Count.Should().Be(4);
-            parsedResult.Instructions!.Count.Should().Be(44);
-            parsedResult.Instructions.Should().Contain(code =>
+            parsedResult.Data.ShouldNotBeEmpty();
+            parsedResult.Instructions.ShouldNotBeEmpty();
+            parsedResult.Data!.Count.ShouldBe(4);
+            parsedResult.Instructions!.Count.ShouldBe(44);
+            parsedResult.Instructions.ShouldContain(code =>
                 code.InstructionLabel != null && string.Equals(code.InstructionLabel, "abc", StringComparison.OrdinalIgnoreCase));
-            parsedResult.Instructions.Should().Contain(code =>
+            parsedResult.Instructions.ShouldContain(code =>
                 code.InstructionLabel != null && string.Equals(code.InstructionLabel, "xyz", StringComparison.OrdinalIgnoreCase));
-            parsedResult.Instructions.Should().Contain(code =>
+            parsedResult.Instructions.ShouldContain(code =>
                 code.InstructionLabel != null && string.Equals(code.InstructionLabel, "bbb", StringComparison.OrdinalIgnoreCase));
-            parsedResult.Instructions.Should().Contain(code =>
+            parsedResult.Instructions.ShouldContain(code =>
                 code.InstructionLabel != null && string.Equals(code.InstructionLabel, "zzz", StringComparison.OrdinalIgnoreCase));
         }
     }
