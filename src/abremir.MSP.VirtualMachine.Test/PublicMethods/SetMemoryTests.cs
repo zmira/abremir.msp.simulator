@@ -3,21 +3,22 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class SetMemoryTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void SetMemory_NullData_ThrowsArgumentNullException()
         {
             Check.ThatCode(() => VirtualMachine.SetMemory(null, [])).Throws<ArgumentNullException>();
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMemory_NullProgram_ThrowsArgumentNullException()
         {
             Check.ThatCode(() => VirtualMachine.SetMemory([], null)).Throws<ArgumentNullException>();
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMemory_StatusIsNotNone_DoesNothing()
         {
             var data = new byte[] { 222 };
@@ -32,7 +33,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Program.Take(program.Length)).IsEquivalentTo(program);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMemory_StatusIsNone_SetsDataAndProgramMemory()
         {
             var data = new byte[] { 222, 111, 3 };
@@ -44,7 +45,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Program.Take(program.Length)).IsEquivalentTo(program);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMemory_StatusIsNone_RaisesVirtualMachineMemorySetEvent()
         {
             var hook = EventHook.For(VirtualMachine)

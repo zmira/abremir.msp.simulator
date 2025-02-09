@@ -4,6 +4,7 @@ using abremir.MSP.Shared.Models;
 
 namespace abremir.MSP.Assembler.Test.Assemblers
 {
+    [TestClass]
     public class ProgramAssemblerTests
     {
         private readonly ProgramAssembler _assembler;
@@ -13,7 +14,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             _assembler = new ProgramAssembler();
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_EmptyInstructions_ReturnsEmpty()
         {
             var result = _assembler.Assemble([], new Dictionary<string, int>());
@@ -24,7 +25,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.LineAddressMap).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithInstructions_ReturnsProgramMemory()
         {
             List<ParsedInstruction> parsedInstructions =
@@ -44,7 +45,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithInstructionsAndLabels_ReturnsProgramMemoryWithMappedLabels()
         {
             List<ParsedInstruction> parsedInstructions =
@@ -65,7 +66,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithInstructionsAndRelativeBranchInsideMemoryLimits_ReturnsProgramMemory()
         {
             List<ParsedInstruction> parsedInstructions =
@@ -85,7 +86,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithInstructionsAndRelativeBranchOutsideMemoryLimits_ReturnsProgramMemoryWithErrors()
         {
             List<ParsedInstruction> parsedInstructions =
@@ -127,7 +128,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithInstructionsAndDataVariables_ReturnsProgramMemoryWithMappedVariables()
         {
             var dataVariableMap = new Dictionary<string, int>
@@ -152,7 +153,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithoutHaltInstruction_ArtificiallyAddsHaltInstruction()
         {
             List<ParsedInstruction> parsedInstructions =

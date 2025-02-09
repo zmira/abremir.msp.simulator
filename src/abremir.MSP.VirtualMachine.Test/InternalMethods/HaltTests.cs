@@ -4,9 +4,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class HaltTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Halt_StatusHalted_DoesNotHalt()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Halted).Build();
@@ -21,7 +22,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void Halt_StatusNotHalted_SetsHaltedBy()
         {
             Check.That(VirtualMachine.HaltedBy).IsNull();
@@ -33,7 +34,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.HaltedBy).Is(haltedBy);
         }
 
-        [Fact]
+        [TestMethod]
         public void Halt_StatusNotHalted_SetsStatusHalted()
         {
             Check.That(VirtualMachine.Status).IsNotEqualTo(Status.Halted);
@@ -43,7 +44,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Status).Is(Status.Halted);
         }
 
-        [Fact]
+        [TestMethod]
         public void Halt_StatusNotHalted_RaisesVirtualMachineHaltedEventWithReason()
         {
             const HaltReason reason = HaltReason.HaltInstruction;

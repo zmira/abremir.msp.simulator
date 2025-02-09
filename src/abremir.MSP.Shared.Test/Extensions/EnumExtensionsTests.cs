@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
-
-namespace abremir.MSP.Shared.Test.Extensions
+﻿namespace abremir.MSP.Shared.Test.Extensions
 {
+    [TestClass]
     public class EnumExtensionsTests
     {
         public const string EnumValueDescription = "This is the description for an enum value";
 
-        [Fact]
+        [TestMethod]
         public void GetDescription_ForEnumWithDescription_ReturnsDescription()
         {
             var result = TestEnumExtensionEnum.EnumValueWithDescription.GetDescription();
@@ -14,7 +13,7 @@ namespace abremir.MSP.Shared.Test.Extensions
             Check.That(EnumValueDescription).Is(result);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetDescription_ForEnumWithoutDescription_ReturnsStringRepresentationOfEnumValue()
         {
             var result = TestEnumExtensionEnum.EnumValueWithoutDescription.GetDescription();
@@ -25,7 +24,7 @@ namespace abremir.MSP.Shared.Test.Extensions
 
     public enum TestEnumExtensionEnum
     {
-        [Description(EnumExtensionsTests.EnumValueDescription)]
+        [System.ComponentModel.Description(EnumExtensionsTests.EnumValueDescription)]
         EnumValueWithDescription,
         EnumValueWithoutDescription
     }

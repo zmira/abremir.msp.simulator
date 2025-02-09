@@ -4,9 +4,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class IsValidAddressTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void IsValidAddress_Valid_ReturnsTrue()
         {
             var address = Random.Next(0, Constants.MemoryCapacity - 1);
@@ -16,9 +17,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsTrue();
         }
 
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(Constants.MemoryCapacity)]
+        [TestMethod]
+        [DataRow(-1)]
+        [DataRow(Constants.MemoryCapacity)]
         public void IsValidAddress_Invalid_ReturnsFalse(int address)
         {
             var result = VirtualMachine.IsValidAddress(null, address);
@@ -26,9 +27,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(Constants.MemoryCapacity)]
+        [TestMethod]
+        [DataRow(-1)]
+        [DataRow(Constants.MemoryCapacity)]
         public void IsValidAddress_Invalid_SetsStatusHaltsWithMemoryAddressViolation(int address)
         {
             Check.That(VirtualMachine.Status).IsNotEqualTo(Status.Halted);

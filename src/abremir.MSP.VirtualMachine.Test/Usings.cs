@@ -1,4 +1,4 @@
 global using EventTesting;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using NFluent;
 global using NSubstitute;
-global using Xunit;

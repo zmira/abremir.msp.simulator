@@ -9,6 +9,7 @@ using Superpower.Model;
 
 namespace abremir.MSP.Parser.Test
 {
+    [TestClass]
     public class ParserTests
     {
         private readonly NSubstituteAutoMocker<Parser> _parser;
@@ -18,7 +19,7 @@ namespace abremir.MSP.Parser.Test
             _parser = new NSubstituteAutoMocker<Parser>();
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionOfUnknownTypeIsThrownWithoutPosition_ReturnsSyntaxError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -34,7 +35,7 @@ namespace abremir.MSP.Parser.Test
                     && error.ErrorMessage == exceptionMessage);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionOfUnknownTypeIsThrown_ReturnsSyntaxError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -53,10 +54,10 @@ namespace abremir.MSP.Parser.Test
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Theory]
-        [InlineData(Operation.Jump)]
-        [InlineData(Operation.JumpIfFalse)]
-        [InlineData(Operation.Call)]
+        [TestMethod]
+        [DataRow(Operation.Jump)]
+        [DataRow(Operation.JumpIfFalse)]
+        [DataRow(Operation.Call)]
         public void Parse_ParseExceptionForBranchOperation_ReturnsBranchInvalidArgumentError(Operation operation)
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -75,7 +76,7 @@ namespace abremir.MSP.Parser.Test
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionForPushAddressOperation_ReturnsPshaInvalidArgumentError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -94,7 +95,7 @@ namespace abremir.MSP.Parser.Test
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionForPushValueOperation_ReturnsPushArgumentOutsideAllowedRangeError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -113,7 +114,7 @@ namespace abremir.MSP.Parser.Test
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionForDataDeclaration_ReturnsUnexpectedInitializationValuesError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -132,7 +133,7 @@ namespace abremir.MSP.Parser.Test
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ExceptionIsThrown_ReturnsExceptionError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();

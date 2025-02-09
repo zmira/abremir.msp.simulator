@@ -3,9 +3,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class SetProgramCounterTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void SetProgramCounter_AddressIsNotValid_DoesNotUpdateProgramCounter()
         {
             var pc = VirtualMachine.PC;
@@ -15,7 +16,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.PC).Is(pc);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetProgramCounter_AddressIsNotValid_ReturnsFalse()
         {
             var result = VirtualMachine.SetProgramCounter(Constants.MemoryCapacity);
@@ -23,7 +24,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void SetProgramCounter_AddressIsValid_UpdatesProgramCounter()
         {
             var newPc = (ushort)Random.Next(1, Constants.MemoryCapacity - 1);
@@ -33,7 +34,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.PC).Is(newPc);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetProgramCounter_AddressIsValid_RaisesProgramCounterUpdatedEvent()
         {
             var newPc = (ushort)Random.Next(1, Constants.MemoryCapacity - 1);
@@ -46,7 +47,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void SetProgramCounter_AddressIsValid_ReturnsTrue()
         {
             var newPc = (ushort)Random.Next(1, Constants.MemoryCapacity - 1);

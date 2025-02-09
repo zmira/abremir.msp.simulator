@@ -5,6 +5,7 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
+    [TestClass]
     public class LogicNotTests : VirtualMachineTestsBase
     {
         private readonly byte[] _program;
@@ -19,15 +20,15 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             VirtualMachine.TryPushToStack(_operation, _operand);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNot_RaisesOperationExecutingEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutingEvent(_operation);
         }
 
-        [Theory]
-        [InlineData(0, 1)]
-        [InlineData(1, 0)]
+        [TestMethod]
+        [DataRow((byte)0, (byte)1)]
+        [DataRow((byte)1, (byte)0)]
         public void ExecuteNextInstruction_LogicNot_PushesResultStack(byte operand, byte expectedResult)
         {
             while (VirtualMachine.Stack.Count != 0)
@@ -43,25 +44,25 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             Check.That(VirtualMachine.Stack.ElementAt(0)).Is(expectedResult);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNot_DoesNotChangeDataMemory()
         {
             ExecuteNextInstruction_Verify_DoesNotChangeDataMemory();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNot_RaisesOperationExecutedEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutedEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNot_UpdatesProgramCounter()
         {
             ExecuteNextInstruction_Verify_UpdatesProgramCounter(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPopValueFromStack_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -71,7 +72,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPopValueFromStack_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -81,7 +82,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.StackEmpty, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPopValueFromStack_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -91,7 +92,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPopValueFromStack_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -101,7 +102,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.StackEmpty, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPopValueFromStack_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();
@@ -111,7 +112,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPushValueToStack_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -123,7 +124,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPushValueToStack_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -135,7 +136,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.StackFull, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPushValueToStack_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -147,7 +148,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPushValueToStack_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -159,7 +160,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.StackFull, stack: stack, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_LogicNotFailsToPushValueToStack_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();

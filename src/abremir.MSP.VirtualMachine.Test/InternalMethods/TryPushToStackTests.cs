@@ -5,9 +5,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class TryPushToStackTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Succeeds_ReturnsTrue()
         {
             var stack = Substitute.For<IStack>();
@@ -20,7 +21,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Succeeds_RaisesStackPointerUpdatedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -36,7 +37,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Fails_ReturnsFalse()
         {
             var stack = Substitute.For<IStack>();
@@ -49,7 +50,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Fails_HaltsWithSTackFull()
         {
             var stack = Substitute.For<IStack>();

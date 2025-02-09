@@ -4,9 +4,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class RaiseInputRequestedEventTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void RaiseInputRequestedEvent_StatusNotInterrupted_DoesNotRaiseInputRequestedEvent()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Running).Build();
@@ -19,7 +20,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void RaiseInputRequestedEvent_StatusNotInterrupted_ReturnsFalse()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Running).Build();
@@ -29,7 +30,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void RaiseInputRequestedEvent_InterruptedByIsNull_DoesNotRaiseInputRequestedEvent()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Interrupted).Build();
@@ -44,7 +45,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void RaiseInputRequestedEvent_InterruptedByIsNull_ReturnsFalse()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Interrupted).Build();
@@ -56,9 +57,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Theory]
-        [InlineData(InterruptReason.InputValue, false)]
-        [InlineData(InterruptReason.InputCharacter, true)]
+        [TestMethod]
+        [DataRow(InterruptReason.InputValue, false)]
+        [DataRow(InterruptReason.InputCharacter, true)]
         public void RaiseInputRequestedEvent_StatusInterruptedAndInterruptedByNotNull_RaisesInputRequestedEvent(InterruptReason interruptReason, bool expectedIsCharacterFlag)
         {
             VirtualMachine.Interrupt(interruptReason);
@@ -71,9 +72,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             _ = VirtualMachine.RaiseInputRequestedEvent();
         }
 
-        [Theory]
-        [InlineData(InterruptReason.InputValue)]
-        [InlineData(InterruptReason.InputCharacter)]
+        [TestMethod]
+        [DataRow(InterruptReason.InputValue)]
+        [DataRow(InterruptReason.InputCharacter)]
         public void RaiseInputRequestedEvent_StatusInterruptedAndInterruptedByNotNull_ReturnsTrue(InterruptReason interruptReason)
         {
             VirtualMachine.Interrupt(interruptReason);

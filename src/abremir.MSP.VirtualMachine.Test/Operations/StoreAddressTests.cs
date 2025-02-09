@@ -6,6 +6,7 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
+    [TestClass]
     public class StoreAddressTests : VirtualMachineTestsBase
     {
         private readonly byte[] _program;
@@ -32,13 +33,13 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             VirtualMachine.TryPushToStack(_operation, _msbValue);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddress_RaisesOperationExecutingEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutingEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddress_SetsResultInDataMemory()
         {
             Check.That(VirtualMachine.Data.ElementAt(_dataAddress)).Is((byte)0);
@@ -50,7 +51,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             Check.That(VirtualMachine.Data.ElementAt(_dataAddress + 1)).Is(_msbValue);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddress_PopsValuesFromStack()
         {
             Check.That(VirtualMachine.Stack).Not.IsEmpty();
@@ -60,19 +61,19 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddress_RaisesOperationExecutedEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutedEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddress_UpdatesProgramCounter()
         {
             ExecuteNextInstruction_Verify_UpdatesProgramCounter(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFirstValueFromStack_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -82,7 +83,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopSecondValueFromStack_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -94,7 +95,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopThirdValueFromStack_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -107,7 +108,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFourthValueFromStack_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -121,7 +122,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFirstValueFromStack_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -131,7 +132,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopSecondValueFromStack_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -143,7 +144,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopThirdValueFromStack_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -156,7 +157,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFourthValueFromStack_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -170,7 +171,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFirstValueFromStack_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -180,7 +181,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopSecondValueFromStack_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -192,7 +193,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopThirdValueFromStack_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -205,7 +206,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFourthValueFromStack_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -219,7 +220,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFirstValueFromStack_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -229,7 +230,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopSecondValueFromStack_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -241,7 +242,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopThirdValueFromStack_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -254,7 +255,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFourthValueFromStack_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -268,7 +269,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.StackEmpty, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFirstValueFromStack_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();
@@ -278,7 +279,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopSecondValueFromStack_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();
@@ -290,7 +291,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopThirdValueFromStack_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();
@@ -303,7 +304,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToPopFourthValueFromStack_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();
@@ -317,7 +318,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetFirstValueInDataMemory_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -334,7 +335,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetSecondValueInDataMemory_SetsStatus()
         {
             var stack = Substitute.For<IStack>();
@@ -351,7 +352,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetFirstValueInDataMemory_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -368,7 +369,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetSecondValueInDataMemory_SetsHaltedBy()
         {
             var stack = Substitute.For<IStack>();
@@ -385,7 +386,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetFirstValueInDataMemory_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -402,7 +403,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetSecondValueInDataMemory_RaisesStatusChangedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -419,7 +420,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetFirstValueInDataMemory_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -436,7 +437,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetSecondValueInDataMemory_RaisesVirtualMachineHaltedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -453,7 +454,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, dataMemory: memory, stack: stack, data: _data, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_StoreAddressFailsToSetFirstValueInDataMemory_DoesNotUpdateProgramCounter()
         {
             var stack = Substitute.For<IStack>();

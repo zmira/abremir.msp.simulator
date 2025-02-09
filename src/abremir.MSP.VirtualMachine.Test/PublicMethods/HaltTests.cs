@@ -3,9 +3,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class HaltTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Halt_HaltsExecutionWithForceHaltReason()
         {
             var hook = EventHook.For(VirtualMachine)

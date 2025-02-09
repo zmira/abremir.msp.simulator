@@ -6,9 +6,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class TrySetDataValueTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Succeeds_ReturnsTrue()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -21,7 +22,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Succeeds_RaisesDataMemoryUpdatedEvent()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -43,7 +44,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Fails_ReturnsFalse()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -56,7 +57,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Fails_HaltsWithMemoryAddressViolation()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();

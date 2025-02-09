@@ -4,9 +4,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class SetModeTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void SetMode_ModeIsSame_DoesNotSetMode()
         {
             const Mode mode = Mode.None;
@@ -22,7 +23,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMode_ModeIsDifferent_SetsMode()
         {
             Check.That(VirtualMachine.Mode).Is(Mode.None);
@@ -34,7 +35,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Mode).Is(mode);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMode_ModeIsDifferent_RaisesModeChangedEventWithNewMode()
         {
             Check.That(VirtualMachine.Mode).Is(Mode.None);

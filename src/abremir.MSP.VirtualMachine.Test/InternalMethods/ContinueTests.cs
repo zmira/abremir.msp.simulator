@@ -7,9 +7,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ContinueTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Continue_StatusNotInterrupted_DoesNotContinue()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Running).Build();
@@ -24,9 +25,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Theory]
-        [InlineData(Operation.InputValue, Operation.InputCharacter)]
-        [InlineData(Operation.InputCharacter, Operation.InputValue)]
+        [TestMethod]
+        [DataRow(Operation.InputValue, Operation.InputCharacter)]
+        [DataRow(Operation.InputCharacter, Operation.InputValue)]
         public void Continue_StatusInterruptedButInterruptedByAndFromOperationDoNotMatch_DoesNotContinue(Operation interruptOperation, Operation continueFromOperation)
         {
             var program = new byte[] { (byte)interruptOperation };
@@ -42,7 +43,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterruptedAndDoesNotSetProgramCounterToAddressOfNextNextInstruction_DoesNotContinue()
         {
             const Operation operation = Operation.InputValue;
@@ -66,7 +67,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.InterruptedBy).IsNotNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterrupted_SetsProgramCounterToAddressOfNextNextInstruction()
         {
             const Operation operation = Operation.InputValue;
@@ -82,7 +83,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.PC).Is((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterrupted_ResetsInterruptedBy()
         {
             const Operation operation = Operation.InputValue;
@@ -98,7 +99,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.InterruptedBy).IsNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterrupted_SetsStatusRunning()
         {
             const Operation operation = Operation.InputValue;
@@ -114,7 +115,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Status).Is(Status.Running);
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterruptedAndModeRun_ExecutesNextInstruction()
         {
             const Operation operation = Operation.InputValue;

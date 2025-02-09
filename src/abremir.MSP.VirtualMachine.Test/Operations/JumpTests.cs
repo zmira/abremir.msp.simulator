@@ -6,6 +6,7 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
+    [TestClass]
     public class JumpTests : VirtualMachineTestsBase
     {
         private readonly byte[] _program;
@@ -20,13 +21,13 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             VirtualMachine.SetMemory([], _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_Jump_RaisesOperationExecutingEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutingEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_Jump_RaisesInstructionArgumentsEvent()
         {
 #pragma warning disable IDE0230 // Use UTF-8 string literal
@@ -34,7 +35,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 #pragma warning restore IDE0230 // Use UTF-8 string literal
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_Call_UpdatesProgramCounterToNewAddress()
         {
 #pragma warning disable IDE0230 // Use UTF-8 string literal
@@ -42,19 +43,19 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 #pragma warning restore IDE0230 // Use UTF-8 string literal
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_Jump_DoesNotChangeDataMemory()
         {
             ExecuteNextInstruction_Verify_DoesNotChangeDataMemory();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_Jump_RaisesOperationExecutedEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutedEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetFirstValueFromProgramMemory_SetsStatus()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -66,7 +67,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetFirstValueFromProgramMemory_SetsHaltedBy()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -78,7 +79,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetFirstValueFromProgramMemory_RaisesStatusChangedEvent()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -90,7 +91,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetFirstValueFromProgramMemory_RaisesVirtualMachineHaltedEvent()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -102,7 +103,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetFirstValueFromProgramMemory_DoesNotUpdateProgramCounter()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -114,7 +115,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetSecondValueFromProgramMemory_SetsStatus()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -127,7 +128,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetSecondValueFromProgramMemory_SetsHaltedBy()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -140,7 +141,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetSecondValueFromProgramMemory_RaisesStatusChangedEvent()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -153,7 +154,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetSecondValueFromProgramMemory_RaisesVirtualMachineHaltedEvent()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -166,7 +167,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, programMemory: memory, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_JumpFailsToGetSecondValueFromProgramMemory_DoesNotUpdateProgramCounter()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -179,9 +180,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(programMemory: memory, program: _program);
         }
 
-        [Theory]
-        [InlineData(255, 255)]
-        [InlineData(255, 125)]
+        [TestMethod]
+        [DataRow((byte)255, (byte)255)]
+        [DataRow((byte)255, (byte)125)]
         public void ExecuteNextInstruction_JumpAddressIsNotValid_SetsStatus(byte lsb, byte msb)
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -194,9 +195,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsStatus(Status.Halted, programMemory: memory, program: _program);
         }
 
-        [Theory]
-        [InlineData(255, 255)]
-        [InlineData(255, 125)]
+        [TestMethod]
+        [DataRow((byte)255, (byte)255)]
+        [DataRow((byte)255, (byte)125)]
         public void ExecuteNextInstruction_JumpAddressIsNotValid_SetsHaltedBy(byte lsb, byte msb)
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -209,9 +210,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_SetsHaltedBy(HaltReason.MemoryAddressViolation, programMemory: memory, program: _program);
         }
 
-        [Theory]
-        [InlineData(255, 255)]
-        [InlineData(255, 125)]
+        [TestMethod]
+        [DataRow((byte)255, (byte)255)]
+        [DataRow((byte)255, (byte)125)]
         public void ExecuteNextInstruction_JumpAddressIsNotValid_RaisesStatusChangedEvent(byte lsb, byte msb)
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -224,9 +225,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Halted, programMemory: memory, program: _program);
         }
 
-        [Theory]
-        [InlineData(255, 255)]
-        [InlineData(255, 125)]
+        [TestMethod]
+        [DataRow((byte)255, (byte)255)]
+        [DataRow((byte)255, (byte)125)]
         public void ExecuteNextInstruction_JumpAddressIsNotValid_RaisesVirtualMachineHaltedEvent(byte lsb, byte msb)
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -239,9 +240,9 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             ExecuteNextInstruction_Verify_RaisesVirtualMachineHaltedEvent(HaltReason.MemoryAddressViolation, programMemory: memory, program: _program);
         }
 
-        [Theory]
-        [InlineData(255, 255)]
-        [InlineData(255, 125)]
+        [TestMethod]
+        [DataRow((byte)255, (byte)255)]
+        [DataRow((byte)255, (byte)125)]
         public void ExecuteNextInstruction_JumpAddressIsNotValid_DoesNotUpdateProgramCounter(byte lsb, byte msb)
         {
             var memory = Substitute.For<IVirtualMachineMemory>();

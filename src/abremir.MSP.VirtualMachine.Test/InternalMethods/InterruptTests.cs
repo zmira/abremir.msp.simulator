@@ -4,12 +4,13 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class InterruptTests : VirtualMachineTestsBase
     {
-        [Theory]
-        [InlineData(Status.Interrupted)]
-        [InlineData(Status.Halted)]
-        [InlineData(Status.Suspended)]
+        [TestMethod]
+        [DataRow(Status.Interrupted)]
+        [DataRow(Status.Halted)]
+        [DataRow(Status.Suspended)]
         public void Interrupt_StatusInterrupted_DoesNotInterrupt(Status status)
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(status).Build();
@@ -24,7 +25,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void Interrupt_StatusNotInterrupted_SetsInterruptedBy()
         {
             Check.That(VirtualMachine.InterruptedBy).IsNull();
@@ -36,7 +37,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.InterruptedBy).Is(interruptedBy);
         }
 
-        [Fact]
+        [TestMethod]
         public void Interrupt_StatusNotInterrupted_SetsStatusInterrupted()
         {
             Check.That(VirtualMachine.Status).IsNotEqualTo(Status.Interrupted);

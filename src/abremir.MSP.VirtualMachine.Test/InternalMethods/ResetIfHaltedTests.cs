@@ -3,9 +3,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ResetIfHaltedTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsNotHalted_DoesNotReset()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5 };
@@ -27,7 +28,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.HaltedBy).Is(haltedBy);
         }
 
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsHalted_ClearsStack()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5, (byte)Operation.Halt };
@@ -44,7 +45,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsHalted_ResetsProgramCounter()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5, (byte)Operation.Halt };
@@ -61,7 +62,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.PC).Is((ushort)0);
         }
 
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsHalted_ClearsHaltedBy()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5, (byte)Operation.Halt };

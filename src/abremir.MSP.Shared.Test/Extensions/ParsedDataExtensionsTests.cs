@@ -2,9 +2,10 @@
 
 namespace abremir.MSP.Shared.Test.Extensions
 {
+    [TestClass]
     public class ParsedDataExtensionsTests
     {
-        [Fact]
+        [TestMethod]
         public void GetMemoryMap_EmptyCollection_ReturnsEmptyArray()
         {
             List<ParsedData> parsedData = [];
@@ -14,7 +15,7 @@ namespace abremir.MSP.Shared.Test.Extensions
             Check.That(result).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void GetMemoryMap_CollectionWithData_ReturnsMemoryMap()
         {
             List<ParsedData> parsedData =

@@ -11,6 +11,7 @@ using NSubstituteAutoMocker.Standard;
 
 namespace abremir.MSP.Compiler.Test
 {
+    [TestClass]
     public class CompilerTests
     {
         private readonly NSubstituteAutoMocker<Compiler> _compiler;
@@ -20,9 +21,9 @@ namespace abremir.MSP.Compiler.Test
             _compiler = new NSubstituteAutoMocker<Compiler>();
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
         public void Compile_EmptySource_ReturnsNoSourceDetectedToAssembleError(string? source)
         {
             var parser = _compiler.Get<IParser>();
@@ -42,7 +43,7 @@ namespace abremir.MSP.Compiler.Test
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ParserReturnsErrors_ReturnsEarlyWithErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -68,7 +69,7 @@ namespace abremir.MSP.Compiler.Test
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ParserOnlyReturnsWarnings()
         {
             var parser = _compiler.Get<IParser>();
@@ -95,7 +96,7 @@ namespace abremir.MSP.Compiler.Test
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ValidatorReturnsErrors_ReturnsEarlyWithErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -123,7 +124,7 @@ namespace abremir.MSP.Compiler.Test
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ValidatorOnlyReturnsWarnings()
         {
             var parser = _compiler.Get<IParser>();
@@ -150,7 +151,7 @@ namespace abremir.MSP.Compiler.Test
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_AssemblerReturnsErrors_ReturnsEarlyWithErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -177,7 +178,7 @@ namespace abremir.MSP.Compiler.Test
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_NoErrors()
         {
             var parser = _compiler.Get<IParser>();

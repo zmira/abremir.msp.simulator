@@ -6,9 +6,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class StepTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Step_StatusInterrupted_RaisesInputRequestedEvent()
         {
             byte[] program = [(byte)Operation.InputValue];
@@ -23,7 +24,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void Step_StatusHalted_ClearsStack()
         {
             byte[] program = [(byte)Operation.PushValue, 1, (byte)Operation.Halt];
@@ -51,7 +52,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void Step_StatusHalted_SetsProgramCounterToZero()
         {
             byte[] program = [(byte)Operation.PushValue, 1, (byte)Operation.Halt];
@@ -79,7 +80,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void Step_StatusHalted_SetsHaltedByToNull()
         {
             byte[] program = [(byte)Operation.PushValue, 1, (byte)Operation.Halt];
@@ -94,7 +95,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.HaltedBy).IsNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void Step_SetsModeToStep()
         {
             byte[] program = [(byte)Operation.PushValue, 1];
@@ -108,7 +109,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Mode).Is(Mode.Step);
         }
 
-        [Fact]
+        [TestMethod]
         public void Step_SetsStatusToRunning()
         {
             byte[] program = [(byte)Operation.PushValue, 1];
@@ -122,7 +123,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Status).Is(Status.Running);
         }
 
-        [Fact]
+        [TestMethod]
         public void Step_ExecutesNextInstruction()
         {
             byte[] program = [(byte)Operation.PushValue, 1];

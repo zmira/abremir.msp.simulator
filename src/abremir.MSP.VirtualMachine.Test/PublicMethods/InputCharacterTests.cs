@@ -4,9 +4,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class InputCharacterTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void InputCharacter_StatusNotInterrupted_DoesNotPushValueToStack()
         {
             VirtualMachine.InputCharacter(65);
@@ -14,7 +15,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void InputCharacter_InterruptedByIsNotInputCharacter_DoesNotPushValueToStack()
         {
             byte[] program = [(byte)Operation.InputValue];
@@ -29,7 +30,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void InputCharacter_PushesValueToStack()
         {
             byte[] program = [(byte)Operation.InputCharacter];
@@ -42,7 +43,7 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             Check.That(VirtualMachine.Stack.Where(value => value != 0)).Not.IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void InputCharacter_ExecutesNextInstruction()
         {
             byte[] program = [(byte)Operation.InputCharacter, (byte)Operation.Halt];

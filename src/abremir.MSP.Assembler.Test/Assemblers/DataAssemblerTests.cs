@@ -4,6 +4,7 @@ using abremir.MSP.Shared.Models;
 
 namespace abremir.MSP.Assembler.Test.Assemblers
 {
+    [TestClass]
     public class DataAssemblerTests
     {
         private readonly DataAssembler _assembler;
@@ -13,7 +14,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             _assembler = new DataAssembler();
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithoutData_ReturnsEmpty()
         {
             var result = _assembler.Assemble([]);
@@ -23,7 +24,7 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             Check.That(result.Data).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithData_ReturnsDataMemoryAndVariableMap()
         {
             List<ParsedData> parsedData =

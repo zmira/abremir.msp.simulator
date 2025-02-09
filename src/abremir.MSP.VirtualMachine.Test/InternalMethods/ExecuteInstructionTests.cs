@@ -6,12 +6,13 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ExecuteInstructionTests : VirtualMachineTestsBase
     {
-        [Theory]
-        [InlineData(Status.Halted)]
-        [InlineData(Status.Interrupted)]
-        [InlineData(Status.Suspended)]
+        [TestMethod]
+        [DataRow(Status.Halted)]
+        [DataRow(Status.Interrupted)]
+        [DataRow(Status.Suspended)]
         public void ExecuteInstruction_SuspendedExecution_DoesNotExecuteInstruction(Status status)
         {
             var program = new byte[] { (byte)Operation.PushValue, 1 };
@@ -27,10 +28,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Theory]
-        [InlineData(Status.Halted)]
-        [InlineData(Status.Interrupted)]
-        [InlineData(Status.Suspended)]
+        [TestMethod]
+        [DataRow(Status.Halted)]
+        [DataRow(Status.Interrupted)]
+        [DataRow(Status.Suspended)]
         public void ExecuteInstruction_SuspendedExecution_ReturnsNull(Status status)
         {
             var program = new byte[] { (byte)Operation.PushValue, 1 };
@@ -43,7 +44,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_InvalidProgramCounterAddress_DoesNotExecuteInstruction()
         {
             var program = new byte[] { (byte)Operation.InputValue };
@@ -58,7 +59,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_InvalidProgramCounterAddress_ReturnsNull()
         {
             var program = new byte[] { (byte)Operation.InputValue };
@@ -70,7 +71,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_InvalidOperation_DoesNotExecuteInstruction()
         {
 #pragma warning disable IDE0230 // Use UTF-8 string literal
@@ -87,7 +88,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_InvalidOperation_SetsStatusToHalted()
         {
 #pragma warning disable IDE0230 // Use UTF-8 string literal
@@ -101,7 +102,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Status).Is(Status.Halted);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_InvalidOperation_SetsHaltReasonUnknownOperation()
         {
 #pragma warning disable IDE0230 // Use UTF-8 string literal
@@ -115,7 +116,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.HaltedBy).Is(HaltReason.UnknownOperation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_InvalidOperation_ReturnsNull()
         {
 #pragma warning disable IDE0230 // Use UTF-8 string literal
@@ -129,7 +130,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_ValidOperation_ExecutesInstruction()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1 };
@@ -144,7 +145,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteInstruction_ValidOperation_ReturnsExecuteInstructionCompleted()
         {
             const Operation operation = Operation.PushValue;

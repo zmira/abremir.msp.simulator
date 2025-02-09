@@ -4,9 +4,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class SetStatusTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void SetStatus_StatusIsSame_DoesNotSetStatus()
         {
             const Status status = Status.None;
@@ -22,7 +23,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void SetStatus_StatusIsDifferent_SetsStatus()
         {
             Check.That(VirtualMachine.Status).Is(Status.None);
@@ -34,7 +35,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Status).Is(status);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetStatus_StatusIsDifferent_RaisesStatusChangedEventWithNewStatus()
         {
             Check.That(VirtualMachine.Status).Is(Status.None);

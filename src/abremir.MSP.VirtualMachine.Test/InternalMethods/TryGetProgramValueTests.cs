@@ -5,9 +5,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class TryGetProgramValueTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void TryGetProgramValue_Succeeds_ReturnsTrue()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -20,7 +21,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGetProgramValue_Succeeds_OutputsValue()
         {
             const Operation operation = Operation.Jump;
@@ -34,7 +35,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(poppedValue).Is((byte)operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGetProgramValue_Fails_ReturnsFalse()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -47,7 +48,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGetProgramValue_Fails_HaltsWithMemoryAddressViolation()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();

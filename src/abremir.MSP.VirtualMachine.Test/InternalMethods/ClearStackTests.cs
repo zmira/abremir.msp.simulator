@@ -3,9 +3,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ClearStackTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void ClearStack_ResetsStack()
         {
             const byte value = 99;
@@ -21,7 +22,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void ClearStack_RaisesStackPointerUpdatedEvent()
         {
             var hook = EventHook.For(VirtualMachine)

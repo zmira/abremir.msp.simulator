@@ -5,9 +5,10 @@ using abremir.MSP.Shared.Models;
 
 namespace abremir.MSP.Validator.Test.Validators
 {
+    [TestClass]
     public class CodeValidatorTests
     {
-        [Fact]
+        [TestMethod]
         public void Validate_NoCodeDeclarations_ReturnsMemoryEmptyWarning()
         {
             var result = CodeValidator.Validate([], []);
@@ -16,7 +17,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Warnings.Single().Warning).Is(Warning.CodeNoInstructionsDeclared);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_CodeInstructionsExceedMemoryCapacity_ReturnsMemoryCapacityExhaustedError()
         {
             List<ParsedInstruction> code = [];
@@ -31,7 +32,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.ProgramMemoryCapacityExhausted);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_LabelExistsAndIsRedefined_ReturnsRedefinitionOfLabelError()
         {
             var code1 = new ParsedInstruction(1, Operation.Halt);
@@ -46,7 +47,7 @@ namespace abremir.MSP.Validator.Test.Validators
                 .Select(error => error.LineNumber)).IsEquivalentTo(new[] { codeX2.LineNumber, codeX3.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_PushOperationValuesAreOutsideAllowedRange_ReturnsPushArgumentOutsideAllowedRangeError()
         {
             var code1 = new ParsedInstruction(1, Operation.PushValue, Constants.Min8BitValue - 1);
@@ -62,7 +63,7 @@ namespace abremir.MSP.Validator.Test.Validators
                 .Select(error => error.LineNumber)).IsEquivalentTo(new[] { code1.LineNumber, code3.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_PushAddressOperationValueIsBeyondMemoryCapacity_ReturnsCodePshaInvalidAddressError()
         {
             var code = new ParsedInstruction(0, Operation.PushAddress, Constants.MemoryCapacity);
@@ -72,7 +73,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.CodePshaInvalidAddress);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_PushAddressOperationReferencesUndeclaredVariable_ReturnsCodePshaVariableNotDeclaredError()
         {
             var code = new ParsedInstruction(0, Operation.PushAddress, TargetTextIdentifier: "x");
@@ -82,7 +83,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.CodePshaVariableNotDeclared);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_PushAddressOperationReferencesLabelInsteadOfVariable_ReturnsCodePshaInvalidVariableArgumentError()
         {
             var code1 = new ParsedInstruction(1, Operation.PushValue, 1, InstructionLabel: "y");
@@ -93,10 +94,10 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Errors.Single(error => error.Error is Error.CodePshaInvalidVariableArgument).LineNumber).Is(code2.LineNumber);
         }
 
-        [Theory]
-        [InlineData(Operation.Jump)]
-        [InlineData(Operation.JumpIfFalse)]
-        [InlineData(Operation.Call)]
+        [TestMethod]
+        [DataRow(Operation.Jump)]
+        [DataRow(Operation.JumpIfFalse)]
+        [DataRow(Operation.Call)]
         public void Validate_BranchLabelNotDefined_ReturnsCodeBranchUndefinedLabelError(Operation operation)
         {
             var code = new ParsedInstruction(1, operation, TargetTextIdentifier: "y");
@@ -106,10 +107,10 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.CodeBranchUndefinedLabel);
         }
 
-        [Theory]
-        [InlineData(Operation.Jump)]
-        [InlineData(Operation.JumpIfFalse)]
-        [InlineData(Operation.Call)]
+        [TestMethod]
+        [DataRow(Operation.Jump)]
+        [DataRow(Operation.JumpIfFalse)]
+        [DataRow(Operation.Call)]
         public void Validate_BranchAddressBeyondMemoryCapacity_ReturnsCodeBranchTargetOutsideMemoryLimitsError(Operation operation)
         {
             var code1 = new ParsedInstruction(1, operation, Constants.MemoryCapacity);
@@ -122,10 +123,10 @@ namespace abremir.MSP.Validator.Test.Validators
                 .Select(error => error.LineNumber)).IsSubSetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
-        [Theory]
-        [InlineData(Operation.Jump)]
-        [InlineData(Operation.JumpIfFalse)]
-        [InlineData(Operation.Call)]
+        [TestMethod]
+        [DataRow(Operation.Jump)]
+        [DataRow(Operation.JumpIfFalse)]
+        [DataRow(Operation.Call)]
         public void Validate_RelativeBranchAddressBeyondMemoryCapacity_ReturnsCodeBranchTargetOutsideMemoryLimitsError(Operation operation)
         {
             var code1 = new ParsedInstruction(1, operation, Constants.MemoryCapacity, IsRelative: true);
@@ -139,7 +140,7 @@ namespace abremir.MSP.Validator.Test.Validators
                 .Select(error => error.LineNumber)).IsSubSetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_OperationReferencesLabelAssignedToItself_ReturnsCodeBranchInvalidArgumentError()
         {
             var code = new ParsedInstruction(1, Operation.Call, TargetTextIdentifier: "y", InstructionLabel: "y");
@@ -149,7 +150,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.CodeBranchInvalidArgument);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_LabelDeclaredButNeverReferenced_ReturnsUnusedLabelWarning()
         {
             var code = new ParsedInstruction(1, Operation.Call, InstructionLabel: "y");
@@ -159,7 +160,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Warnings).HasElementThatMatches(warning => warning.Warning == Warning.CodeUnusedLabel);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_CodeLabelUsesSameNameAsDataVariable_ReturnsCodeLabelSharesNameWithVariableWarning()
         {
             var data = new ParsedData(1, "y", 0, 1);
@@ -170,7 +171,7 @@ namespace abremir.MSP.Validator.Test.Validators
             Check.That(result.Warnings).HasElementThatMatches(warning => warning.Warning == Warning.CodeLabelSharesNameWithVariable);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_PushAddressValueAndNoDataHasBeenDeclared_ReturnsCodeAddressDoesNotReferenceVariableSpaceWarning()
         {
             var code1 = new ParsedInstruction(1, Operation.PushAddress, 0);
@@ -182,7 +183,7 @@ namespace abremir.MSP.Validator.Test.Validators
                 .Select(warnings => warnings.LineNumber)).IsSubSetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_PushAddressValueReferencesUnallocatedDataMemory_ReturnsCodeAddressDoesNotReferenceVariableSpaceWarning()
         {
             var data1 = new ParsedData(1, "x", 0, 10);
@@ -196,7 +197,7 @@ namespace abremir.MSP.Validator.Test.Validators
                 .Select(warnings => warnings.LineNumber)).IsSubSetOf(new[] { code1.LineNumber, code2.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_CodeDoesNotContainHaltInstruction_ReturnsNoHaltInstructionDeclaredWarning()
         {
             List<ParsedInstruction> parsedInstructions =
