@@ -2,7 +2,6 @@
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -44,8 +43,8 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.Count.ShouldBe(1);
-            VirtualMachine.Stack.ElementAt(0).ShouldBe(expectedResult);
+            Check.That(VirtualMachine.Stack).CountIs(1);
+            Check.That(VirtualMachine.Stack.ElementAt(0)).Is(expectedResult);
         }
 
         [Fact]

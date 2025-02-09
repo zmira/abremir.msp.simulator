@@ -11,7 +11,7 @@
         {
             var result = byteValue.FromTwosComplement();
 
-            expectedDecomplementedValue.ShouldBe(result);
+            Check.That(expectedDecomplementedValue).Is(result);
         }
 
         [Theory]
@@ -23,18 +23,16 @@
         {
             var result = byteValue.ToMemoryAddress();
 
-            expectedIntValue.ShouldBe(result);
+            Check.That(expectedIntValue).Is(result);
         }
 
         [Theory]
-#pragma warning disable CA1861 // Avoid constant arrays as arguments
         [InlineData(new byte[] { })]
-#pragma warning restore CA1861 // Avoid constant arrays as arguments
         [InlineData(new byte[] { 0 })]
         [InlineData(new byte[] { 255, 124, 0 })]
         public void ToMemoryAddress_InvalidNumberOfElements_ThrowsArgumentOutOfRangeException(byte[] byteValue)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => byteValue.ToMemoryAddress());
+            Check.ThatCode(byteValue.ToMemoryAddress).Throws<ArgumentOutOfRangeException>();
         }
     }
 }

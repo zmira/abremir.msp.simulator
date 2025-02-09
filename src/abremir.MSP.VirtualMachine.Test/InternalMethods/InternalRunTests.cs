@@ -2,7 +2,6 @@
 using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
@@ -32,7 +31,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).Not.IsEmpty();
 
             var count = 0;
 
@@ -49,7 +48,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -60,7 +59,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.PC.ShouldNotBe((ushort)0);
+            Check.That(VirtualMachine.PC).IsNotEqualTo((ushort)0);
 
             var count = 0;
 
@@ -77,7 +76,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -88,7 +87,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.HaltedBy.ShouldNotBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNotNull();
 
             var count = 0;
 
@@ -106,7 +105,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -131,7 +130,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -156,7 +155,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -175,7 +174,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBeGreaterThan(0);
+            Check.That(count).IsStrictlyGreaterThan(0);
         }
 
         [Fact]
@@ -194,7 +193,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -213,7 +212,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
         [Fact]
@@ -234,7 +233,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine.Run();
             VirtualMachine.Suspend();
 
-            count.ShouldBe(0);
+            Check.That(count).Is(0);
         }
 
         [Fact]
@@ -255,7 +254,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine.Run();
             VirtualMachine.SetMode(Enums.Mode.Step);
 
-            count.ShouldBe(0);
+            Check.That(count).Is(0);
         }
     }
 }

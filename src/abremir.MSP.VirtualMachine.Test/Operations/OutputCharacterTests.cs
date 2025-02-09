@@ -3,8 +3,6 @@ using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -33,8 +31,8 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<OutputEmittedEventArgs>((virtualMachine, handler) => virtualMachine.OutputEmitted += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBeTrue())
-                .Verify(eventArgs => eventArgs.Value.ShouldBe(_value))
+                .Verify(eventArgs => Check.That(eventArgs.IsCharacter).IsTrue())
+                .Verify(eventArgs => Check.That(eventArgs.Value).Is(_value))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -51,11 +49,11 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_OutputCharacter_PopsValueFromStack()
         {
-            VirtualMachine.Stack.ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack).Not.IsEmpty();
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
         [Fact]

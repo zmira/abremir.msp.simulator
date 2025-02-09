@@ -3,7 +3,6 @@ using abremir.MSP.Shared.Extensions;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -317,7 +316,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.ShouldBe((ushort)(pc + _operation.GetNumberOfMemoryCellsOccupied()));
+            Check.That(VirtualMachine.PC).Is((ushort)(pc + _operation.GetNumberOfMemoryCellsOccupied()));
         }
     }
 }

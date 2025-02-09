@@ -13,7 +13,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.IsValidAddress(null, address);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
         [Theory]
@@ -23,7 +23,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             var result = VirtualMachine.IsValidAddress(null, address);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Theory]
@@ -31,12 +31,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         [InlineData(Constants.MemoryCapacity)]
         public void IsValidAddress_Invalid_SetsStatusHaltsWithMemoryAddressViolation(int address)
         {
-            VirtualMachine.Status.ShouldNotBe(Status.Halted);
+            Check.That(VirtualMachine.Status).IsNotEqualTo(Status.Halted);
 
             VirtualMachine.IsValidAddress(null, address);
 
-            VirtualMachine.Status.ShouldBe(Status.Halted);
-            VirtualMachine.HaltedBy.ShouldBe(HaltReason.MemoryAddressViolation);
+            Check.That(VirtualMachine.Status).Is(Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).Is(HaltReason.MemoryAddressViolation);
         }
     }
 }

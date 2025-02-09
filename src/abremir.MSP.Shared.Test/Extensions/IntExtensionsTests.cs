@@ -11,7 +11,7 @@
         {
             var result = intValue.ToTwosComplement();
 
-            expectedComplementValue.ShouldBe(result);
+            Check.That(expectedComplementValue).Is(result);
         }
 
         [Theory]
@@ -19,7 +19,7 @@
         [InlineData(Constants.Constants.Max8BitValue + 1)]
         public void ToTwosComplement_InvalidValues_ThrowsException(int intValue)
         {
-            Assert.Throws<OverflowException>(() => intValue.ToTwosComplement());
+            Check.ThatCode(() => intValue.ToTwosComplement()).Throws<OverflowException>();
         }
 
         [Theory]
@@ -33,7 +33,7 @@
         {
             var result = intValue.ToLeastAndMostSignificantBytes();
 
-            expectedBytes.ShouldBeEquivalentTo(result);
+            Check.That(expectedBytes).Is(result);
         }
 
         [Theory]
@@ -42,7 +42,7 @@
         [InlineData(ushort.MaxValue + 1)]
         public void ToLeastAndMostSignificantBytes_InvalidValues_ThrowsOverflowException(int intValue)
         {
-            Assert.Throws<OverflowException>(() => intValue.ToLeastAndMostSignificantBytes());
+            Check.ThatCode(() => intValue.ToLeastAndMostSignificantBytes()).Throws<OverflowException>();
         }
     }
 }

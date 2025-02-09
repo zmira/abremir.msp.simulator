@@ -19,7 +19,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _virtualMachineMemory.SetMemory(data);
 
-            _virtualMachineMemory.MemoryData.Count(value => value is not 0).ShouldBe(data.Length);
+            Check.That(_virtualMachineMemory.MemoryData.Count(value => value is not 0)).Is(data.Length);
         }
 
         [Fact]
@@ -32,8 +32,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.Count(value => value is not 0).ShouldNotBe(data.Length);
-            memoryData.Count(value => value is not 0).ShouldBe(Constants.MemoryCapacity);
+            Check.That(memoryData.Count(value => value is not 0)).IsNotEqualTo(data.Length);
+            Check.That(memoryData.Count(value => value is not 0)).Is(Constants.MemoryCapacity);
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var newMemoryData = _virtualMachineMemory.MemoryData;
 
-            newMemoryData.Count(value => value is not 0).ShouldNotBe(memoryData.Count);
-            newMemoryData.All(value => value is 0).ShouldBeTrue();
+            Check.That(newMemoryData.Count(value => value is not 0)).IsNotEqualTo(memoryData.Count);
+            Check.That(newMemoryData.All(value => value is 0)).IsTrue();
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TryGet(Constants.MemoryCapacity, out _);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TryGet(Constants.MemoryCapacity - 1, out _);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _virtualMachineMemory.TryGet(address, out var outputValue);
 
-            outputValue.ShouldBe(value);
+            Check.That(outputValue).Is(value);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TrySet(Constants.MemoryCapacity, 5);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _virtualMachineMemory.TrySet(Constants.MemoryCapacity - 1, 5);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
         [Fact]
@@ -110,7 +110,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.ElementAt(address).ShouldBe(value);
+            Check.That(memoryData.ElementAt(address)).Is(value);
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _virtualMachineMemory.TrySet(address, value);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
         [Fact]
@@ -138,8 +138,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.ElementAt(address).ShouldNotBe(value);
-            result.ShouldBeTrue();
+            Check.That(memoryData.ElementAt(address)).IsNotEqualTo(value);
+            Check.That(result).IsTrue();
         }
 
         [Fact]
@@ -151,8 +151,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.Count.ShouldBe(Constants.MemoryCapacity);
-            memoryData.Count(value => value is not 0).ShouldBe(data.Length);
+            Check.That(memoryData).CountIs(Constants.MemoryCapacity);
+            Check.That(memoryData.Count(value => value is not 0)).Is(data.Length);
         }
     }
 }

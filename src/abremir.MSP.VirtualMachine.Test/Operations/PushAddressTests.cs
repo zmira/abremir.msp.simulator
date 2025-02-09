@@ -3,7 +3,6 @@ using abremir.MSP.Shared.Extensions;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -38,12 +37,12 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_PushAddress_PushesResultToStack()
         {
-            VirtualMachine.Stack.ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack).IsEmpty();
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.ElementAt(0).ShouldBe(_msb);
-            VirtualMachine.Stack.ElementAt(1).ShouldBe(_lsb);
+            Check.That(VirtualMachine.Stack.ElementAt(0)).Is(_msb);
+            Check.That(VirtualMachine.Stack.ElementAt(1)).Is(_lsb);
         }
 
         [Fact]

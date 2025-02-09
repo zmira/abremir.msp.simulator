@@ -2,7 +2,6 @@
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -53,7 +52,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBeTrue())
+                .Verify(eventArgs => Check.That(eventArgs.IsCharacter).IsTrue())
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();

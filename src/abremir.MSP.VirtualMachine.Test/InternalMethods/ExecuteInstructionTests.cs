@@ -3,7 +3,6 @@ using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
@@ -41,7 +40,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            result.ShouldBeNull();
+            Check.That(result).IsNull();
         }
 
         [Fact]
@@ -68,7 +67,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(Constants.MemoryCapacity);
 
-            result.ShouldBeNull();
+            Check.That(result).IsNull();
         }
 
         [Fact]
@@ -99,7 +98,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            VirtualMachine.Status.ShouldBe(Status.Halted);
+            Check.That(VirtualMachine.Status).Is(Status.Halted);
         }
 
         [Fact]
@@ -113,7 +112,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            VirtualMachine.HaltedBy.ShouldBe(HaltReason.UnknownOperation);
+            Check.That(VirtualMachine.HaltedBy).Is(HaltReason.UnknownOperation);
         }
 
         [Fact]
@@ -127,7 +126,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            result.ShouldBeNull();
+            Check.That(result).IsNull();
         }
 
         [Fact]
@@ -155,8 +154,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.ExecuteInstruction(VirtualMachine.PC);
 
-            result.ShouldNotBeNull();
-            result!.Operation.ShouldBe(operation);
+            Check.That(result).IsNotNull();
+            Check.That(result!.Operation).Is(operation);
         }
     }
 }

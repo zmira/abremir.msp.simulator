@@ -3,7 +3,6 @@ using abremir.MSP.Shared.Extensions;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -40,21 +39,21 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
         [Fact]
         public void ExecuteNextInstruction_StoreValue_SetsResultInDataMemory()
         {
-            VirtualMachine.Data.ElementAt(_dataAddress).ShouldNotBe(_value);
+            Check.That(VirtualMachine.Data.ElementAt(_dataAddress)).IsNotEqualTo(_value);
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Data.ElementAt(_dataAddress).ShouldBe(_value);
+            Check.That(VirtualMachine.Data.ElementAt(_dataAddress)).Is(_value);
         }
 
         [Fact]
         public void ExecuteNextInstruction_StoreValue_PopsValueFromStack()
         {
-            VirtualMachine.Stack.ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack).Not.IsEmpty();
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.Stack.ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
         [Fact]

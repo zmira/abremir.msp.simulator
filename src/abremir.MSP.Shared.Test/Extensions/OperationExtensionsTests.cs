@@ -42,7 +42,7 @@ namespace abremir.MSP.Shared.Test.Extensions
         {
             var result = operation.GetNumberOfMemoryCellsOccupied();
 
-            expectedNumberOfCells.ShouldBe(result);
+            Check.That(expectedNumberOfCells).Is(result);
         }
     }
 }

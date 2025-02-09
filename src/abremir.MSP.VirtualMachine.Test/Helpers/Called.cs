@@ -1,5 +1,4 @@
-﻿using EventTesting;
-using EventTesting.Verifiers;
+﻿using EventTesting.Verifiers;
 
 namespace abremir.MSP.VirtualMachine.Test.Helpers.EventTestingHelper
 {

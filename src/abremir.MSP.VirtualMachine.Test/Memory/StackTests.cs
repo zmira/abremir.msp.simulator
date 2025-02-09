@@ -22,8 +22,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.Clear();
 
-            _stack.SP.ShouldNotBe(sp);
-            _stack.SP.ShouldBe((ushort)(Constants.MemoryCapacity - 1));
+            Check.That(_stack.SP).IsNotEqualTo(sp);
+            Check.That(_stack.SP).Is((ushort)(Constants.MemoryCapacity - 1));
         }
 
         [Fact]
@@ -36,8 +36,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.Clear();
 
-            _stack.StackData.Count.ShouldNotBe(data.Count);
-            _stack.StackData.ShouldBeEmpty();
+            Check.That(_stack.StackData).Not.CountIs(data.Count);
+            Check.That(_stack.StackData).IsEmpty();
         }
 
         [Fact]
@@ -47,8 +47,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.TryPush(value);
 
-            result.ShouldBeTrue();
-            _stack.SP.ShouldBe((ushort)(Constants.MemoryCapacity - 2));
+            Check.That(result).IsTrue();
+            Check.That(_stack.SP).Is((ushort)(Constants.MemoryCapacity - 2));
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.TryPush(10);
 
-            _stack.SP.ShouldBeLessThan(sp);
+            Check.That(_stack.SP).IsStrictlyLessThan(sp);
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.TryPush(99);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -83,9 +83,9 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.TryPop(out var returnValue);
 
-            result.ShouldBeTrue();
-            returnValue.ShouldBe(value);
-            _stack.SP.ShouldBe((ushort)(Constants.MemoryCapacity - 1));
+            Check.That(result).IsTrue();
+            Check.That(returnValue).Is(value);
+            Check.That(_stack.SP).Is((ushort)(Constants.MemoryCapacity - 1));
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.TryPop(out _);
 
-            _stack.SP.ShouldBeGreaterThan(sp);
+            Check.That(_stack.SP).IsStrictlyGreaterThan(sp);
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _stack.TryPop(out _);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
         {
             var result = _stack.StackData;
 
-            result.ShouldBeEmpty();
+            Check.That(result).IsEmpty();
         }
 
         [Fact]
@@ -127,8 +127,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.StackData;
 
-            result.ShouldNotBeEmpty();
-            result.ShouldBeEquivalentTo(new byte[] { 3, 2, 1 });
+            Check.That(result).Not.IsEmpty();
+            Check.That(result).Is(new byte[] { 3, 2, 1 });
         }
     }
 }

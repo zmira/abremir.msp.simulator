@@ -2,8 +2,6 @@
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
@@ -19,7 +17,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryPopFromStack(Operation.LessThan, out _);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
         [Fact]
@@ -33,7 +31,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             _ = VirtualMachine.TryPopFromStack(Operation.LessThan, out var poppedValue);
 
-            poppedValue.ShouldBe(value);
+            Check.That(poppedValue).Is(value);
         }
 
         [Fact]
@@ -57,7 +55,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             var result = VirtualMachine.TryPopFromStack(Operation.LessThan, out _);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -65,8 +63,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine.TryPopFromStack(Operation.LessThan, out _);
 
-            VirtualMachine.Status.ShouldBe(Status.Halted);
-            VirtualMachine.HaltedBy.ShouldBe(HaltReason.StackEmpty);
+            Check.That(VirtualMachine.Status).Is(Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).Is(HaltReason.StackEmpty);
         }
     }
 }

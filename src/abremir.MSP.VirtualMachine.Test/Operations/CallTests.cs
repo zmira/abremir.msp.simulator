@@ -4,7 +4,6 @@ using abremir.MSP.Shared.Extensions;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
@@ -54,7 +53,7 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             var nextInstructionAddress = pc + Operation.Call.GetNumberOfMemoryCellsOccupied();
             var memoryAddressInStack = new[] { VirtualMachine.Stack.ElementAt(1), VirtualMachine.Stack.ElementAt(0) }.ToMemoryAddress();
 
-            memoryAddressInStack.ShouldBe(nextInstructionAddress);
+            Check.That(memoryAddressInStack).Is(nextInstructionAddress);
         }
 
         [Fact]

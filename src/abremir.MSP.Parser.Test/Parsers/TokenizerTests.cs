@@ -5,6 +5,7 @@ using abremir.MSP.Parser.Parsers;
 using abremir.MSP.Shared.Constants;
 using abremir.MSP.Shared.Enums;
 using abremir.MSP.Shared.Extensions;
+using NSubstitute.ExceptionExtensions;
 using Superpower;
 
 namespace abremir.MSP.Parser.Test.Parsers
@@ -28,7 +29,7 @@ namespace abremir.MSP.Parser.Test.Parsers
                 .Select(t => t.Kind)
                 .ToList();
 
-            expectedTokens.ShouldBe(actualTokens);
+            Check.That(expectedTokens).IsEqualTo(actualTokens);
         }
 
         [Theory]
@@ -99,7 +100,7 @@ namespace abremir.MSP.Parser.Test.Parsers
                 .Select(t => t.Kind)
                 .ToList();
 
-            expectedTokens.ShouldBe(actualTokens);
+            Check.That(expectedTokens).IsEqualTo(actualTokens);
         }
 
         [Fact]
@@ -107,7 +108,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         {
             var prog = $"{Constants.DataSegment}{Environment.NewLine}{Constants.CodeSegment}{Environment.NewLine}{Operation.PushValue.GetDescription()} k(76%";
 
-            Assert.Throws<ParseException>(() => _tokenizer.Tokenize(prog));
+            Check.ThatCode(() => _tokenizer.Tokenize(prog)).Throws<ParseException>();
         }
 
         [Fact]
@@ -115,7 +116,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         {
             var prog = $"{Constants.DataSegment}{Environment.NewLine}{Constants.CodeSegment}{Environment.NewLine}{Operation.PushAddress.GetDescription()} 0/887&5";
 
-            Assert.Throws<ParseException>(() => _tokenizer.Tokenize(prog));
+            Check.ThatCode(() => _tokenizer.Tokenize(prog)).Throws<ParseException>();
         }
 
         [Theory]
@@ -126,7 +127,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         {
             var prog = $"{Constants.DataSegment}{Environment.NewLine}{Constants.CodeSegment}{Environment.NewLine}{operation.GetDescription()} k(76%";
 
-            Assert.Throws<ParseException>(() => _tokenizer.Tokenize(prog));
+            Check.ThatCode(() => _tokenizer.Tokenize(prog)).Throws<ParseException>();
         }
 
         [Fact]
@@ -134,7 +135,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         {
             var prog = $"{Constants.DataSegment}{Environment.NewLine}/gghg%{Constants.CodeSegment}";
 
-            Assert.Throws<ParseException>(() => _tokenizer.Tokenize(prog));
+            Check.ThatCode(() => _tokenizer.Tokenize(prog)).Throws<ParseException>();
         }
 
         [Fact]
@@ -142,7 +143,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         {
             var prog = $"{Constants.DataSegment}{Environment.NewLine}{Constants.CodeSegment}{Environment.NewLine}{Operation.ReturnFromCall.GetDescription()} (7lijklsfd";
 
-            Assert.Throws<ParseException>(() => _tokenizer.Tokenize(prog));
+            Check.ThatCode(() => _tokenizer.Tokenize(prog)).Throws<ParseException>();
         }
 
         [Fact]
@@ -150,7 +151,7 @@ namespace abremir.MSP.Parser.Test.Parsers
         {
             var prog = $"{Constants.DataSegment}{Environment.NewLine}gghg 1 TAM 1 VAL 1|b%3{Environment.NewLine}{Constants.CodeSegment}";
 
-            Assert.Throws<ParseException>(() => _tokenizer.Tokenize(prog));
+            Check.ThatCode(() => _tokenizer.Tokenize(prog)).Throws<ParseException>();
         }
     }
 }

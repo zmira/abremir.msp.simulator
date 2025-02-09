@@ -1,7 +1,6 @@
 ﻿using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
@@ -18,21 +17,21 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Reset_SetsModeNone()
         {
-            VirtualMachine.Mode.ShouldNotBe(Mode.None);
+            Check.That(VirtualMachine.Mode).IsNotEqualTo(Mode.None);
 
             VirtualMachine.Reset();
 
-            VirtualMachine.Mode.ShouldBe(Mode.None);
+            Check.That(VirtualMachine.Mode).Is(Mode.None);
         }
 
         [Fact]
         public void Reset_SetsStatusNone()
         {
-            VirtualMachine.Status.ShouldNotBe(Status.None);
+            Check.That(VirtualMachine.Status).IsNotEqualTo(Status.None);
 
             VirtualMachine.Reset();
 
-            VirtualMachine.Status.ShouldBe(Status.None);
+            Check.That(VirtualMachine.Status).Is(Status.None);
         }
 
         [Fact]
@@ -44,11 +43,11 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine.SetMemory([], program);
             VirtualMachine.Step();
 
-            VirtualMachine.HaltedBy.ShouldNotBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNotNull();
 
             VirtualMachine.Reset();
 
-            VirtualMachine.HaltedBy.ShouldBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNull();
         }
 
         [Fact]
@@ -60,31 +59,31 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine.SetMemory([], program);
             VirtualMachine.Step();
 
-            VirtualMachine.InterruptedBy.ShouldNotBeNull();
+            Check.That(VirtualMachine.InterruptedBy).IsNotNull();
 
             VirtualMachine.Reset();
 
-            VirtualMachine.InterruptedBy.ShouldBeNull();
+            Check.That(VirtualMachine.InterruptedBy).IsNull();
         }
 
         [Fact]
         public void Reset_ClearsStack()
         {
-            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).Not.IsEmpty();
 
             VirtualMachine.Reset();
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
         [Fact]
         public void Reset_SetsProgramCounterToZero()
         {
-            VirtualMachine.PC.ShouldNotBe((byte)0);
+            Check.That(VirtualMachine.PC).IsNotEqualTo((byte)0);
 
             VirtualMachine.Reset();
 
-            VirtualMachine.PC.ShouldBe((byte)0);
+            Check.That(VirtualMachine.PC).Is((byte)0);
         }
 
         [Fact]
@@ -101,21 +100,21 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void Reset_ClearAllMemoryTrue_ClearsDataMemory()
         {
-            VirtualMachine.Data.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Data.Where(value => value != 0)).Not.IsEmpty();
 
             VirtualMachine.Reset(true);
 
-            VirtualMachine.Data.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Data.Where(value => value != 0)).IsEmpty();
         }
 
         [Fact]
         public void Reset_ClearAllMemoryTrue_ClearsProgramMemory()
         {
-            VirtualMachine.Program.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Program.Where(value => value != 0)).Not.IsEmpty();
 
             VirtualMachine.Reset(true);
 
-            VirtualMachine.Program.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Program.Where(value => value != 0)).IsEmpty();
         }
 
         [Fact]

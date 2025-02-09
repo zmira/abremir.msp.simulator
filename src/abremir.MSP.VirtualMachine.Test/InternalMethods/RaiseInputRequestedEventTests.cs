@@ -1,7 +1,6 @@
 ﻿using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
@@ -27,7 +26,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.RaiseInputRequestedEvent();
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -35,7 +34,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Interrupted).Build();
 
-            VirtualMachine.HaltedBy.ShouldBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNull();
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler);
@@ -50,11 +49,11 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Interrupted).Build();
 
-            VirtualMachine.HaltedBy.ShouldBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNull();
 
             var result = VirtualMachine.RaiseInputRequestedEvent();
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Theory]
@@ -66,7 +65,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBe(expectedIsCharacterFlag))
+                .Verify(eventArgs => Check.That(eventArgs.IsCharacter).Is(expectedIsCharacterFlag))
                 .Build();
 
             _ = VirtualMachine.RaiseInputRequestedEvent();
@@ -81,7 +80,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.RaiseInputRequestedEvent();
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
     }
 }

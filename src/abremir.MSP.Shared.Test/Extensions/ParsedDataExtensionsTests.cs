@@ -11,7 +11,7 @@ namespace abremir.MSP.Shared.Test.Extensions
 
             var result = parsedData.GetMemoryMap();
 
-            result.ShouldBeEmpty();
+            Check.That(result).IsEmpty();
         }
 
         [Fact]
@@ -29,12 +29,12 @@ namespace abremir.MSP.Shared.Test.Extensions
 
             var result = parsedData.GetMemoryMap().ToList();
 
-            result.ShouldNotBeEmpty();
+            Check.That(result).Not.IsEmpty();
             parsedData.ForEach(data =>
             {
                 for (var offset = 0; offset < data.Size; offset++)
                 {
-                    result[data.Address + offset].ShouldBe((byte)1);
+                    Check.That(result[data.Address + offset]).Is((byte)1);
                 }
             });
         }

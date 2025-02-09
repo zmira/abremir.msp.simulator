@@ -1,6 +1,5 @@
 ﻿using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
@@ -9,13 +8,13 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
         [Fact]
         public void SetMemory_NullData_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => VirtualMachine.SetMemory(null, []));
+            Check.ThatCode(() => VirtualMachine.SetMemory(null, [])).Throws<ArgumentNullException>();
         }
 
         [Fact]
         public void SetMemory_NullProgram_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => VirtualMachine.SetMemory([], null));
+            Check.ThatCode(() => VirtualMachine.SetMemory([], null)).Throws<ArgumentNullException>();
         }
 
         [Fact]
@@ -29,8 +28,8 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.SetMemory([111], [123]);
 
-            VirtualMachine.Data.Take(data.Length).ToArray().ShouldBeEquivalentTo(data);
-            VirtualMachine.Program.Take(program.Length).ToArray().ShouldBeEquivalentTo(program);
+            Check.That(VirtualMachine.Data.Take(data.Length)).IsEquivalentTo(data);
+            Check.That(VirtualMachine.Program.Take(program.Length)).IsEquivalentTo(program);
         }
 
         [Fact]
@@ -41,8 +40,8 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.SetMemory(data, program);
 
-            VirtualMachine.Data.Take(data.Length).ToArray().ShouldBeEquivalentTo(data);
-            VirtualMachine.Program.Take(program.Length).ToArray().ShouldBeEquivalentTo(program);
+            Check.That(VirtualMachine.Data.Take(data.Length)).IsEquivalentTo(data);
+            Check.That(VirtualMachine.Program.Take(program.Length)).IsEquivalentTo(program);
         }
 
         [Fact]

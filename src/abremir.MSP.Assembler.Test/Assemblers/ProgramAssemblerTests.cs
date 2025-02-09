@@ -18,10 +18,10 @@ namespace abremir.MSP.Assembler.Test.Assemblers
         {
             var result = _assembler.Assemble([], new Dictionary<string, int>());
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
-            result.LineAddressMap.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.Program).IsEmpty();
+            Check.That(result.LineAddressMap).IsEmpty();
         }
 
         [Fact]
@@ -38,10 +38,10 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedInstructions, new Dictionary<string, int>());
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.LineAddressMap.ShouldBeEquivalentTo(expectedLineAddressMap);
-            result.Program.ShouldBeEquivalentTo(expectedAssembledProgram);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.LineAddressMap).IsEquivalentTo(expectedLineAddressMap);
+            Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
         [Fact]
@@ -59,10 +59,10 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedInstructions, new Dictionary<string, int>());
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.LineAddressMap.ShouldBeEquivalentTo(expectedLineAddressMap);
-            result.Program.ShouldBeEquivalentTo(expectedAssembledProgram);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.LineAddressMap).IsEquivalentTo(expectedLineAddressMap);
+            Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
         [Fact]
@@ -79,10 +79,10 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedInstructions, new Dictionary<string, int>());
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.LineAddressMap.ShouldBeEquivalentTo(expectedLineAddressMap);
-            result.Program.ShouldBeEquivalentTo(expectedAssembledProgram);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.LineAddressMap).IsEquivalentTo(expectedLineAddressMap);
+            Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
         [Fact]
@@ -120,11 +120,11 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedInstructions, new Dictionary<string, int>());
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(expectedLineNumbersWithErrors);
-            result.LineAddressMap.ShouldBeEquivalentTo(expectedLineAddressMap);
-            result.Program.ShouldBeEquivalentTo(expectedAssembledProgram);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors.Select(error => error.LineNumber)).IsEquivalentTo(expectedLineNumbersWithErrors);
+            Check.That(result.LineAddressMap).IsEquivalentTo(expectedLineAddressMap);
+            Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
         [Fact]
@@ -146,10 +146,10 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedInstructions, dataVariableMap);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.LineAddressMap.ShouldBeEquivalentTo(expectedLineAddressMap);
-            result.Program.ShouldBeEquivalentTo(expectedAssembledProgram);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.LineAddressMap).IsEquivalentTo(expectedLineAddressMap);
+            Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
 
         [Fact]
@@ -164,10 +164,10 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedInstructions, new Dictionary<string, int>());
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.LineAddressMap.ShouldBeEquivalentTo(expectedLineAddressMap);
-            result.Program.ShouldBeEquivalentTo(expectedAssembledProgram);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.LineAddressMap).IsEquivalentTo(expectedLineAddressMap);
+            Check.That(result.Program).IsEquivalentTo(expectedAssembledProgram);
         }
     }
 }

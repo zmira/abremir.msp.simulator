@@ -1,6 +1,5 @@
 ﻿using abremir.MSP.Shared.Constants;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
@@ -13,7 +12,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.SetProgramCounter(Constants.MemoryCapacity);
 
-            VirtualMachine.PC.ShouldBe(pc);
+            Check.That(VirtualMachine.PC).Is(pc);
         }
 
         [Fact]
@@ -21,7 +20,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
         {
             var result = VirtualMachine.SetProgramCounter(Constants.MemoryCapacity);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
         [Fact]
@@ -31,7 +30,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.SetProgramCounter(newPc);
 
-            VirtualMachine.PC.ShouldBe(newPc);
+            Check.That(VirtualMachine.PC).Is(newPc);
         }
 
         [Fact]
@@ -54,7 +53,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.SetProgramCounter(newPc);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
     }
 }

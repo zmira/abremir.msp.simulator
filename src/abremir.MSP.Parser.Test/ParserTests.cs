@@ -27,9 +27,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse(string.Empty);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.SyntaxError
                     && error.ErrorMessage == exceptionMessage);
         }
@@ -44,9 +44,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse(string.Empty);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.SyntaxError
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
@@ -66,9 +66,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse($"{operation.GetDescription()} k(76%");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.CodeBranchInvalidArgument
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
@@ -85,9 +85,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse($"{Operation.PushAddress.GetDescription()} 0/887&5");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.CodePshaInvalidArgument
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
@@ -104,9 +104,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse($"{Operation.PushValue.GetDescription()} k(76%");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.CodePushArgumentOutsideAllowedRange
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
@@ -123,9 +123,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse("gghg 1 TAM 1 VAL 1|b%3");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.DataUnexpectedInitializationValues
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
@@ -141,9 +141,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse(string.Empty);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.Exception
                     && error.ErrorMessage == exceptionMessage);
         }
