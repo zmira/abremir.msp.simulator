@@ -1,21 +1,21 @@
 ﻿using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class InputCharacterTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void InputCharacter_StatusNotInterrupted_DoesNotPushValueToStack()
         {
             VirtualMachine.InputCharacter(65);
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void InputCharacter_InterruptedByIsNotInputCharacter_DoesNotPushValueToStack()
         {
             byte[] program = [(byte)Operation.InputValue];
@@ -23,14 +23,14 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.InterruptedBy.ShouldBe(Enums.InterruptReason.InputValue);
+            Check.That(VirtualMachine.InterruptedBy).Is(Enums.InterruptReason.InputValue);
 
             VirtualMachine.InputCharacter(65);
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void InputCharacter_PushesValueToStack()
         {
             byte[] program = [(byte)Operation.InputCharacter];
@@ -40,10 +40,10 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.InputCharacter(65);
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).Not.IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void InputCharacter_ExecutesNextInstruction()
         {
             byte[] program = [(byte)Operation.InputCharacter, (byte)Operation.Halt];

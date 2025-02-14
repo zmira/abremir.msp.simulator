@@ -2,13 +2,13 @@
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class TryGetDataValueTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void TryGetDataValue_Succeeds_ReturnsTrue()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -18,10 +18,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryGetDataValue(Operation.LessThan, 100, out _);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGetDataValue_Succeeds_OutputsValue()
         {
             const byte value = 99;
@@ -32,10 +32,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TryGetDataValue(Operation.LessThan, (ushort)(data.Length - 1), out var poppedValue);
 
-            poppedValue.ShouldBe(value);
+            Check.That(poppedValue).Is(value);
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGetDataValue_Fails_ReturnsFalse()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -45,10 +45,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryGetDataValue(Operation.LessThan, 100, out _);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGetDataValue_Fails_HaltsWithMemoryAddressViolation()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -58,8 +58,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TryGetDataValue(Operation.LessThan, 100, out _);
 
-            VirtualMachine.Status.ShouldBe(Status.Halted);
-            VirtualMachine.HaltedBy.ShouldBe(HaltReason.MemoryAddressViolation);
+            Check.That(VirtualMachine.Status).Is(Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).Is(HaltReason.MemoryAddressViolation);
         }
     }
 }

@@ -1,3 +1,3 @@
 global using abremir.MSP.Validator.Validators;
-global using Shouldly;
-global using Xunit;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using NFluent;

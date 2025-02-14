@@ -1,12 +1,12 @@
 ﻿using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ClearStackTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void ClearStack_ResetsStack()
         {
             const byte value = 99;
@@ -15,14 +15,14 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.Stack.ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack).Not.IsEmpty();
 
             VirtualMachine.ClearStack();
 
-            VirtualMachine.Stack.ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void ClearStack_RaisesStackPointerUpdatedEvent()
         {
             var hook = EventHook.For(VirtualMachine)

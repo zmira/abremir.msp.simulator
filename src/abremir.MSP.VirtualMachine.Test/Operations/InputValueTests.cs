@@ -2,10 +2,10 @@
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.Operations
 {
+    [TestClass]
     public class InputValueTests : VirtualMachineTestsBase
     {
         private readonly byte[] _program;
@@ -18,42 +18,42 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             VirtualMachine.SetMemory([], _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_RaisesOperationExecutingEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutingEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_SetsStatus()
         {
             ExecuteNextInstruction_Verify_SetsStatus(Status.Interrupted, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_SetsInterruptedBy()
         {
             ExecuteNextInstruction_Verify_SetsInterruptedBy(InterruptReason.InputValue, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_RaisesStatusChangedEvent()
         {
             ExecuteNextInstruction_Verify_RaisesStatusChangedEvent(Status.Interrupted, program: _program);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_RaisesOperationExecutedEvent()
         {
             ExecuteNextInstruction_Verify_RaisesOperationExecutedEvent(_operation);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_RaisesInputRequestedEvent()
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler)
-                .Verify(eventArgs => eventArgs.IsCharacter.ShouldBeFalse())
+                .Verify(eventArgs => Check.That(eventArgs.IsCharacter).IsFalse())
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -61,13 +61,13 @@ namespace abremir.MSP.VirtualMachine.Test.Operations
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_DoesNotChangeDataMemory()
         {
             ExecuteNextInstruction_Verify_DoesNotChangeDataMemory();
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_InputValue_DoesNotUpdateProgramCounter()
         {
             ExecuteNextInstruction_Verify_DoesNotUpdateProgramCounter(program: _program);

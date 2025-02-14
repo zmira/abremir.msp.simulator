@@ -4,31 +4,30 @@ using abremir.MSP.Shared.Extensions;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
-using EventTestingHelper = abremir.MSP.VirtualMachine.Test.Helpers.EventTestingHelper;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ContinueTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Continue_StatusNotInterrupted_DoesNotContinue()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Status.Running).Build();
 
-            VirtualMachine.Status.ShouldNotBe(Status.Interrupted);
+            Check.That(VirtualMachine.Status).IsNotEqualTo(Status.Interrupted);
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<StatusChangedEventArgs>((virtualMachine, handler) => virtualMachine.StatusChanged += handler);
 
             VirtualMachine.Continue(Operation.InputValue);
 
-            hook.Verify(EventTestingHelper.Called.Never());
+            hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Theory]
-        [InlineData(Operation.InputValue, Operation.InputCharacter)]
-        [InlineData(Operation.InputCharacter, Operation.InputValue)]
+        [TestMethod]
+        [DataRow(Operation.InputValue, Operation.InputCharacter)]
+        [DataRow(Operation.InputCharacter, Operation.InputValue)]
         public void Continue_StatusInterruptedButInterruptedByAndFromOperationDoNotMatch_DoesNotContinue(Operation interruptOperation, Operation continueFromOperation)
         {
             var program = new byte[] { (byte)interruptOperation };
@@ -41,10 +40,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Continue(continueFromOperation);
 
-            hook.Verify(EventTestingHelper.Called.Never());
+            hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterruptedAndDoesNotSetProgramCounterToAddressOfNextNextInstruction_DoesNotContinue()
         {
             const Operation operation = Operation.InputValue;
@@ -61,14 +60,14 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram([.. program]).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.InterruptedBy.ShouldBe(InterruptReason.InputValue);
+            Check.That(VirtualMachine.InterruptedBy).Is(InterruptReason.InputValue);
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.InterruptedBy.ShouldNotBeNull();
+            Check.That(VirtualMachine.InterruptedBy).IsNotNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterrupted_SetsProgramCounterToAddressOfNextNextInstruction()
         {
             const Operation operation = Operation.InputValue;
@@ -81,10 +80,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.PC.ShouldBe((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
+            Check.That(VirtualMachine.PC).Is((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterrupted_ResetsInterruptedBy()
         {
             const Operation operation = Operation.InputValue;
@@ -93,14 +92,14 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.InterruptedBy.ShouldBe(InterruptReason.InputValue);
+            Check.That(VirtualMachine.InterruptedBy).Is(InterruptReason.InputValue);
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.InterruptedBy.ShouldBeNull();
+            Check.That(VirtualMachine.InterruptedBy).IsNull();
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterrupted_SetsStatusRunning()
         {
             const Operation operation = Operation.InputValue;
@@ -109,14 +108,14 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.Status.ShouldBe(Status.Interrupted);
+            Check.That(VirtualMachine.Status).Is(Status.Interrupted);
 
             VirtualMachine.Continue(operation);
 
-            VirtualMachine.Status.ShouldBe(Status.Running);
+            Check.That(VirtualMachine.Status).Is(Status.Running);
         }
 
-        [Fact]
+        [TestMethod]
         public void Continue_StatusInterruptedAndModeRun_ExecutesNextInstruction()
         {
             const Operation operation = Operation.InputValue;
@@ -125,7 +124,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Mode.ShouldBe(Mode.Run);
+            Check.That(VirtualMachine.Mode).Is(Mode.Run);
 
             var hook = EventHook.For(VirtualMachine)
                 .HookOnly<InstructionExecutingEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuting += handler);

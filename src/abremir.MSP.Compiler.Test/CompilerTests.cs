@@ -11,6 +11,7 @@ using NSubstituteAutoMocker.Standard;
 
 namespace abremir.MSP.Compiler.Test
 {
+    [TestClass]
     public class CompilerTests
     {
         private readonly NSubstituteAutoMocker<Compiler> _compiler;
@@ -20,9 +21,9 @@ namespace abremir.MSP.Compiler.Test
             _compiler = new NSubstituteAutoMocker<Compiler>();
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
         public void Compile_EmptySource_ReturnsNoSourceDetectedToAssembleError(string? source)
         {
             var parser = _compiler.Get<IParser>();
@@ -31,18 +32,18 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile(source);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(error => error.Error == Error.NoSourceDetectedToAssemble);
-            result.Warnings.ShouldBeEmpty();
-            result.Data.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.NoSourceDetectedToAssemble);
+            Check.That(result.Warnings).IsEmpty();
+            Check.That(result.Data).IsEmpty();
+            Check.That(result.Program).IsEmpty();
             parser.DidNotReceive().Parse(Arg.Any<string>());
             validator.DidNotReceive().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ParserReturnsErrors_ReturnsEarlyWithErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -57,18 +58,18 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(error => error.Error == Error.SyntaxError);
-            result.Warnings.ShouldBeEmpty();
-            result.Data.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.SyntaxError);
+            Check.That(result.Warnings).IsEmpty();
+            Check.That(result.Data).IsEmpty();
+            Check.That(result.Program).IsEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.DidNotReceive().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ParserOnlyReturnsWarnings()
         {
             var parser = _compiler.Get<IParser>();
@@ -84,18 +85,18 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.Warnings.ShouldNotBeEmpty();
-            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataNoVariablesDeclared);
-            result.Data.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.Warnings).Not.IsEmpty();
+            Check.That(result.Warnings).HasElementThatMatches(warning => warning.Warning == Warning.DataNoVariablesDeclared);
+            Check.That(result.Data).IsEmpty();
+            Check.That(result.Program).IsEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ValidatorReturnsErrors_ReturnsEarlyWithErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -112,18 +113,18 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(error => error.Error == Error.SyntaxError);
-            result.Warnings.ShouldBeEmpty();
-            result.Data.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.SyntaxError);
+            Check.That(result.Warnings).IsEmpty();
+            Check.That(result.Data).IsEmpty();
+            Check.That(result.Program).IsEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.DidNotReceive().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_ValidatorOnlyReturnsWarnings()
         {
             var parser = _compiler.Get<IParser>();
@@ -139,18 +140,18 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.Warnings.ShouldNotBeEmpty();
-            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataNoVariablesDeclared);
-            result.Data.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.Warnings).Not.IsEmpty();
+            Check.That(result.Warnings).HasElementThatMatches(warning => warning.Warning == Warning.DataNoVariablesDeclared);
+            Check.That(result.Data).IsEmpty();
+            Check.That(result.Program).IsEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_AssemblerReturnsErrors_ReturnsEarlyWithErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -166,18 +167,18 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(error => error.Error == Error.SyntaxError);
-            result.Warnings.ShouldBeEmpty();
-            result.Data.ShouldBeEmpty();
-            result.Program.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.SyntaxError);
+            Check.That(result.Warnings).IsEmpty();
+            Check.That(result.Data).IsEmpty();
+            Check.That(result.Program).IsEmpty();
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
         }
 
-        [Fact]
+        [TestMethod]
         public void Compile_NoErrors()
         {
             var parser = _compiler.Get<IParser>();
@@ -193,13 +194,13 @@ namespace abremir.MSP.Compiler.Test
 
             var result = _compiler.ClassUnderTest.Compile("test code");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldBeEmpty();
-            result.Warnings.ShouldBeEmpty();
-            result.Data.ShouldNotBeEmpty();
-            result.Data.ShouldBeEquivalentTo(assemblerResult.Data);
-            result.Program.ShouldNotBeEmpty();
-            result.Program.ShouldBeEquivalentTo(assemblerResult.Program);
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.Warnings).IsEmpty();
+            Check.That(result.Data).Not.IsEmpty();
+            Check.That(result.Data).Is(assemblerResult.Data);
+            Check.That(result.Program).Not.IsEmpty();
+            Check.That(result.Program).Is(assemblerResult.Program);
             parser.Received().Parse(Arg.Any<string>());
             validator.Received().Validate(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());
             assembler.Received().Assemble(Arg.Any<IReadOnlyCollection<ParsedData>>(), Arg.Any<IReadOnlyCollection<ParsedInstruction>>());

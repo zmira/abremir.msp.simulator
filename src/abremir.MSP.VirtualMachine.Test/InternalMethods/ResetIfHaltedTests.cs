@@ -3,9 +3,10 @@ using abremir.MSP.VirtualMachine.Test.Helpers;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ResetIfHaltedTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsNotHalted_DoesNotReset()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5 };
@@ -13,8 +14,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.Stack.ShouldNotBeEmpty();
-            VirtualMachine.PC.ShouldNotBe((ushort)0);
+            Check.That(VirtualMachine.Stack).Not.IsEmpty();
+            Check.That(VirtualMachine.PC).IsNotEqualTo((ushort)0);
 
             var pc = VirtualMachine.PC;
             var stack = VirtualMachine.Stack;
@@ -22,12 +23,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.PC.ShouldBe(pc);
-            VirtualMachine.Stack.ShouldBeEquivalentTo(stack);
-            VirtualMachine.HaltedBy.ShouldBe(haltedBy);
+            Check.That(VirtualMachine.PC).Is(pc);
+            Check.That(VirtualMachine.Stack).Is(stack);
+            Check.That(VirtualMachine.HaltedBy).Is(haltedBy);
         }
 
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsHalted_ClearsStack()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5, (byte)Operation.Halt };
@@ -35,16 +36,16 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Status.ShouldBe(Enums.Status.Halted);
-            VirtualMachine.HaltedBy.ShouldNotBeNull();
-            VirtualMachine.Stack.ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Status).Is(Enums.Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).IsNotNull();
+            Check.That(VirtualMachine.Stack).Not.IsEmpty();
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.Stack.ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsHalted_ResetsProgramCounter()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5, (byte)Operation.Halt };
@@ -52,16 +53,16 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Status.ShouldBe(Enums.Status.Halted);
-            VirtualMachine.HaltedBy.ShouldNotBeNull();
-            VirtualMachine.PC.ShouldNotBe((ushort)0);
+            Check.That(VirtualMachine.Status).Is(Enums.Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).IsNotNull();
+            Check.That(VirtualMachine.PC).IsNotEqualTo((ushort)0);
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.PC.ShouldBe((ushort)0);
+            Check.That(VirtualMachine.PC).Is((ushort)0);
         }
 
-        [Fact]
+        [TestMethod]
         public void ResetIfHalted_StatusIsHalted_ClearsHaltedBy()
         {
             var program = new byte[] { (byte)Operation.PushValue, 5, (byte)Operation.Halt };
@@ -69,12 +70,12 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Status.ShouldBe(Enums.Status.Halted);
-            VirtualMachine.HaltedBy.ShouldNotBeNull();
+            Check.That(VirtualMachine.Status).Is(Enums.Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).IsNotNull();
 
             VirtualMachine.ResetIfHalted();
 
-            VirtualMachine.HaltedBy.ShouldBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNull();
         }
     }
 }

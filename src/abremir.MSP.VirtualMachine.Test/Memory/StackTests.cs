@@ -3,6 +3,7 @@ using abremir.MSP.VirtualMachine.Memory;
 
 namespace abremir.MSP.VirtualMachine.Test.Memory
 {
+    [TestClass]
     public class StackTests
     {
         private readonly Stack _stack;
@@ -12,7 +13,7 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
             _stack = new Stack();
         }
 
-        [Fact]
+        [TestMethod]
         public void Clear_ResetsSP()
         {
             _stack.TryPush(1);
@@ -22,11 +23,11 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.Clear();
 
-            _stack.SP.ShouldNotBe(sp);
-            _stack.SP.ShouldBe((ushort)(Constants.MemoryCapacity - 1));
+            Check.That(_stack.SP).IsNotEqualTo(sp);
+            Check.That(_stack.SP).Is((ushort)(Constants.MemoryCapacity - 1));
         }
 
-        [Fact]
+        [TestMethod]
         public void Clear_ResetsStackData()
         {
             _stack.TryPush(1);
@@ -36,32 +37,32 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.Clear();
 
-            _stack.StackData.Count.ShouldNotBe(data.Count);
-            _stack.StackData.ShouldBeEmpty();
+            Check.That(_stack.StackData).Not.CountIs(data.Count);
+            Check.That(_stack.StackData).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPush_StackNotFull_PushesValue()
         {
             const byte value = 10;
 
             var result = _stack.TryPush(value);
 
-            result.ShouldBeTrue();
-            _stack.SP.ShouldBe((ushort)(Constants.MemoryCapacity - 2));
+            Check.That(result).IsTrue();
+            Check.That(_stack.SP).Is((ushort)(Constants.MemoryCapacity - 2));
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPush_StackNotFull_DecrementsSP()
         {
             var sp = _stack.SP;
 
             _stack.TryPush(10);
 
-            _stack.SP.ShouldBeLessThan(sp);
+            Check.That(_stack.SP).IsStrictlyLessThan(sp);
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPush_StackFull_ReturnsFalse()
         {
             for (var i = 0; i < Constants.MemoryCapacity; i++)
@@ -71,10 +72,10 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.TryPush(99);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPop_StackWithContent_ReturnsValue()
         {
             const byte value = 10;
@@ -83,12 +84,12 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.TryPop(out var returnValue);
 
-            result.ShouldBeTrue();
-            returnValue.ShouldBe(value);
-            _stack.SP.ShouldBe((ushort)(Constants.MemoryCapacity - 1));
+            Check.That(result).IsTrue();
+            Check.That(returnValue).Is(value);
+            Check.That(_stack.SP).Is((ushort)(Constants.MemoryCapacity - 1));
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPop_StackWithContent_IncrementsSP()
         {
             _stack.TryPush(10);
@@ -97,26 +98,26 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _stack.TryPop(out _);
 
-            _stack.SP.ShouldBeGreaterThan(sp);
+            Check.That(_stack.SP).IsStrictlyGreaterThan(sp);
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPop_EmptyStack_ReturnsFalse()
         {
             var result = _stack.TryPop(out _);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void StackData_EmptyStack_ReturnsEmpty()
         {
             var result = _stack.StackData;
 
-            result.ShouldBeEmpty();
+            Check.That(result).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void StackData_StackWithContent_ReturnsExpected()
         {
             _stack.TryPush(1);
@@ -127,8 +128,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _stack.StackData;
 
-            result.ShouldNotBeEmpty();
-            result.ShouldBeEquivalentTo(new byte[] { 3, 2, 1 });
+            Check.That(result).Not.IsEmpty();
+            Check.That(result).Is(new byte[] { 3, 2, 1 });
         }
     }
 }

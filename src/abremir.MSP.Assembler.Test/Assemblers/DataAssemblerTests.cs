@@ -4,6 +4,7 @@ using abremir.MSP.Shared.Models;
 
 namespace abremir.MSP.Assembler.Test.Assemblers
 {
+    [TestClass]
     public class DataAssemblerTests
     {
         private readonly DataAssembler _assembler;
@@ -13,17 +14,17 @@ namespace abremir.MSP.Assembler.Test.Assemblers
             _assembler = new DataAssembler();
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithoutData_ReturnsEmpty()
         {
             var result = _assembler.Assemble([]);
 
-            result.ShouldNotBeNull();
-            result.DataVariableMap.ShouldBeEmpty();
-            result.Data.ShouldBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.DataVariableMap).IsEmpty();
+            Check.That(result.Data).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void Assemble_WithData_ReturnsDataMemoryAndVariableMap()
         {
             List<ParsedData> parsedData =
@@ -36,17 +37,17 @@ namespace abremir.MSP.Assembler.Test.Assemblers
 
             var result = _assembler.Assemble(parsedData);
 
-            result.ShouldNotBeNull();
-            result.DataVariableMap.ShouldNotBeEmpty();
-            result.Data.ShouldNotBeEmpty();
+            Check.That(result).IsNotNull();
+            Check.That(result.DataVariableMap).Not.IsEmpty();
+            Check.That(result.Data).Not.IsEmpty();
             parsedData.ForEach(data =>
             {
-                result.DataVariableMap.ContainsKey(data.VariableName).ShouldBeTrue();
-                result.DataVariableMap[data.VariableName].ShouldBe(data.Address);
+                Check.That(result.DataVariableMap.ContainsKey(data.VariableName)).IsTrue();
+                Check.That(result.DataVariableMap[data.VariableName]).Is(data.Address);
 
                 for (var valueIndex = 0; valueIndex < (data.Values ?? []).Length; valueIndex++)
                 {
-                    result.Data[data.Address + valueIndex].ShouldBe(data.Values![valueIndex].ToTwosComplement());
+                    Check.That(result.Data[data.Address + valueIndex]).Is(data.Values![valueIndex].ToTwosComplement());
                 }
             });
         }

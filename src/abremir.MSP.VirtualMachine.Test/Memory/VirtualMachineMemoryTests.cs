@@ -3,6 +3,7 @@ using abremir.MSP.VirtualMachine.Memory;
 
 namespace abremir.MSP.VirtualMachine.Test.Memory
 {
+    [TestClass]
     public class VirtualMachineMemoryTests
     {
         private VirtualMachineMemory _virtualMachineMemory;
@@ -12,17 +13,17 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
             _virtualMachineMemory = new VirtualMachineMemory();
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMemory_LessDataThanCapacity_CopiesAll()
         {
             var data = new byte[] { 1, 2, 3, 4 };
 
             _virtualMachineMemory.SetMemory(data);
 
-            _virtualMachineMemory.MemoryData.Count(value => value is not 0).ShouldBe(data.Length);
+            Check.That(_virtualMachineMemory.MemoryData.Count(value => value is not 0)).Is(data.Length);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetMemory_MoreDataThanCapacity_OnlyCopiesEnoughToFillCapacity()
         {
             var data = new byte[Constants.MemoryCapacity + 1];
@@ -32,11 +33,11 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.Count(value => value is not 0).ShouldNotBe(data.Length);
-            memoryData.Count(value => value is not 0).ShouldBe(Constants.MemoryCapacity);
+            Check.That(memoryData.Count(value => value is not 0)).IsNotEqualTo(data.Length);
+            Check.That(memoryData.Count(value => value is not 0)).Is(Constants.MemoryCapacity);
         }
 
-        [Fact]
+        [TestMethod]
         public void Clear_ResetsMemoryData()
         {
             var data = new byte[] { 1, 2, 3, 4 };
@@ -49,27 +50,27 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var newMemoryData = _virtualMachineMemory.MemoryData;
 
-            newMemoryData.Count(value => value is not 0).ShouldNotBe(memoryData.Count);
-            newMemoryData.All(value => value is 0).ShouldBeTrue();
+            Check.That(newMemoryData.Count(value => value is not 0)).IsNotEqualTo(memoryData.Count);
+            Check.That(newMemoryData.All(value => value is 0)).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGet_BeyondBounds_ReturnsFalse()
         {
             var result = _virtualMachineMemory.TryGet(Constants.MemoryCapacity, out _);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGet_AddressWithinBounds_ReturnsTrue()
         {
             var result = _virtualMachineMemory.TryGet(Constants.MemoryCapacity - 1, out _);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryGet_AddressWithinBounds_OutputsValue()
         {
             const ushort address = 3;
@@ -81,26 +82,26 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             _virtualMachineMemory.TryGet(address, out var outputValue);
 
-            outputValue.ShouldBe(value);
+            Check.That(outputValue).Is(value);
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySet_BeyondBounds_ReturnsFalse()
         {
             var result = _virtualMachineMemory.TrySet(Constants.MemoryCapacity, 5);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySet_WithinBounds_ReturnsTrue()
         {
             var result = _virtualMachineMemory.TrySet(Constants.MemoryCapacity - 1, 5);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySet_WithinBounds_SetsValue()
         {
             const ushort address = Constants.MemoryCapacity - 100;
@@ -110,10 +111,10 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.ElementAt(address).ShouldBe(value);
+            Check.That(memoryData.ElementAt(address)).Is(value);
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySet_MemoryIsReadOnly_ReturnsTrue()
         {
             const ushort address = Constants.MemoryCapacity - 100;
@@ -123,10 +124,10 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var result = _virtualMachineMemory.TrySet(address, value);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySet_MemoryIsReadOnly_DoesNotSetValue()
         {
             const ushort address = Constants.MemoryCapacity - 100;
@@ -138,11 +139,11 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.ElementAt(address).ShouldNotBe(value);
-            result.ShouldBeTrue();
+            Check.That(memoryData.ElementAt(address)).IsNotEqualTo(value);
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void MemoryData_ReturnsFullContentsOfMemory()
         {
             var data = new byte[] { 1, 2, 3, 4 };
@@ -151,8 +152,8 @@ namespace abremir.MSP.VirtualMachine.Test.Memory
 
             var memoryData = _virtualMachineMemory.MemoryData;
 
-            memoryData.Count.ShouldBe(Constants.MemoryCapacity);
-            memoryData.Count(value => value is not 0).ShouldBe(data.Length);
+            Check.That(memoryData).CountIs(Constants.MemoryCapacity);
+            Check.That(memoryData.Count(value => value is not 0)).Is(data.Length);
         }
     }
 }

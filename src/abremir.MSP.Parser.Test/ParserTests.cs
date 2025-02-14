@@ -9,6 +9,7 @@ using Superpower.Model;
 
 namespace abremir.MSP.Parser.Test
 {
+    [TestClass]
     public class ParserTests
     {
         private readonly NSubstituteAutoMocker<Parser> _parser;
@@ -18,7 +19,7 @@ namespace abremir.MSP.Parser.Test
             _parser = new NSubstituteAutoMocker<Parser>();
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionOfUnknownTypeIsThrownWithoutPosition_ReturnsSyntaxError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -27,14 +28,14 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse(string.Empty);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.SyntaxError
                     && error.ErrorMessage == exceptionMessage);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionOfUnknownTypeIsThrown_ReturnsSyntaxError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -44,19 +45,19 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse(string.Empty);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.SyntaxError
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Theory]
-        [InlineData(Operation.Jump)]
-        [InlineData(Operation.JumpIfFalse)]
-        [InlineData(Operation.Call)]
+        [TestMethod]
+        [DataRow(Operation.Jump)]
+        [DataRow(Operation.JumpIfFalse)]
+        [DataRow(Operation.Call)]
         public void Parse_ParseExceptionForBranchOperation_ReturnsBranchInvalidArgumentError(Operation operation)
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -66,16 +67,16 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse($"{operation.GetDescription()} k(76%");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.CodeBranchInvalidArgument
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionForPushAddressOperation_ReturnsPshaInvalidArgumentError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -85,16 +86,16 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse($"{Operation.PushAddress.GetDescription()} 0/887&5");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.CodePshaInvalidArgument
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionForPushValueOperation_ReturnsPushArgumentOutsideAllowedRangeError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -104,16 +105,16 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse($"{Operation.PushValue.GetDescription()} k(76%");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.CodePushArgumentOutsideAllowedRange
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ParseExceptionForDataDeclaration_ReturnsUnexpectedInitializationValuesError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -123,16 +124,16 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse("gghg 1 TAM 1 VAL 1|b%3");
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.DataUnexpectedInitializationValues
                     && error.ErrorMessage == exceptionMessage
                     && error.LineNumber == errorPosition.Line
                     && error.ColumnNumber == errorPosition.Column);
         }
 
-        [Fact]
+        [TestMethod]
         public void Parse_ExceptionIsThrown_ReturnsExceptionError()
         {
             var exceptionMessage = Guid.NewGuid().ToString();
@@ -141,9 +142,9 @@ namespace abremir.MSP.Parser.Test
 
             var result = _parser.ClassUnderTest.Parse(string.Empty);
 
-            result.ShouldNotBeNull();
-            result.Errors.ShouldNotBeEmpty();
-            result.Errors.ShouldContain(
+            Check.That(result).IsNotNull();
+            Check.That(result.Errors).Not.IsEmpty();
+            Check.That(result.Errors).HasElementThatMatches(
                 error => error.Error == Error.Exception
                     && error.ErrorMessage == exceptionMessage);
         }

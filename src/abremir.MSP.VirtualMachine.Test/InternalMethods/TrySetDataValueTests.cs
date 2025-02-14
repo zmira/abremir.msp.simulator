@@ -3,14 +3,13 @@ using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class TrySetDataValueTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Succeeds_ReturnsTrue()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -20,10 +19,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TrySetDataValue(Operation.LessThan, 100, 5);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Succeeds_RaisesDataMemoryUpdatedEvent()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -36,8 +35,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var hook = EventHook.For(VirtualMachine)
                 .Hook<DataMemoryUpdatedEventArgs>((virtualMachine, handler) => virtualMachine.DataMemoryUpdated += handler)
-                .Verify(eventArgs => eventArgs.Address.ShouldBe(address))
-                .Verify(eventArgs => eventArgs.Value.ShouldBe(value))
+                .Verify(eventArgs => Check.That(eventArgs.Address).Is(address))
+                .Verify(eventArgs => Check.That(eventArgs.Value).Is(value))
                 .Build();
 
             _ = VirtualMachine.TrySetDataValue(Operation.LessThan, address, value);
@@ -45,7 +44,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Fails_ReturnsFalse()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -55,10 +54,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TrySetDataValue(Operation.LessThan, 100, 5);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TrySetDataValue_Fails_HaltsWithMemoryAddressViolation()
         {
             var memory = Substitute.For<IVirtualMachineMemory>();
@@ -68,8 +67,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TrySetDataValue(Operation.LessThan, 100, 5);
 
-            VirtualMachine.Status.ShouldBe(Status.Halted);
-            VirtualMachine.HaltedBy.ShouldBe(HaltReason.MemoryAddressViolation);
+            Check.That(VirtualMachine.Status).Is(Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).Is(HaltReason.MemoryAddressViolation);
         }
     }
 }

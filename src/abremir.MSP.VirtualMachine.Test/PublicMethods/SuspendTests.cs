@@ -2,36 +2,37 @@
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class SuspendTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Suspend_StatusIsNotRunning_DoesNotUpdateStatusToSuspended()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Enums.Status.None).WithMode(Enums.Mode.Run).Build();
 
             VirtualMachine.Suspend();
 
-            VirtualMachine.Status.ShouldNotBe(Enums.Status.Suspended);
+            Check.That(VirtualMachine.Status).IsNotEqualTo(Enums.Status.Suspended);
         }
 
-        [Fact]
+        [TestMethod]
         public void Suspend_ModeIsNotRun_DoesNotUpdateStatusToSuspended()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Enums.Status.Running).WithMode(Enums.Mode.Step).Build();
 
             VirtualMachine.Suspend();
 
-            VirtualMachine.Status.ShouldNotBe(Enums.Status.Suspended);
+            Check.That(VirtualMachine.Status).IsNotEqualTo(Enums.Status.Suspended);
         }
 
-        [Fact]
+        [TestMethod]
         public void Suspend_UpdatesStatusToSuspended()
         {
             VirtualMachine = new VirtualMachineBuilder().WithStatus(Enums.Status.Running).WithMode(Enums.Mode.Run).Build();
 
             VirtualMachine.Suspend();
 
-            VirtualMachine.Status.ShouldBe(Enums.Status.Suspended);
+            Check.That(VirtualMachine.Status).Is(Enums.Status.Suspended);
         }
     }
 }

@@ -2,14 +2,13 @@
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Memory;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
-using NSubstitute;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class TryPushToStackTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Succeeds_ReturnsTrue()
         {
             var stack = Substitute.For<IStack>();
@@ -19,10 +18,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryPushToStack(Operation.LessThan, 5);
 
-            result.ShouldBeTrue();
+            Check.That(result).IsTrue();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Succeeds_RaisesStackPointerUpdatedEvent()
         {
             var stack = Substitute.For<IStack>();
@@ -38,7 +37,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Fails_ReturnsFalse()
         {
             var stack = Substitute.For<IStack>();
@@ -48,10 +47,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             var result = VirtualMachine.TryPushToStack(Operation.LessThan, 5);
 
-            result.ShouldBeFalse();
+            Check.That(result).IsFalse();
         }
 
-        [Fact]
+        [TestMethod]
         public void TryPushToStack_Fails_HaltsWithSTackFull()
         {
             var stack = Substitute.For<IStack>();
@@ -61,8 +60,8 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.TryPushToStack(Operation.LessThan, 5);
 
-            VirtualMachine.Status.ShouldBe(Status.Halted);
-            VirtualMachine.HaltedBy.ShouldBe(HaltReason.StackFull);
+            Check.That(VirtualMachine.Status).Is(Status.Halted);
+            Check.That(VirtualMachine.HaltedBy).Is(HaltReason.StackFull);
         }
     }
 }

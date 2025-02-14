@@ -1,21 +1,21 @@
 ﻿using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class InputTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Input_StatusNotInterrupted_DoesNotPushValueToStack()
         {
             VirtualMachine.Input(1);
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void Input_InterruptedByIsNotInputValue_DoesNotPushValueToStack()
         {
             byte[] program = [(byte)Operation.InputCharacter];
@@ -23,14 +23,14 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Step();
 
-            VirtualMachine.InterruptedBy.ShouldBe(Enums.InterruptReason.InputCharacter);
+            Check.That(VirtualMachine.InterruptedBy).Is(Enums.InterruptReason.InputCharacter);
 
             VirtualMachine.Input(1);
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void Input_PushesValueToStack()
         {
             byte[] program = [(byte)Operation.InputValue];
@@ -40,10 +40,10 @@ namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 
             VirtualMachine.Input(1);
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).Not.IsEmpty();
         }
 
-        [Fact]
+        [TestMethod]
         public void Input_ExecutesNextInstruction()
         {
             byte[] program = [(byte)Operation.InputValue, (byte)Operation.Halt];

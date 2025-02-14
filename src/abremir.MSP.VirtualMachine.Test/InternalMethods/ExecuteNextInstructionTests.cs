@@ -3,13 +3,13 @@ using abremir.MSP.Shared.Extensions;
 using abremir.MSP.VirtualMachine.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class ExecuteNextInstructionTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_ExecutesInstruction()
         {
             var program = new byte[] { (byte)Operation.Halt };
@@ -24,7 +24,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_ExecuteInstructionCompletedIsNull_DoesNothing()
         {
             var program = new byte[] { (byte)Operation.Halt };
@@ -39,7 +39,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_ExecuteInstructionCompletedIsNotNull_RaisesInstructionExecutedEvent()
         {
             var program = new byte[] { (byte)Operation.Halt };
@@ -54,7 +54,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_ExecuteInstructionCompletedIsNotNullAndOperationIsHalt_DoesNothing()
         {
             var program = new byte[] { (byte)Operation.Halt, (byte)Operation.InputValue };
@@ -65,7 +65,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
                 .HookOnly<InputRequestedEventArgs>((virtualMachine, handler) => virtualMachine.InputRequested += handler);
             var operationExecutedEventHook = EventHook.For(VirtualMachine)
                 .Hook<InstructionExecutedEventArgs>((virtualMachine, handler) => virtualMachine.InstructionExecuted += handler)
-                .Verify(eventArgs => eventArgs.Operation.ShouldBe(Operation.Halt))
+                .Verify(eventArgs => Check.That(eventArgs.Operation).Is(Operation.Halt))
                 .Build();
 
             VirtualMachine.ExecuteNextInstruction();
@@ -73,9 +73,9 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             inputRequestedEventHook.Verify(Helpers.EventTestingHelper.Called.Never());
         }
 
-        [Theory]
-        [InlineData(Operation.InputValue)]
-        [InlineData(Operation.InputCharacter)]
+        [TestMethod]
+        [DataRow(Operation.InputValue)]
+        [DataRow(Operation.InputCharacter)]
         public void ExecuteNextInstruction_ExecuteInstructionCompletedIsNotNullAndOperationIsInput_RaisesInputRequestedEvent(Operation inputType)
         {
             var program = new byte[] { (byte)inputType };
@@ -90,7 +90,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_ExecuteInstructionCompletedIsNotNullAndOperationIsOtherAndHasAddress_SetsProgramCounterToAddress()
         {
             const ushort address = 5555;
@@ -101,10 +101,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.ShouldBe(address);
+            Check.That(VirtualMachine.PC).Is(address);
         }
 
-        [Fact]
+        [TestMethod]
         public void ExecuteNextInstruction_ExecuteInstructionCompletedIsNotNullAndOperationIsOtherAndDoesNotHaveAddress_SetsProgramCounterToAddressOfNextNextInstruction()
         {
             const Operation operation = Operation.PushValue;
@@ -116,7 +116,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.ExecuteNextInstruction();
 
-            VirtualMachine.PC.ShouldBe((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
+            Check.That(VirtualMachine.PC).Is((ushort)(pc + operation.GetNumberOfMemoryCellsOccupied()));
         }
     }
 }

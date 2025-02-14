@@ -4,38 +4,39 @@ using abremir.MSP.Shared.Models;
 
 namespace abremir.MSP.Validator.Test.Validators
 {
+    [TestClass]
     public class DataValidatorTests
     {
-        [Fact]
+        [TestMethod]
         public void Validate_NoDataDeclarations_ReturnsMemoryEmptyWarning()
         {
             var result = DataValidator.Validate([], []);
 
-            result.Errors.ShouldBeEmpty();
-            result.Warnings.Single().Warning.ShouldBe(Warning.DataNoVariablesDeclared);
+            Check.That(result.Errors).IsEmpty();
+            Check.That(result.Warnings.Single().Warning).Is(Warning.DataNoVariablesDeclared);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataAllocationOverflowsMemoryCapacity_ReturnsMemoryCapacityExhaustedError()
         {
             var data = new ParsedData(0, "x", Constants.MemoryCapacity - 1, 2, null);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataMemoryCapacityExhausted);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataMemoryCapacityExhausted);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataAddressIsBeyondMemoryCapacity_ReturnsInvalidAddressError()
         {
             var data = new ParsedData(0, "x", Constants.MemoryCapacity, 2, null);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidAddress);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataInvalidAddress);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataAddressBelongsToMemoryAlreadyReserved_ReturnsInvalidAddressError()
         {
             var dataX = new ParsedData(1, "x", 0, 10, null);
@@ -43,10 +44,10 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([dataY, dataX], []);
 
-            result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber.ShouldBe(dataY.LineNumber);
+            Check.That(result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber).Is(dataY.LineNumber);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataVariableIsReDeclared_ReturnsDataRedefinitionOfVariable()
         {
             var dataX1 = new ParsedData(1, "x", 0, 10, null);
@@ -55,41 +56,41 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([dataX2, dataX3, dataX1], []);
 
-            result.Errors.Where(error => error.Error is Error.DataRedefinitionOfVariable)
-                .Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(new[] { dataX2.LineNumber, dataX3.LineNumber });
+            Check.That(result.Errors.Where(error => error.Error is Error.DataRedefinitionOfVariable)
+                .Select(error => error.LineNumber)).IsEquivalentTo(new[] { dataX2.LineNumber, dataX3.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataSizeIsZero_ReturnsInvalidSizeError()
         {
             var data = new ParsedData(0, "x", 0, 0, null);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidSize);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataInvalidSize);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataSizeIsLargerThanMemoryCapacity_ReturnsInvalidSizeError()
         {
             var data = new ParsedData(0, "x", 0, Constants.MemoryCapacity + 1, null);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidSize);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataInvalidSize);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataAllocationOverflowsMemoryCapacity_ReturnsInvalidSizeError()
         {
             var data = new ParsedData(0, "x", Constants.MemoryCapacity - 1, 2, null);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataInvalidSize);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataInvalidSize);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataBlockOverlapsWithMemoryAlreadyReserved_ReturnsInvalidSizeError()
         {
             var dataX = new ParsedData(1, "x", 0, 10, null);
@@ -97,30 +98,30 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([dataY, dataX], []);
 
-            result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber.ShouldBe(dataY.LineNumber);
+            Check.That(result.Errors.Single(error => error.Error is Error.DataInvalidSize).LineNumber).Is(dataY.LineNumber);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataValuesInitializedButNoValueGiven_ReturnsUnexpectedInitializationValuesError()
         {
             var data = new ParsedData(0, "x", 0, 2, []);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataUnexpectedInitializationValues);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataUnexpectedInitializationValues);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataValuesGivenExceedDataSize_ReturnsInitializedValuesExceedReservedSpaceError()
         {
             var data = new ParsedData(0, "x", 0, 1, [1, 1]);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Errors.ShouldContain(error => error.Error == Error.DataInitializedValuesExceedReservedSpace);
+            Check.That(result.Errors).HasElementThatMatches(error => error.Error == Error.DataInitializedValuesExceedReservedSpace);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataValuesAreOutsideAllowedRange_ReturnsInitializationValueOutsideAllowedRangeError()
         {
             var dataX = new ParsedData(1, "x", 0, 1, [Constants.Min8BitValue - 1]);
@@ -131,28 +132,28 @@ namespace abremir.MSP.Validator.Test.Validators
 
             var result = DataValidator.Validate([dataA, dataW, dataX, dataY, dataZ], []);
 
-            result.Errors.Where(error => error.Error is Error.DataInitializationValueOutsideAllowedRange)
-                .Select(error => error.LineNumber).ToArray().ShouldBeEquivalentTo(new[] { dataX.LineNumber, dataZ.LineNumber });
+            Check.That(result.Errors.Where(error => error.Error is Error.DataInitializationValueOutsideAllowedRange)
+                .Select(error => error.LineNumber)).IsEquivalentTo(new[] { dataX.LineNumber, dataZ.LineNumber });
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataValuesGivenAreLessThanTheDataSize_ReturnsUninitializedValuesWarning()
         {
             var data = new ParsedData(0, "x", 0, 2, [1]);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataUninitializedValues);
+            Check.That(result.Warnings).HasElementThatMatches(warning => warning.Warning == Warning.DataUninitializedValues);
         }
 
-        [Fact]
+        [TestMethod]
         public void Validate_DataVariableNotUsedInCode_ReturnsUnusedVariableWarning()
         {
             var data = new ParsedData(0, "x", 0, 1, [1]);
 
             var result = DataValidator.Validate([data], []);
 
-            result.Warnings.ShouldContain(warning => warning.Warning == Warning.DataUnusedVariable);
+            Check.That(result.Warnings).HasElementThatMatches(warning => warning.Warning == Warning.DataUnusedVariable);
         }
     }
 }

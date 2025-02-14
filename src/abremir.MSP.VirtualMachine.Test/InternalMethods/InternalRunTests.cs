@@ -2,13 +2,13 @@
 using abremir.MSP.Shared.Enums;
 using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 {
+    [TestClass]
     public class InternalRunTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void InternalRun_StatusInterrupted_RaisesInputRequestedEvent()
         {
             byte[] program = [(byte)Operation.InputValue];
@@ -24,7 +24,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             hook.Verify(Called.Once());
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_StatusHalted_ClearsStack()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -32,7 +32,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.Stack.Where(value => value != 0).ShouldNotBeEmpty();
+            Check.That(VirtualMachine.Stack.Where(value => value != 0)).Not.IsEmpty();
 
             var count = 0;
 
@@ -49,10 +49,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_StatusHalted_SetsProgramCounterToZero()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -60,7 +60,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.PC.ShouldNotBe((ushort)0);
+            Check.That(VirtualMachine.PC).IsNotEqualTo((ushort)0);
 
             var count = 0;
 
@@ -77,10 +77,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_StatusHalted_SetsHaltedByToNull()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -88,7 +88,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine = new VirtualMachineBuilder().WithProgram(program).Build();
             VirtualMachine.Run();
 
-            VirtualMachine.HaltedBy.ShouldNotBeNull();
+            Check.That(VirtualMachine.HaltedBy).IsNotNull();
 
             var count = 0;
 
@@ -106,10 +106,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_SetsModeToRun()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -131,10 +131,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_SetsStatusToRunning()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -156,10 +156,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_ExecutesNextInstruction()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -175,10 +175,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBeGreaterThan(0);
+            Check.That(count).IsStrictlyGreaterThan(0);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_AfterStatusHalt_DoesNotExecuteNextInstruction()
         {
             var program = new byte[] { (byte)Operation.Halt, (byte)Operation.PushValue, 1 };
@@ -194,10 +194,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_AfterStatusInterrupted_DoesNotExecuteNextInstruction()
         {
             var program = new byte[] { (byte)Operation.InputValue, (byte)Operation.PushValue, 1 };
@@ -213,10 +213,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
 
             VirtualMachine.Run();
 
-            count.ShouldBe(1);
+            Check.That(count).Is(1);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_AfterStatusSuspended_DoesNotExecuteNextInstruction()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -234,10 +234,10 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine.Run();
             VirtualMachine.Suspend();
 
-            count.ShouldBe(0);
+            Check.That(count).Is(0);
         }
 
-        [Fact]
+        [TestMethod]
         public void InternalRun_AfterModeStep_DoesNotExecuteNextInstruction()
         {
             var program = new byte[] { (byte)Operation.PushValue, 1, (byte)Operation.Halt };
@@ -255,7 +255,7 @@ namespace abremir.MSP.VirtualMachine.Test.InternalMethods
             VirtualMachine.Run();
             VirtualMachine.SetMode(Enums.Mode.Step);
 
-            count.ShouldBe(0);
+            Check.That(count).Is(0);
         }
     }
 }

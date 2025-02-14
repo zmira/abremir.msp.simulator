@@ -1,17 +1,17 @@
 ﻿using abremir.MSP.VirtualMachine.Models;
 using abremir.MSP.VirtualMachine.Test.Helpers;
-using EventTesting;
 
 namespace abremir.MSP.VirtualMachine.Test.PublicMethods
 {
+    [TestClass]
     public class HaltTests : VirtualMachineTestsBase
     {
-        [Fact]
+        [TestMethod]
         public void Halt_HaltsExecutionWithForceHaltReason()
         {
             var hook = EventHook.For(VirtualMachine)
                 .Hook<VirtualMachineHaltedEventArgs>((virtualMachine, handler) => virtualMachine.VirtualMachineHalted += handler)
-                .Verify(eventArgs => eventArgs.Reason.ShouldBe(Enums.HaltReason.ForceHalt))
+                .Verify(eventArgs => Check.That(eventArgs.Reason).Is(Enums.HaltReason.ForceHalt))
                 .Build();
 
             VirtualMachine.Halt();
