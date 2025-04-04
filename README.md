@@ -26,7 +26,7 @@ With the programmer's manual in hand, I then started developing what ended up be
 
 Development of the MSP Simulator was split by area of concern. This helped keep context boundaries during development and testing. The different areas of concern are briefly described below.
 
-### [Parser](./src/abremir.MSP.Parser/)
+### [Parser](./source/abremir.MSP.Parser/)
 
 This is where it all starts!
 
@@ -34,7 +34,7 @@ This initial stage is where the source code is converted into an internal repres
 
 The internal representation generated at the end of this stage, if successful, is what will allow the following stages to be executed.
 
-### [Validator](./src/abremir.MSP.Validator/)
+### [Validator](./source/abremir.MSP.Validator/)
 
 Once the source code has been parsed successfully, having generated internal representations of both the data initializers and the instructions, the actual values, and (potential) relationships between data and instructions, need to be validated.
 
@@ -42,7 +42,7 @@ Data and code validation are done independently, and may generate warnings and/o
 
 If the outcome of the validation does not contain any errors all is good, and the process can progress to the next stage: assembly.
 
-### [Assembler](./src/abremir.MSP.Assembler/)
+### [Assembler](./source/abremir.MSP.Assembler/)
 
 The task of the assembler is to convert the internal representation of the source code into a format that the virtual machine can process.
 
@@ -50,7 +50,7 @@ This means the internal representation of the source code will be converted into
 
 Aside from this, the assembler will also output a map between the source code line of the code segment and its location the Program Memory, and a map between the data variables and their address in the Data Memory.
 
-### [Compiler](./src/abremir.MSP.Compiler/)
+### [Compiler](./source/abremir.MSP.Compiler/)
 
 The purpose of the compiler is to wire-up everything and to prepare a payload that is ready to be served to the virtual machine. In order to accomplish this it will leverage the components already described (parser, validator, and assembler).
 
@@ -60,7 +60,7 @@ If any of the sub-stages returns errors, the process is stopped.
 
 On a successful compilation, the resulting data memory and program memory can be fed directly to the virtual machine.
 
-### [Virtual machine](./src/abremir.MSP.VirtualMachine/)
+### [Virtual machine](./source/abremir.MSP.VirtualMachine/)
 
 Once fed with a compiled data memory and program memory, prepared by the compiler, the virtual machine will be able to run the program it was assigned.
 
@@ -70,7 +70,7 @@ The virtual machine will also emit events in order to notify potential subscribe
 
 Please note that the current implementation of the virtual machine does not exactly match the outlined in the [architecture documentation](./doc/../docs/architecture.md), but the outcome is expected to be the same.
 
-### [Integrated Development Environment](./src/abremir.MSP.IDE.Console/)
+### [Integrated Development Environment](./source/abremir.MSP.IDE.Console/)
 
 The MSP Simulator IDE, as shown above, is a console application built using the cross-platform terminal UI toolkit [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui).
 
@@ -86,7 +86,7 @@ The IDE also provides an integrated help window.
 
 ---
 
-The code editor, where the user can type code directly or have code be loaded from file. A few [examples](./src/abremir.MSP.IDE.Console/Examples/) are included.
+The code editor, where the user can type code directly or have code be loaded from file. A few [examples](./source/abremir.MSP.IDE.Console/Examples/) are included.
 
 | ![MSP code editor window](./assets/msp-ide-console-editor.png) |
 |:--:|
